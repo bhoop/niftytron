@@ -3,7 +3,7 @@ import useAppNavigation from './app-navigation';
 import { useDataStore, type Layer } from './state';
 import { SlickList, SlickItem } from 'vue-slicksort';
 import { computed, nextTick, ref } from 'vue';
-import { PlusIcon, BookmarkIcon, PhotographIcon, CollectionIcon } from '@heroicons/vue/outline';
+import { PlusIcon, CollectionIcon } from '@heroicons/vue/outline';
 import PieceSidebar from './PieceSidebar.vue';
 import LayerSidebar from './LayerSidebar.vue';
 
@@ -39,49 +39,6 @@ function sortLayers( newSortOrder: Layer[] ) {
 	data.layers = reverse( newSortOrder );
 }
 
-async function getFilesFromPossibleDirectory( item: DataTransferItem ) {
-	let entry: FileSystemFileHandle|FileSystemDirectoryHandle = await item.getAsFileSystemHandle();
-	if ( entry.kind === 'file' ) return [ await entry.getAsFile() ];
-	console.log('entry', entry);
-	return [];
-}
-
-function getFileFromEntry( entry: FileSystemFileEntry ): Promise<File> {
-	return new Promise( ( resolve, reject ) => entry.file( resolve, reject ) );
-}
-
-async function dropCollectionFiles( items?: DataTransferItemList ) {
-	draggingOntoCollection.value = false;
-	if (!items) return;
-	let filePromises: Promise<File>[] = [];
-	for ( let item of items ) {
-		if ( !item.webkitGetAsEntry ) return alert('File uploads not supported.');
-		const entry = item.webkitGetAsEntry();
-		console.log( entry, typeof entry );
-		if ( entry === null ) continue;
-		else if ( entry instanceof FileSystemFileEntry ) {
-			filePromises.push( getFileFromEntry( entry ) );
-		} else if ( entry instanceof FileSystemDirectoryEntry ) {
-			let reader = entry.createReader();
-			await new Promise<void>( resolve => {
-				reader.readEntries( results => {
-					for ( let childEntry of results ) {
-						console.log( childEntry );
-						if ( childEntry instanceof FileSystemFileEntry ) {
-							filePromises.push( getFileFromEntry( childEntry ) );
-						}
-					}
-					resolve();
-				} );
-			} );
-		}
-	}
-	console.log(filePromises);
-	const files = await Promise.all( filePromises );
-	console.log( 'read files!', files );
-}
-
-let draggingOntoCollection = ref(false);
 </script>
 <template>
 <template v-if="!activeLayer">
@@ -91,14 +48,7 @@ let draggingOntoCollection = ref(false);
 			<PlusIcon class="h-4 w-4"/>
 		</div>
 	</div>
-	<div
-		class="flex-1" :class="[draggingOntoCollection && 'outline outline-lime-500']"
-		@dragover.prevent
-		@dragend.prevent
-		@dragenter="draggingOntoCollection = true"
-		@dragleave="draggingOntoCollection = false"
-		@drop.prevent="event => dropCollectionFiles( ( event as DragEvent ).dataTransfer?.items )"
-		>
+	<div class="flex-1">
 		<input v-if="addingLayer !== null" ref="addInput" v-model="addingLayer" type="text" class="w-full rounded bg-neutral-200 border border-neutral-400 px-3 py-1" placeholder="New layer" autofocus @keyup.enter="finishAddingLayer()" @keyup.esc="finishAddingLayer()" @change="finishAddingLayer()"/>
 		<SlickList axis="y" :list="layersInDisplayOrder" @update:list="sortLayers" :pressDelay="150" :distance="10">
 			<SlickItem v-for="(layer,i) in layersInDisplayOrder" :key="layer.name" :index="i">

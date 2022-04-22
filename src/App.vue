@@ -22,9 +22,10 @@ let visibleImages = computed(() => {
 		: collection.images.filter( img => test.every( term => img.search.includes( term ) ) );
 });
 
-async function onSelectImages( files: FileList ) {
+async function onSelectImages( files: FileList | null ) {
+	if ( ! files ) return;
 	const layerData: { [layername:string]: Piece[] } = {};
-	for ( const file of files ) {
+	for ( const file of Array.from( files ) ) {
 		let src: string = await new Promise( resolve => {
 			let reader = new FileReader();
 			reader.onloadend = () => resolve( reader.result as string );

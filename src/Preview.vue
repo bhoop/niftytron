@@ -1,13 +1,16 @@
 <script setup lang="ts">import { computed, unref } from 'vue';
-import { type Image, type Attribute, useDataStore, type Layer } from './state';
+import { type Image, type Attribute, useDataStore, type Layer, type Piece } from './state';
 
 const props = defineProps<{ image: Image, focusLayer?: Layer|null }>();
 const data  = useDataStore();
 
 const layers = computed( () => {
-	return data.layers
-		.map( layer => props.image.attributes.has( layer ) ? { layer, piece: props.image.attributes.get( layer ) } : null )
-		.filter( check => check !== null );
+	const arr: Attribute[] = [];
+	for( const layer of data.layers ) {
+		const piece = props.image.attributes.get( layer );
+		if ( piece ) arr.push( { layer, piece } );
+	}
+	return arr;
 } );
 
 // const styleBgImage = computed( () => {
