@@ -19,11 +19,17 @@ export interface Attribute {
 	piece: Piece,
 }
 
+export type Favorite = Record<string, string>;
+
 export interface Image {
 	id: number,
-	attributes: Map<Layer, Piece>;
+	attributes: Map<Layer, Piece|null>;
+	key: string;
 	search: string;
+	favorite: Favorite|false;
 }
+
+
 
 export interface State {
 	layers: Layer[],

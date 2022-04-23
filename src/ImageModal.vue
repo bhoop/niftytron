@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { XIcon } from '@heroicons/vue/outline';
+import { XIcon, StarIcon } from '@heroicons/vue/outline';
 import { computed, ref } from 'vue';
 import useAppNavigation from './app-navigation';
 import Preview from "./Preview.vue";
-import type { Image, Layer, Piece } from './state';
+import { Image, Layer, Piece, useCollectionStore } from './state';
 import { useDataStore } from './state';
 
 const data = useDataStore();
+const collection = useCollectionStore();
 const focusLayer = ref<Layer|null>(null);
 const nav = useAppNavigation();
 
@@ -28,7 +29,13 @@ const attributes = computed( () => {
 </script>
 <template>
 	<div class="p-5 pr-10 pt-0">
-		<div class="pt-4 pb-5 text-lg">Image #{{ image.id }}</div>
+		<div class="pt-4 pb-5 flex items-center">
+			<div class="text-lg">Image #{{ image.id }}</div>
+			<StarIcon class="w-6 h-6 ml-2 cursor-pointer"
+				:class="[image.favorite ? 'fill-orange-500 stroke-0' : 'text-orange-500']"
+				@click="collection.toggleImageFavorite( image )"
+				/>
+		</div>
 		<div class="relative flex gap-5">
 			<div class="w-60 flex checkered bg-white border rounded border-neutral-400">
 				<Preview :image="image" :focus-layer="focusLayer"/>
