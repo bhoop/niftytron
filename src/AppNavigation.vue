@@ -13,21 +13,6 @@ let collection = useCollectionStore();
 let addingLayer = ref<string|null>(null);
 let addInput = ref<HTMLInputElement|null>(null);
 
-async function startAddingLayer() {
-	addingLayer.value = '';
-	await nextTick();
-	addInput.value!.focus();
-}
-
-function finishAddingLayer() {
-	console.log('addlayer', addingLayer.value);
-	if ( addingLayer.value !== '' ) {
-		data.layers.unshift( { name: addingLayer.value!, pieces: [] } );
-		goto( data.layers[0]);
-	}
-	addingLayer.value = null;
-}
-
 function reverse<T>( arr: T[] ): T[] {
 	let arr2 = [ ...arr ];
 	arr2.reverse();
@@ -43,7 +28,6 @@ function sortLayers( newSortOrder: Layer[] ) {
 async function onSelectImages( files: FileList | null ) {
 	if ( ! files ) return;
 	await data.upload( Array.from( files ) );
-	collection.regenerate();
 }
 
 </script>
@@ -57,7 +41,6 @@ async function onSelectImages( files: FileList | null ) {
 		</label>
 	</div>
 	<div class="flex-1">
-		<input v-if="addingLayer !== null" ref="addInput" v-model="addingLayer" type="text" class="w-full rounded bg-neutral-200 border border-neutral-400 px-3 py-1" placeholder="New layer" autofocus @keyup.enter="finishAddingLayer()" @keyup.esc="finishAddingLayer()" @change="finishAddingLayer()"/>
 		<SlickList axis="y" :list="layersInDisplayOrder" @update:list="sortLayers" :pressDelay="150" :distance="10">
 			<SlickItem v-for="(layer,i) in layersInDisplayOrder" :key="layer.name" :index="i">
 				<div
@@ -65,7 +48,8 @@ async function onSelectImages( files: FileList | null ) {
 					@click="goto( layer )"
 					>
 					<CollectionIcon class="ml-2 mr-2 w-5 h-5 text-neutral-500/50 group-hover:text-orange-500"/>
-					{{ layer.name }}
+					<div class="">{{ layer.name }}</div>
+					<div class="ml-auto text-sm opacity-50 font-semibold">{{ layer.probability }}%</div>
 				</div>
 			</SlickItem>
 		</SlickList>

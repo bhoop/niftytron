@@ -18,7 +18,7 @@ export const useDataStore = defineStore('data', () => {
 				: layers.value.reduce(
 						(sum, layer) =>
 							layer.pieces.length > 0
-								? sum * layer.pieces.length
+								? sum * layer.pieces.length * (Number(layer.probability) / 100)
 								: sum,
 						1
 					);
@@ -26,6 +26,14 @@ export const useDataStore = defineStore('data', () => {
 	} );
 
 	const combinationCountAbbr = computed( () => numFormatter.format( combinationCount.value ).toLowerCase() );
+
+	const key = computed( () => {
+		const parts = layers.value.map( layer => {
+			return layer.probability + ':' + layer.pieces.length
+		} );
+		parts.sort();
+		return parts.join('/');
+	} );
 
 	const upload = async ( files: File[] ) => {
 		const layerData: { [layername: string]: Piece[] } = {};
@@ -55,7 +63,9 @@ export const useDataStore = defineStore('data', () => {
 			);
 			let [layerName, pieceName] = file.name
 				.replace(/\.png$/, "")
-				.split("_", 2);
+				.split(/_+\s*/, 2);
+			layerName = layerName[0].toUpperCase() + layerName.substring(1);
+			pieceName = pieceName[0].toUpperCase() + pieceName.substring(1);
 			if (!layerData[layerName]) layerData[layerName] = [];
 			layerData[layerName].push({ name: pieceName, ...sources });
 			uploading.value.progress = ++i / files.length;
@@ -63,13 +73,13 @@ export const useDataStore = defineStore('data', () => {
 		uploading.value = { progress: 0.99, message: 'finalizing...' };
 		let layersArray: Layer[] = [];
 		for (const name in layerData) {
-			layersArray.push({ name, pieces: layerData[name] });
+			layersArray.push({ name, pieces: layerData[name], probability:'100' });
 		}
 		layers.value = layersArray;
 		uploading.value = false;
 	}
 
-	return { layers, uploading, combinationCount, combinationCountAbbr, upload };
+	return { key, layers, uploading, combinationCount, combinationCountAbbr, upload };
 } );
 
 if (import.meta.hot) {

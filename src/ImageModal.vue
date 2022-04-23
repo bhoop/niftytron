@@ -42,14 +42,17 @@ const attributes = computed( () => {
 			</div>
 			<div class="flex-1 flex flex-col gap-3 items-start">
 				<a
-					v-for="attr in attributes"
+					v-for="layer in data.layers"
 					class="cursor-pointer rounded bg-neutral-200 border border-neutral-400 flex items-center"
-					@mouseenter="focusLayer = attr!.layer"
+					@mouseenter="focusLayer = image.attributes.get(layer)"
 					@mouseleave="focusLayer = null"
-					@click="nav.goto( attr!.layer, attr!.piece )"
+					@click="nav.goto( layer, image.attributes.get(layer) )"
 					>
-					<div class="w-20 pl-2 text-sm font-semibold">{{ attr!.layer.name }}</div>
-					<div class="w-36 flex-1 text-sm py-0.5 px-2 rounded bg-white">{{ attr!.piece.name }}</div>
+					<div class="w-20 pl-2 text-sm font-semibold">{{ layer.name }}</div>
+					<div class="w-36 flex-1 text-sm py-0.5 px-2 rounded bg-white">
+						<span v-if="! image.attributes.has(layer)" class="text-neutral-400">None</span>
+						<template v-else>{{ image.attributes.get(layer)!.name }}</template>
+					</div>
 				</a>
 			</div>
 		</div>

@@ -4,7 +4,7 @@ export { useDataStore } from "./stores/data";
 export interface Layer {
 	name: string;
 	pieces: Piece[],
-	rarity?: number
+	probability: string
 };
 
 export interface Piece {

@@ -1,7 +1,7 @@
 import type { Layer, Piece, Image, Favorite } from "../state";
 import { acceptHMRUpdate, defineStore } from "pinia";
 import { useDataStore } from "./data";
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, watchEffect } from "vue";
 
 export const useCollectionStore = defineStore("collection", () => {
 	const size = ref( 1000 );
@@ -12,6 +12,7 @@ export const useCollectionStore = defineStore("collection", () => {
 	const imageset = ref<Map<string, Image>>(new Map() );
 	const regenState = ref<{ layer: Layer }[]>([]);
 	const actualSize = computed( () => Math.min( size.value, data.combinationCount ) );
+	const dataKey = ref('');
 
 	const images = computed(() => {
 		let arr = [...imageset.value.values()].slice(0, actualSize.value );
@@ -75,6 +76,10 @@ export const useCollectionStore = defineStore("collection", () => {
 					// add an attribute for each layer
 					let attributes: Map<Layer, Piece> = new Map();
 					for (let rs of regenState.value) {
+						// check to see if this layer should be used
+						const probability = Number( rs.layer.probability );
+						// if probability is out, skip this layer.
+						if ( probability < 100 && 100 * Math.random() > probability ) continue;
 						let piece =
 							rs.layer.pieces[
 								Math.floor(Math.random() * rs.layer.pieces.length)
@@ -95,8 +100,6 @@ export const useCollectionStore = defineStore("collection", () => {
 		}
 	}
 
-	regenerate();
-
 	// when the collection size changes, regenerate the collection
 	watch(size, (newSize, oldSize) => {
 		let actualNewSize = newSize ?? data.combinationCount;
@@ -105,6 +108,16 @@ export const useCollectionStore = defineStore("collection", () => {
 			regenerate();
 		}
 	});
+
+	// when the data sources change, regenerate the collection
+	watchEffect( () => {
+		if ( dataKey.value !== data.key ) {
+			console.log('regenerating because data key changed', dataKey.value, '=>', data.key );
+			dataKey.value = data.key;
+			regenerate();
+		}
+	} );
+
 
 	function changeSize(newSize: number ) {
 		const num = Number( newSize );
