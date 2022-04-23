@@ -26,6 +26,12 @@ const attributes = computed( () => {
 	return attrs;
 } );
 
+const layersInDisplayOrder = computed( () => {
+	const arr = [...data.layers];
+	arr.reverse();
+	return arr;
+} );
+
 </script>
 <template>
 	<div class="p-5 pr-10 pt-0">
@@ -42,9 +48,9 @@ const attributes = computed( () => {
 			</div>
 			<div class="flex-1 flex flex-col gap-3 items-start">
 				<a
-					v-for="layer in data.layers"
+					v-for="layer in layersInDisplayOrder"
 					class="cursor-pointer rounded bg-neutral-200 border border-neutral-400 flex items-center"
-					@mouseenter="focusLayer = image.attributes.get(layer)"
+					@mouseenter="focusLayer = layer"
 					@mouseleave="focusLayer = null"
 					@click="nav.goto( layer, image.attributes.get(layer) )"
 					>
