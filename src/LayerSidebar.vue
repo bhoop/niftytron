@@ -14,7 +14,7 @@ const piecesInDisplayOrder = computed(() => {
 
 </script>
 <template>
-	<div class="relative">
+	<div class="relative overflow-y-auto">
 		<div class="rounded bg-neutral-200 border border-neutral-400 p-px flex items-center" title="Layer name">
 			<BookmarkIcon class="h-6 w-6 text-neutral-400 mx-1"/>
 			<input type="text" placeholder="Layer name" class="w-full py-1 px-2 rounded" v-model.lazy="layer.name"/>

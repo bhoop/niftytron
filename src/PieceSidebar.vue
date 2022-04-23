@@ -14,7 +14,7 @@ const bgimage = computed( () => props.piece.src
 );
 </script>
 <template>
-	<div class="flex-1 relative">
+	<div class="flex-1 relative overflow-y-auto">
 		<div
 			class="rounded bg-neutral-200 border border-neutral-400 p-px flex items-center"
 			title="Piece name"

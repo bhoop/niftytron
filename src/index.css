@@ -13,3 +13,22 @@
 	background-position: 0 0, 12.5px 0, 12.5px -12.5px, 0px 12.5px;
 	/* Must be half of one side of the square */
 }
+
+input[type=number].no-arrows {
+	-moz-appearance: textfield;
+}
+input[type=number].no-arrows::-webkit-outer-spin-button,
+input[type=number].no-arrows::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+.modal-enter-active,
+.modal-leave-active {
+	transition: opacity 0.5s ease;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+	opacity: 0;
+}

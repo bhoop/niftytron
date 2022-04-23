@@ -10,6 +10,7 @@ export interface Layer {
 export interface Piece {
 	name: string;
 	src: string;
+	preview: string;
 	rarity?: number;
 }
 

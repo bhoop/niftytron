@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import useAppNavigation from './app-navigation';
-import { useDataStore, type Layer } from './state';
+import { useCollectionStore, useDataStore, type Layer, type Piece } from './state';
 import { SlickList, SlickItem } from 'vue-slicksort';
 import { computed, nextTick, ref } from 'vue';
 import { PlusIcon, CollectionIcon } from '@heroicons/vue/outline';
@@ -9,6 +9,7 @@ import LayerSidebar from './LayerSidebar.vue';
 
 let { activeLayer, activePiece, goto } = useAppNavigation();
 let data = useDataStore();
+let collection = useCollectionStore();
 let addingLayer = ref<string|null>(null);
 let addInput = ref<HTMLInputElement|null>(null);
 
@@ -39,14 +40,21 @@ function sortLayers( newSortOrder: Layer[] ) {
 	data.layers = reverse( newSortOrder );
 }
 
+async function onSelectImages( files: FileList | null ) {
+	if ( ! files ) return;
+	await data.upload( Array.from( files ) );
+	collection.regenerate();
+}
+
 </script>
 <template>
 <template v-if="!activeLayer">
 	<div class="flex gap-2">
 		<div class="mr-auto">Layers</div>
-		<div class="p-1 rounded-lg bg-orange-500 text-orange-900" title="Add layer" @click="startAddingLayer">
+		<label class="p-1 rounded-lg bg-orange-500 text-orange-900 cursor-pointer">
+			<input type="file" class="absolute hidden" multiple accept="image/pdf" @change="event => onSelectImages( ( event.target as HTMLInputElement).files )"/>
 			<PlusIcon class="h-4 w-4"/>
-		</div>
+		</label>
 	</div>
 	<div class="flex-1">
 		<input v-if="addingLayer !== null" ref="addInput" v-model="addingLayer" type="text" class="w-full rounded bg-neutral-200 border border-neutral-400 px-3 py-1" placeholder="New layer" autofocus @keyup.enter="finishAddingLayer()" @keyup.esc="finishAddingLayer()" @change="finishAddingLayer()"/>

@@ -4,27 +4,29 @@ import { useDataStore } from "./data";
 import { computed, ref, watch } from "vue";
 
 export const useCollectionStore = defineStore("collection", () => {
-	const size = ref<number | null>(null);
+	const size = ref( 1000 );
 	const data = useDataStore();
 	const regenerationId = ref(0);
-	const imageset = ref<Map<number, Image>>(new Map());
-	const targetSize = ref(0);
+	const finishedRegenerationId = ref(0);
+	const imageset = ref<Map<number, Image>>(new Map() );
 	const regenState = ref<{ layer: Layer }[]>([]);
+	const actualSize = computed( () => Math.min( size.value, data.combinationCount ) );
 
 	const images = computed(() => {
-		let arr = [...imageset.value.values()].slice(0, targetSize.value);
-		return arr.length < targetSize.value
-			? arr.concat(new Array(targetSize.value - arr.length).fill(null))
+		let arr = [...imageset.value.values()].slice(0, actualSize.value );
+		return arr.length < actualSize.value
+			? arr.concat(new Array(actualSize.value - arr.length).fill(null))
 			: arr;
 	});
 
+	const isGenerating = computed( () => regenerationId.value !== finishedRegenerationId.value );
+
 	const regenerate = async () => {
 		regenerationId.value++;
-		targetSize.value = size.value ?? data.combinationCount;
 		console.log("start regeneration #", regenerationId.value);
 		// generate IDs
 		const ids: number[] = [];
-		const maxId = size.value ?? data.combinationCount;
+		const maxId = size.value;
 		for (let i = 1; i <= maxId; i++) {
 			ids.push(i);
 		}
@@ -65,6 +67,7 @@ export const useCollectionStore = defineStore("collection", () => {
 				setTimeout(resolve, 0);
 			});
 		}
+		finishedRegenerationId.value = currentRegenerationId;
 		if (regenerationId.value === currentRegenerationId) {
 			console.log("done!");
 		} else {
@@ -83,38 +86,16 @@ export const useCollectionStore = defineStore("collection", () => {
 		}
 	});
 
-	// when the max number of combinations change (usually because pieces have been added),
-	// regenerate the collection.
-	watch(
-		data,
-		({ combinationCount: newCount }, { combinationCount: oldCount }) => {
-			if (newCount !== images.value.length) {
-			console.log("REGENERATE!");
-				regenerate();
-			} else {
-				console.log(newCount, '===', oldCount);
-			}
-		}
-	);
-
-	function changeSize(newSize: number | string | null) {
-		if (newSize === "" || newSize === null) {
-			size.value = null;
-		} else {
-			let num = Number(newSize);
-			if (!Number.isInteger(num) || num < 1) {
-				let v = size.value;
-				size.value = 1;
-				size.value = v;
-			} else if (num > data.combinationCount) {
-				size.value = data.combinationCount;
-			} else {
-				size.value = num;
-			}
+	function changeSize(newSize: number ) {
+		const num = Number( newSize );
+		console.log("heywhy", newSize, num);
+		if ( num > 0 ) {
+			console.warn('changesize!');
+			size.value = num;
 		}
 	}
 
-	return { images, size, regenerate, changeSize };
+	return { images, size, isGenerating, regenerate, changeSize };
 });
 
 if (import.meta.hot) {
