@@ -226,8 +226,9 @@ export const useCollectionStore = defineStore("collection", () => {
 				index += chunkSize;
 			}
 			downloading.value.running = false;
-		} catch( err ) {
-			// console.error( err );
+		} catch( err: any ) {
+			alert( 'An error occured (see console)');
+			console.error( err );
 		}
 	}
 
