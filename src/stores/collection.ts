@@ -1,7 +1,7 @@
 import type { Layer, Piece, Image, Favorite } from "../state";
 import { acceptHMRUpdate, defineStore } from "pinia";
 import { useDataStore } from "./data";
-import { computed, ref, watch, watchEffect } from "vue";
+import { computed, ref, unref, watch, watchEffect } from "vue";
 
 export const useCollectionStore = defineStore("collection", () => {
 	const size = ref( 1000 );
@@ -14,6 +14,7 @@ export const useCollectionStore = defineStore("collection", () => {
 	const actualSize = computed( () => Math.min( size.value, data.combinationCount ) );
 	const dataKey = ref('');
 	const generating = ref<false | { progress: number; message: string }>(false);
+	const downloading = ref({ running: false, destination: '', done:0, total:0 });
 
 	const images = computed(() => {
 		let arr = [...imageset.value.values()].slice(0, actualSize.value );
@@ -35,10 +36,10 @@ export const useCollectionStore = defineStore("collection", () => {
 		console.log("start regeneration #", regenerationId.value);
 		generating.value = { progress: 0.05, message: "preparing to start..." };
 		// generate IDs
-		const ids: number[] = [];
 		const maxId = size.value;
+		const ids: number[] = [];
 		for (let i = 1; i <= maxId; i++) {
-			ids.push(i);
+			ids.splice(Math.floor( Math.random() * ids.length ), 0, i);
 		}
 		// reset state
 		const currentRegenerationId = regenerationId.value;
@@ -172,7 +173,69 @@ export const useCollectionStore = defineStore("collection", () => {
 		}
 	}
 
-	return { images, size, isGenerating, generating, regenerate, changeSize, getImageKey, toggleImageFavorite };
+	async function download() {
+		const imgdataCache = new Map();
+		const imgdata = async (layer: Layer, piece: Piece) => {
+			const key = `${layer.name}//${piece.name}`;
+			if ( ! imgdataCache.has( key ) ) {
+				const image = new Image();
+				await new Promise( resolve => {
+					image.onload = () => resolve( image );
+					image.src = piece.src;
+				} );
+				imgdataCache.set(key, image);
+			}
+			return imgdataCache.get( key );
+		};
+
+		try {
+			const dirHandle = await window.showDirectoryPicker({
+				writeable: true,
+			});
+			console.log("gotDirHandle", dirHandle);
+			downloading.value = { running: true, destination: dirHandle.name, done:0, total: unref( size ) };
+			let index = 0;
+			let chunkSize = 10;
+			let canvas = document.createElement('canvas');
+			canvas.width = 1000;
+			canvas.height = 1000;
+			let context = canvas.getContext('2d')!;
+			while ( downloading.value.running === true && downloading.value.done < size.value ) {
+				// generate images in chunks so we don't lock up the main thread
+				for ( let i = 0; i < chunkSize; i++ ) {
+					const image = images.value[index + i];
+					// clear the canvas
+					context.clearRect(0, 0, canvas.width, canvas.height);
+					// stack layers onto the canvas
+					for ( const layer of data.layers ) {
+						const piece = image.attributes.get( layer );
+						if ( ! piece ) continue;
+						const img = await imgdata( layer, piece );
+						context.drawImage( img, 0, 0, 1000, 1000 );
+					}
+					// write the image to a file
+					const filename = image.id + '.png';
+					const fileHandle = await dirHandle.getFileHandle( filename, { create: true } );
+					const writable = await fileHandle.createWritable({keepExistingData:false});
+					const canvasBlob = await new Promise( resolve => canvas.toBlob( resolve, 'image/png', 1 ) );
+					await writable.write( canvasBlob );
+					await writable.close();
+
+					downloading.value.done++;
+				}
+				index += chunkSize;
+			}
+			downloading.value.running = false;
+		} catch( err ) {
+			// console.error( err );
+		}
+	}
+
+	function stopDownload() {
+		downloading.value.running = false;
+	}
+
+	return { images, size, isGenerating, generating, regenerate, changeSize, getImageKey, toggleImageFavorite, download, downloading, stopDownload };
 });
 
 if (import.meta.hot) {

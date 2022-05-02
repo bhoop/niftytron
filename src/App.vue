@@ -10,6 +10,7 @@ import AppHeader from './AppHeader.vue';
 import Collection from './Collection.vue';
 import UploadProgress from './UploadProgress.vue';
 import useAppNavigation from './app-navigation';
+import DownloadProgress from './DownloadProgress.vue';
 
 // import { RefreshIcon } from '@heroicons/vue/solid';
 
@@ -53,6 +54,7 @@ let visibleImages = computed(() => {
 		</div>
 		<!-- Action buttons -->
 		<div class="flex-1 flex justify-end">
+			<button class="text-sm bg-green-600/80 rounded mr-3" @click="collection.download()">download</button>
 			<button class="text-sm bg-orange-500/80 rounded" @click="collection.regenerate()">regenerate</button>
 		</div>
 	</div>
@@ -93,5 +95,6 @@ let visibleImages = computed(() => {
 </div>
 <Transition name="modal">
 	<UploadProgress :upload="data.uploading" v-if="data.uploading"/>
+	<DownloadProgress v-else-if="collection.downloading.running" :done="collection.downloading.done" :total="collection.size" :destination="collection.downloading.destination" @cancel="collection.stopDownload"/>
 </Transition>
 </template>
