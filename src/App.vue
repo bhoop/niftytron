@@ -43,6 +43,7 @@ let visibleImages = computed(() => {
 	<div class="p-3 pl-72 z-10 w-full sticky top-0 backdrop-blur-lg bg-neutral-200/80 flex items-center border-b border-neutral-300 transition-all">
 		<!-- Spacer -->
 		<div class="flex-1">
+			<div v-if="collection.isGenerating" class="text-orange-500 animate-pulse">Generating collection...</div>
 		</div>
 		<!-- search box -->
 		<div class="h-8 relative rounded bg-neutral-200 border border-neutral-400 flex items-center flex-0 w-72" title="Size of collection">
@@ -67,6 +68,11 @@ let visibleImages = computed(() => {
 				:value="collection.size"
 				@change="event => collection.changeSize(Number((event.target as HTMLInputElement).value))"
 				class=" relative bg-transparent w-full py-1 pl-10 pr-2 rounded no-arrows"
+				/>
+			<div
+				class="pointer-events-none opacity-0 bg-orange-400/30 absolute left-0 top-0 h-full transition-opacity animate-pulse"
+				:class="[collection.isGenerating && 'opacity-100']"
+				:style="{width: ( collection.generating ? collection.generating.progress * 100 : 0 ) + '%' }"
 				/>
 		</div>
 

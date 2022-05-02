@@ -13,6 +13,7 @@ export const useCollectionStore = defineStore("collection", () => {
 	const regenState = ref<{ layer: Layer }[]>([]);
 	const actualSize = computed( () => Math.min( size.value, data.combinationCount ) );
 	const dataKey = ref('');
+	const generating = ref<false | { progress: number; message: string }>(false);
 
 	const images = computed(() => {
 		let arr = [...imageset.value.values()].slice(0, actualSize.value );
@@ -32,6 +33,7 @@ export const useCollectionStore = defineStore("collection", () => {
 	const regenerate = async () => {
 		regenerationId.value++;
 		console.log("start regeneration #", regenerationId.value);
+		generating.value = { progress: 0.05, message: "preparing to start..." };
 		// generate IDs
 		const ids: number[] = [];
 		const maxId = size.value;
@@ -63,6 +65,7 @@ export const useCollectionStore = defineStore("collection", () => {
 			}
 			const image = makeImage( ids.pop()!, map, fav );
 			imageset.value.set( image.key, image );
+			generating.value.progress = imageset.value.size / maxId;
 		}
 		// start randomly generating images
 		while (
@@ -88,11 +91,13 @@ export const useCollectionStore = defineStore("collection", () => {
 					}
 					const image = makeImage( ids.pop()!, attributes, false );
 					imageset.value.set( image.key, image );
+					if ( generating.value ) generating.value.progress = imageset.value.size / maxId;
 				}
 				setTimeout(resolve, 0);
 			});
 		}
 		finishedRegenerationId.value = currentRegenerationId;
+		generating.value = false;
 		if (regenerationId.value === currentRegenerationId) {
 			console.log("done!");
 		} else {
@@ -167,7 +172,7 @@ export const useCollectionStore = defineStore("collection", () => {
 		}
 	}
 
-	return { images, size, isGenerating, regenerate, changeSize, getImageKey, toggleImageFavorite };
+	return { images, size, isGenerating, generating, regenerate, changeSize, getImageKey, toggleImageFavorite };
 });
 
 if (import.meta.hot) {
