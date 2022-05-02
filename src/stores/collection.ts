@@ -189,7 +189,7 @@ export const useCollectionStore = defineStore("collection", () => {
 		};
 
 		try {
-			const dirHandle = await window.showDirectoryPicker({
+			const dirHandle = await ( window as any ).showDirectoryPicker({
 				writeable: true,
 			});
 			console.log("gotDirHandle", dirHandle);
