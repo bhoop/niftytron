@@ -6,6 +6,10 @@
 	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEX///+/v7+jQ3Y5AAAAD0lEQVQI12Ng+I8V4RIGAH6/D/EIQoVRAAAAAElFTkSuQmCC');
 }
 
+.favorite {
+	background: radial-gradient(circle, #f97316 0%, #FFBB0100 70%);
+}
+
 input[type=number].no-arrows {
 	-moz-appearance: textfield;
 }

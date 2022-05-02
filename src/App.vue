@@ -18,9 +18,11 @@ let data = useDataStore();
 let collection = useCollectionStore();
 const nav = useAppNavigation();
 
-let currentImage = ref<Image|null>();
+let currentImageId = ref<number|null>(null);
 let search = ref<string>('');
 let sizeInput = ref('');
+
+let currentImage = computed(() => currentImageId.value === null ? null : collection.images.find( img => img?.id === currentImageId.value ));
 
 let visibleImages = computed(() => {
 	let output = collection.images;
@@ -87,11 +89,11 @@ let visibleImages = computed(() => {
 		</label>
 	</div> -->
 	<div class="pl-72">
-		<Collection :images="visibleImages" @select-image="image => currentImage = image"/>
+		<Collection :images="visibleImages" @select-image="image => currentImageId = image.id"/>
 	</div>
 </div>
 <div class="z-40 fixed top-0 left-0 w-screen h-screen pointer-events-none flex items-center justify-center">
-	<ImageModal v-if="currentImage" :image="currentImage" class="pointer-events-auto bg-white/80 backdrop-blur-xl shadow-2xl rounded border border-neutral-300" @close="currentImage = null"/>
+	<ImageModal v-if="currentImage" :image="currentImage" class="pointer-events-auto bg-white/80 backdrop-blur-xl shadow-2xl rounded border border-neutral-300" @close="currentImageId = null"/>
 </div>
 <Transition name="modal">
 	<UploadProgress :upload="data.uploading" v-if="data.uploading"/>

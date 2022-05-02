@@ -158,19 +158,37 @@ export const useCollectionStore = defineStore("collection", () => {
 		};
 	}
 
+	function getImageFavorite( attributes: Image["attributes"] ) {
+		const obj: Record<string, string> = {};
+		for (const [layer, piece] of attributes) {
+			if (piece) obj[layer.name] = piece.name;
+		}
+		return obj;
+	}
+
 	function toggleImageFavorite( image: Image ) {
 		if ( image.favorite ) {
 			favorites.value = favorites.value.filter( fav => image.favorite !== fav );
 			image.favorite = false;
 		} else {
-			const obj: Record<string, string> = {};
-			for ( const [ layer, piece ] of image.attributes ) {
-				if ( piece ) obj[ layer.name ] = piece.name;
-			}
-
+			const obj = getImageFavorite( image.attributes );
 			favorites.value.push( obj )
 			image.favorite = obj;
 		}
+	}
+
+	function updateFavorite(image: Image, layer: Layer, piece: Piece | null) {
+		// remove the old key
+		imageset.value.delete(image.key);
+		favorites.value = favorites.value.filter( fav => image.favorite !== fav );
+		// add the new image
+		const map: Image["attributes"] = new Map(image.attributes);
+		if (piece === null) map.delete(layer);
+		else map.set(layer, piece);
+		const favoriteObject = getImageFavorite( map );
+		const newImage = makeImage(image.id, map, favoriteObject);
+		imageset.value.set( newImage.key, newImage );
+		favorites.value.push( favoriteObject );
 	}
 
 	async function download() {
@@ -236,7 +254,7 @@ export const useCollectionStore = defineStore("collection", () => {
 		downloading.value.running = false;
 	}
 
-	return { images, size, isGenerating, generating, regenerate, changeSize, getImageKey, toggleImageFavorite, download, downloading, stopDownload };
+	return { images, size, isGenerating, generating, regenerate, changeSize, getImageKey, toggleImageFavorite, updateFavorite, download, downloading, stopDownload };
 });
 
 if (import.meta.hot) {

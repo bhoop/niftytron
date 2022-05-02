@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { XIcon, StarIcon } from '@heroicons/vue/outline';
-import { computed, ref } from 'vue';
+import { ChevronDownIcon } from '@heroicons/vue/solid';
+import { computed, ref, unref } from 'vue';
 import useAppNavigation from './app-navigation';
 import Preview from "./Preview.vue";
-import { Image, Layer, Piece, useCollectionStore } from './state';
+import { type Image, type Layer, type Piece, useCollectionStore } from './state';
 import { useDataStore } from './state';
 
 const data = useDataStore();
@@ -17,20 +18,16 @@ defineEmits<{
 	(e: 'open-attr', layer: Layer, piece: Piece): void,
 }>();
 
-const attributes = computed( () => {
-	let attrs = data.layers.map( layer => {
-		let piece = props.image.attributes.get( layer );
-		return piece ? { layer, piece } : null;
-	}).filter( a => a !== null );
-	attrs.reverse();
-	return attrs;
-} );
-
 const layersInDisplayOrder = computed( () => {
 	const arr = [...data.layers];
 	arr.reverse();
 	return arr;
 } );
+
+function changeImagePiece( layer: Layer, pieceName: string ) {
+	const piece = pieceName === '' ? null : layer.pieces.find(p => p.name === pieceName) ?? null;
+	collection.updateFavorite( props.image, layer, piece );
+}
 
 </script>
 <template>
@@ -55,9 +52,16 @@ const layersInDisplayOrder = computed( () => {
 					@click="nav.goto( layer, image.attributes.get(layer) )"
 					>
 					<div class="w-20 pl-2 text-sm font-semibold">{{ layer.name }}</div>
-					<div class="w-36 flex-1 text-sm py-0.5 px-2 rounded bg-white">
+					<div class="w-52 flex-1 text-sm py-0.5 px-2 rounded bg-white flex items-center relative">
 						<span v-if="! image.attributes.has(layer)" class="text-neutral-400">None</span>
 						<template v-else>{{ image.attributes.get(layer)!.name }}</template>
+						<template v-if="image.favorite">
+							<ChevronDownIcon class="w-5 h-5 ml-auto relative left-1 text-orange-500"/>
+							<select @click.stop="" :value="image.attributes.get(layer)?.name ?? ''" @change="event => changeImagePiece(layer, unref((event.target as HTMLSelectElement).value))" class="absolute left-0 top-0 w-full h-full opacity-0">
+								<option value="">None</option>
+								<option v-for="piece in layer.pieces" :value="piece.name">{{ piece.name }}</option>
+							</select>
+						</template>
 					</div>
 				</a>
 			</div>

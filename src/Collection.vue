@@ -75,23 +75,6 @@ function onClickImage( image: Image ) {
 }
 </script>
 <template>
-	<!-- <div
-		class="fixed left-0 bottom-0 p-4 bg-white/50 whitespace-pre font-mono text-xs"
-	>
-		{{
-			JSON.stringify(
-				{
-					images: images.length,
-					...state,
-					container,
-					first: displaySlice[0]?.id,
-					offset,
-				},
-				null,
-				"  "
-			)
-		}}
-	</div> -->
 	<div class="p-5 relative">
 		<div
 			class="w-full absolute top-0 left-0 h-screen pointer-events-none"
@@ -103,15 +86,12 @@ function onClickImage( image: Image ) {
 				class="grid grid-cols-[repeat(auto-fill,15rem)]"
 				:style="`position:relative; top:${offset * cellSize}px`"
 			>
-				<div v-for="image of displaySlice" class="h-60">
-					<Preview :image="image" @click="onClickImage(image)" />
+				<div v-for="image of displaySlice" class="h-60 flex">
+					<div class="m-px self-stretch flex-1 border border-neutral-500/30 bg-neutral-100/50" :class="[image && image.favorite !== false && 'bg-radial from-orange-400 to-orange-100']">
+						<Preview :image="image" @click="onClickImage(image)" />
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- <div class="grid grid-cols-[repeat(auto-fill,15rem)] p-5">
-		<div v-for="image of visibleImages" class="h-60 rounded-sm">
-			<Preview :image="image" @click="currentImage = image"/>
-		</div>
-	</div> -->
 </template>
