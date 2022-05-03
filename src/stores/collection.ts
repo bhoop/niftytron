@@ -39,7 +39,13 @@ export const useCollectionStore = defineStore("collection", () => {
 		const maxId = size.value;
 		const ids: number[] = [];
 		for (let i = 1; i <= maxId; i++) {
-			ids.splice(Math.floor( Math.random() * ids.length ), 0, i);
+			ids.push( i );
+		}
+		for (let i = ids.length - 1; i > 0; i--) {
+			let j = Math.floor(Math.random() * (i + 1));
+			let temp = ids[i];
+			ids[i] = ids[j];
+			ids[j] = temp;
 		}
 		// reset state
 		const currentRegenerationId = regenerationId.value;
@@ -245,8 +251,12 @@ export const useCollectionStore = defineStore("collection", () => {
 			}
 			downloading.value.running = false;
 		} catch( err: any ) {
-			alert( 'An error occured (see console)');
-			console.error( err );
+			if ( err instanceof DOMException && err.name === 'AbortError' ) {
+				// user canceled directory selection
+			} else {
+				alert("An error occured (see console)");
+				console.error(err);
+			}
 		}
 	}
 
