@@ -67,13 +67,13 @@ export const useDataStore = defineStore('data', () => {
 			layerName = layerName[0].toUpperCase() + layerName.substring(1);
 			pieceName = pieceName[0].toUpperCase() + pieceName.substring(1);
 			if (!layerData[layerName]) layerData[layerName] = [];
-			layerData[layerName].push({ name: pieceName, ...sources });
+			layerData[layerName].push({ name: pieceName, tags:'', ...sources });
 			uploading.value.progress = ++i / files.length;
 		}
 		uploading.value = { progress: 0.99, message: 'finalizing...' };
 		let layersArray: Layer[] = [];
 		for (const name in layerData) {
-			layersArray.push({ name, pieces: layerData[name], probability:'100' });
+			layersArray.push({ name, pieces: layerData[name], probability:'100', tags:'' });
 		}
 		layers.value = layersArray;
 		uploading.value = false;

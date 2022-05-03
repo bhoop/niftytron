@@ -3,6 +3,7 @@ import type { Layer } from "./state";
 import { BookmarkIcon, PhotographIcon, AdjustmentsIcon } from '@heroicons/vue/outline';
 import useAppNavigation from "./app-navigation";
 import { computed } from "vue";
+import TagField from "./TagField.vue";
 const props = defineProps<{ layer: Layer }>();
 
 const nav = useAppNavigation();
@@ -22,8 +23,10 @@ const piecesInDisplayOrder = computed(() => {
 
 		<div class="rounded bg-neutral-200 border border-neutral-400 p-px flex items-center" title="Layer name">
 			<AdjustmentsIcon class="h-6 w-6 text-neutral-400 mx-1"/>
-			<input type="text" placeholder="Layer name" class="w-full py-1 px-2 rounded" v-model.lazy="layer.probability"/>
+			<input type="text" placeholder="Layer rarity" class="w-full py-1 px-2 rounded" v-model.lazy="layer.probability"/>
 		</div>
+
+		<TagField v-model="layer.tags"/>
 
 		<hr>
 		<div>Pieces</div>
