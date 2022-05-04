@@ -2,16 +2,21 @@ export { useCollectionStore } from "./stores/collection";
 export { useDataStore } from "./stores/data";
 
 export interface Layer {
+	id: string;
 	name: string;
 	pieces: Piece[];
-	probability: string;
-	tags: string;
+	limit: false|number;
+	required: boolean;
+	tags: string[];
+	blockedTags: string[];
 }
 
 export interface Piece {
+	id: string;
 	name: string;
-	rarity?: number;
-	tags: string;
+	limit: false|number;
+	tags: string[];
+	blockedTags: string[];
 	src: string;
 	preview: string;
 }
@@ -21,14 +26,17 @@ export interface Attribute {
 	piece: Piece;
 }
 
-export type Favorite = Record<string, string>;
+export interface FavoriteBag {
+	[uid: string]: string[];
+}
+
+export type Favorite = string[];
 
 export interface Image {
-	id: number;
+	number: number;
 	attributes: Map<Layer, Piece | null>;
-	key: string;
-	search: string;
-	favorite: Favorite | false;
+	key: number;
+	favorite: string | false;
 }
 
 export interface State {

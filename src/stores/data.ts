@@ -1,6 +1,7 @@
 import type { Layer, Piece, Image } from "../state";
+import uid from "../uid";
 import { acceptHMRUpdate, defineStore } from "pinia";
-import { computed, ref } from "vue";
+import { computed, ref, watch, watchEffect } from "vue";
 
 const numFormatter = new Intl.NumberFormat("en-US", {
 	notation: "compact",
@@ -18,7 +19,7 @@ export const useDataStore = defineStore('data', () => {
 				: layers.value.reduce(
 						(sum, layer) =>
 							layer.pieces.length > 0
-								? sum * layer.pieces.length * (Number(layer.probability) / 100)
+								? sum * layer.pieces.length
 								: sum,
 						1
 					);
@@ -27,13 +28,33 @@ export const useDataStore = defineStore('data', () => {
 
 	const combinationCountAbbr = computed( () => numFormatter.format( combinationCount.value ).toLowerCase() );
 
-	const key = computed( () => {
-		const parts = layers.value.map( layer => {
-			return layer.probability + ':' + layer.pieces.length
-		} );
-		parts.sort();
-		return parts.join('/');
-	} );
+	function generateKeyFromLayers() {
+		let lArr = [...layers.value];
+		lArr.sort( (a,b) => a.id.localeCompare( b.id ) );
+		return lArr.map( layer => {
+			return [
+				layer.required ? 1 : 0,
+				layer.limit || 'x',
+				layer.tags.join('|'),
+				layer.blockedTags.join('|'),
+				layer.pieces.map( piece => {
+					return [
+						piece.limit || 'x',
+						piece.tags.join('|'),
+						piece.blockedTags.join('|'),
+					].join(':');
+				}).join(':'),
+			].join(":");
+		} ).join( '/' );
+	}
+	const key = ref(generateKeyFromLayers());
+	const keyTimer = ref(0);
+	watch(layers, () => {
+		clearTimeout(keyTimer.value);
+		keyTimer.value = setTimeout( ()=> {
+			key.value = generateKeyFromLayers();
+		}, 1000 );
+	});
 
 	const upload = async ( files: File[] ) => {
 		const layerData: { [layername: string]: Piece[] } = {};
@@ -67,13 +88,13 @@ export const useDataStore = defineStore('data', () => {
 			layerName = layerName[0].toUpperCase() + layerName.substring(1);
 			pieceName = pieceName[0].toUpperCase() + pieceName.substring(1);
 			if (!layerData[layerName]) layerData[layerName] = [];
-			layerData[layerName].push({ name: pieceName, tags:'', ...sources });
+			layerData[layerName].push({ id: uid(), limit:false, name: pieceName, tags:[], blockedTags:[], ...sources });
 			uploading.value.progress = ++i / files.length;
 		}
 		uploading.value = { progress: 0.99, message: 'finalizing...' };
 		let layersArray: Layer[] = [];
 		for (const name in layerData) {
-			layersArray.push({ name, pieces: layerData[name], probability:'100', tags:'' });
+			layersArray.push({ id: uid(), limit:false, required: true, name, pieces: layerData[name], tags:[], blockedTags:[] });
 		}
 		layers.value = layersArray;
 		uploading.value = false;

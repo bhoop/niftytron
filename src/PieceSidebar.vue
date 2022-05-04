@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BookmarkIcon, PhotographIcon, SparklesIcon } from "@heroicons/vue/outline";
+import { BanIcon, BookmarkIcon, PhotographIcon, SparklesIcon } from "@heroicons/vue/outline";
 import { computed, ref } from "vue";
 import type { Piece } from "./state";
 import { useDataStore } from "./state";
@@ -42,10 +42,19 @@ const bgimage = computed( () => props.piece.src
 		</div>
 
 		<TagField v-model="piece.tags" class="mt-3"/>
-<!-- <label
-			class="mt-3 rounded bg-neutral-200 border border-neutral-400 p-px flex items-top cursor-pointer"
-			title="Click to replace image"
-		> -->
+
+		<div class="mt-3 h-8 relative rounded bg-neutral-200 border border-neutral-400 p-px flex items-center mb-3" title="Blocked tags">
+			<BanIcon class="absolute left-1.5 top-[0.25rem-1px] h-5 w-5 text-neutral-400"/>
+			<div class="bg-white rounded absolute top-0 left-8 right-0 h-full flex items-center justify-end text-neutral-400/80 text-xs pointer-events-none pl-1 pr-2">
+				<span class="ml-2">({{ data.combinationCountAbbr }} max)</span>
+			</div>
+			<input type="number" min="1" step="1"
+				v-model="piece.rarity"
+				placeholder="auto"
+				class=" relative bg-transparent w-full py-1 pl-10 pr-2 rounded no-arrows"
+				/>
+		</div>
+
 		<label
 			class="mt-3 rounded bg-neutral-200 border border-neutral-400 p-px flex items-top"
 		>

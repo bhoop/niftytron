@@ -1,24 +1,39 @@
-import type { Layer, Piece, Image, Favorite } from "../state";
+import type { Layer, Piece, Image, Favorite, FavoriteBag } from "../state";
 import { acceptHMRUpdate, defineStore } from "pinia";
 import { useDataStore } from "./data";
 import { computed, ref, unref, watch, watchEffect } from "vue";
+import { useCollectionGenerator } from "./useCollectionGenerator";
+import uid from "../uid";
+import throttle from "../throttle";
 
 export const useCollectionStore = defineStore("collection", () => {
-	const size = ref( 1000 );
+	const size = ref(1000);
 	const data = useDataStore();
-	const regenerationId = ref(0);
-	const finishedRegenerationId = ref(0);
-	const favorites = ref<Favorite[]>([]);
-	const imageset = ref<Map<string, Image>>(new Map() );
-	const regenState = ref<{ layer: Layer }[]>([]);
-	const actualSize = computed( () => Math.min( size.value, data.combinationCount ) );
-	const dataKey = ref('');
-	const generating = ref<false | { progress: number; message: string }>(false);
-	const downloading = ref({ running: false, destination: '', done:0, total:0 });
+	const favorites = ref<FavoriteBag>({});
+	const downloading = ref({
+		running: false,
+		destination: "",
+		done: 0,
+		total: 0,
+	});
+
+	const generator = useCollectionGenerator();
+	const collectionKey = computed( () => {
+		return `${size.value}:${data.key}`;
+	});
+	function regenerate() {
+		generator.regenerate({
+			layers: data.layers,
+			size: Math.min( data.combinationCount, size.value),
+			favorites: favorites.value,
+		});
+	}
+	watch( collectionKey, regenerate );
 
 	const images = computed(() => {
-		let arr = [...imageset.value.values()].slice(0, actualSize.value );
-		if ( arr.length < actualSize.value ) arr = arr.concat( new Array( actualSize.value - arr.length ).fill( null ) );
+		console.log('compute images', generator.images.value.size);
+		let arr = [...generator.images.value.values()].slice(0, size.value );
+		if ( arr.length < size.value ) arr = arr.concat( new Array( size.value - arr.length ).fill( null ) );
 		arr.sort( ( a, b ) => {
 			if ( a === null && b !== null ) return 1;
 			if ( a !== null && b === null ) return -1;
@@ -29,220 +44,107 @@ export const useCollectionStore = defineStore("collection", () => {
 		return arr;
 	});
 
-	const isGenerating = computed( () => regenerationId.value !== finishedRegenerationId.value );
-
-	const regenerate = async () => {
-		regenerationId.value++;
-		console.log("start regeneration #", regenerationId.value);
-		generating.value = { progress: 0.05, message: "preparing to start..." };
-		// generate IDs
-		const maxId = size.value;
-		const ids: number[] = [];
-		for (let i = 1; i <= maxId; i++) {
-			ids.push( i );
-		}
-		for (let i = ids.length - 1; i > 0; i--) {
-			let j = Math.floor(Math.random() * (i + 1));
-			let temp = ids[i];
-			ids[i] = ids[j];
-			ids[j] = temp;
-		}
-		// reset state
-		const currentRegenerationId = regenerationId.value;
-		imageset.value = new Map();
-		regenState.value = data.layers
-			.map((layer) => ({ layer }))
-			.filter((r) => r.layer.pieces.length > 0);
-
-		// first add all of the favorites
-		const layerLookup: { [key:string]: Layer } = {};
-		const pieceLookup: { [key:string]: Piece } = {};
-		for ( const l of data.layers ) {
-			layerLookup[ l.name ] = l;
-			for ( const p of l.pieces ) pieceLookup[ `${l.name}:${p.name}`] = p;
-		}
-		for ( const fav of favorites.value ) {
-			const map: Image["attributes"] = new Map();
-			for ( const layerName in fav ) {
-				const layer = layerLookup[ layerName ];
-				const piece = pieceLookup[ layerName+':'+fav[layerName] ];
-				if ( layer && piece ) {
-					map.set( layer, piece );
-				}
-			}
-			const image = makeImage( ids.pop()!, map, fav );
-			imageset.value.set( image.key, image );
-			generating.value.progress = imageset.value.size / maxId;
-		}
-		// start randomly generating images
-		while (
-			regenerationId.value === currentRegenerationId &&
-			imageset.value.size < maxId
-		) {
-			await new Promise((resolve) => {
-				// generate 100 images at a time so we don't lock up the browser
-				let blockers: Set<string> = new Set();
-				for (let i = 0; i < 100; i++) {
-					// add an attribute for each layer
-					let attributes: Map<Layer, Piece> = new Map();
-					for (let rs of regenState.value) {
-						// check to see if this layer should be used
-						const probability = Number( rs.layer.probability );
-						// if probability is out, skip this layer.
-						if ( probability < 100 && 100 * Math.random() > probability ) continue;
-						let piece =
-							rs.layer.pieces[
-								Math.floor(Math.random() * rs.layer.pieces.length)
-							];
-						attributes.set(rs.layer, piece);
-					}
-					const image = makeImage( ids.pop()!, attributes, false );
-					imageset.value.set( image.key, image );
-					if ( generating.value ) generating.value.progress = imageset.value.size / maxId;
-				}
-				setTimeout(resolve, 0);
-			});
-		}
-		finishedRegenerationId.value = currentRegenerationId;
-		generating.value = false;
-		if (regenerationId.value === currentRegenerationId) {
-			console.log("done!");
-		} else {
-			console.log("aborted regeneration!");
-		}
-	}
-
-	// when the collection size changes, regenerate the collection
-	watch(size, (newSize, oldSize) => {
-		let actualNewSize = newSize ?? data.combinationCount;
-		if (oldSize === null || newSize === null || actualNewSize > oldSize) {
-			// if `newSize` is larger than our current size, regenerate!
-			regenerate();
-		}
-	});
-
-	// when the data sources change, regenerate the collection
-	watchEffect( () => {
-		if ( dataKey.value !== data.key ) {
-			console.log('regenerating because data key changed', dataKey.value, '=>', data.key );
-			dataKey.value = data.key;
-			regenerate();
-		}
-	} );
-
-
-	function changeSize(newSize: number ) {
-		const num = Number( newSize );
-		if ( num > 0 ) {
+	function changeSize(newSize: number) {
+		const num = Number(newSize);
+		if (num > 0) {
 			size.value = num;
 		}
 	}
 
-	function getImageKey( attributes: Image["attributes"] ) {
-		let arr: string[] = [];
-		for ( const [ layer, piece ] of attributes ) {
-			if ( piece?.name ) arr.push( layer.name+':'+piece.name );
-		}
-		arr.sort( (a,b) => a.localeCompare(b) );
-		return arr.join('/');
-	}
-
-	function makeImage( id: number, attributes: Image["attributes"], favorite: Favorite|false ): Image {
-		const key = getImageKey( attributes );
-		const search: string[] = [];
-		for ( const [ layer, piece ] of attributes ) {
-			search.push( `layer:${layer.name}` );
-			if ( piece ) search.push( `piece:${piece.name}` );
-		}
-
-		return {
-			id,
-			key,
-			attributes,
-			search: search.join(' '),
-			favorite,
-		};
-	}
-
-	function getImageFavorite( attributes: Image["attributes"] ) {
-		const obj: Record<string, string> = {};
+	function getImageFavorite(attributes: Image["attributes"]) {
+		const arr: string[] = [];
 		for (const [layer, piece] of attributes) {
-			if (piece) obj[layer.name] = piece.name;
+			if (piece) arr.push(piece.id);
 		}
-		return obj;
+		return arr;
 	}
 
-	function toggleImageFavorite( image: Image ) {
-		if ( image.favorite ) {
-			favorites.value = favorites.value.filter( fav => image.favorite !== fav );
+	function toggleImageFavorite(image: Image) {
+		if (image.favorite) {
+			delete favorites.value[image.favorite];
 			image.favorite = false;
 		} else {
-			const obj = getImageFavorite( image.attributes );
-			favorites.value.push( obj )
-			image.favorite = obj;
+			const key = uid();
+			const obj = getImageFavorite(image.attributes);
+			favorites.value[key] = obj;
+			image.favorite = key;
 		}
 	}
 
 	function updateFavorite(image: Image, layer: Layer, piece: Piece | null) {
-		// remove the old key
-		imageset.value.delete(image.key);
-		favorites.value = favorites.value.filter( fav => image.favorite !== fav );
-		// add the new image
-		const map: Image["attributes"] = new Map(image.attributes);
-		if (piece === null) map.delete(layer);
-		else map.set(layer, piece);
-		const favoriteObject = getImageFavorite( map );
-		const newImage = makeImage(image.id, map, favoriteObject);
-		imageset.value.set( newImage.key, newImage );
-		favorites.value.push( favoriteObject );
+		// // remove the old key
+		// imageset.value.delete(image.key);
+		// favorites.value = favorites.value.filter( fav => image.favorite !== fav );
+		// // add the new image
+		// const map: Image["attributes"] = new Map(image.attributes);
+		// if (piece === null) map.delete(layer);
+		// else map.set(layer, piece);
+		// const favoriteObject = getImageFavorite( map );
+		// const newImage = makeImage(image.id, map, favoriteObject);
+		// imageset.value.set( newImage.key, newImage );
+		// favorites.value.push( favoriteObject );
 	}
 
 	async function download() {
 		const imgdataCache = new Map();
 		const imgdata = async (layer: Layer, piece: Piece) => {
 			const key = `${layer.name}//${piece.name}`;
-			if ( ! imgdataCache.has( key ) ) {
+			if (!imgdataCache.has(key)) {
 				const image = new Image();
-				await new Promise( resolve => {
-					image.onload = () => resolve( image );
+				await new Promise((resolve) => {
+					image.onload = () => resolve(image);
 					image.src = piece.src;
-				} );
+				});
 				imgdataCache.set(key, image);
 			}
-			return imgdataCache.get( key );
+			return imgdataCache.get(key);
 		};
 
 		try {
-			const dirHandle = await ( window as any ).showDirectoryPicker({
+			const dirHandle = await (window as any).showDirectoryPicker({
 				writeable: true,
 			});
 			console.log("gotDirHandle", dirHandle);
-			downloading.value = { running: true, destination: dirHandle.name, done:0, total: unref( size ) };
+			downloading.value = {
+				running: true,
+				destination: dirHandle.name,
+				done: 0,
+				total: unref(size),
+			};
 			let index = 0;
 			let chunkSize = 10;
-			let canvas = document.createElement('canvas');
+			let canvas = document.createElement("canvas");
 			canvas.width = 1000;
 			canvas.height = 1000;
-			let context = canvas.getContext('2d')!;
-			while ( downloading.value.running === true && downloading.value.done < size.value ) {
+			let context = canvas.getContext("2d")!;
+			while (
+				downloading.value.running === true &&
+				downloading.value.done < size.value
+			) {
 				// generate images in chunks so we don't lock up the main thread
-				for ( let i = 0; i < chunkSize; i++ ) {
+				for (let i = 0; i < chunkSize; i++) {
 					const image = images.value[index + i];
 					// clear the canvas
 					context.clearRect(0, 0, canvas.width, canvas.height);
 					// stack layers onto the canvas
-					for ( const layer of data.layers ) {
-						const piece = image.attributes.get( layer );
-						if ( ! piece ) continue;
-						const img = await imgdata( layer, piece );
-						context.drawImage( img, 0, 0, 1000, 1000 );
+					for (const layer of data.layers) {
+						const piece = image.attributes.get(layer);
+						if (!piece) continue;
+						const img = await imgdata(layer, piece);
+						context.drawImage(img, 0, 0, 1000, 1000);
 					}
 					// write the image to a file
-					const filename = image.id + '.png';
-					const fileHandle = await dirHandle.getFileHandle( filename, { create: true } );
-					const writable = await fileHandle.createWritable({keepExistingData:false});
-					const canvasBlob = await new Promise( resolve => canvas.toBlob( resolve, 'image/png', 1 ) );
-					await writable.write( canvasBlob );
+					const filename = image.number + ".png";
+					const fileHandle = await dirHandle.getFileHandle(filename, {
+						create: true,
+					});
+					const writable = await fileHandle.createWritable({
+						keepExistingData: false,
+					});
+					const canvasBlob = await new Promise((resolve) =>
+						canvas.toBlob(resolve, "image/png", 1)
+					);
+					await writable.write(canvasBlob);
 					await writable.close();
 
 					downloading.value.done++;
@@ -250,8 +152,8 @@ export const useCollectionStore = defineStore("collection", () => {
 				index += chunkSize;
 			}
 			downloading.value.running = false;
-		} catch( err: any ) {
-			if ( err instanceof DOMException && err.name === 'AbortError' ) {
+		} catch (err: any) {
+			if (err instanceof DOMException && err.name === "AbortError") {
 				// user canceled directory selection
 			} else {
 				alert("An error occured (see console)");
@@ -264,7 +166,19 @@ export const useCollectionStore = defineStore("collection", () => {
 		downloading.value.running = false;
 	}
 
-	return { images, size, isGenerating, generating, regenerate, changeSize, getImageKey, toggleImageFavorite, updateFavorite, download, downloading, stopDownload };
+	return {
+		images,
+		size,
+		isGenerating: generator.status.value.running,
+		generating: generator.status,
+		regenerate,
+		changeSize,
+		toggleImageFavorite,
+		updateFavorite,
+		download,
+		downloading,
+		stopDownload,
+	};
 });
 
 if (import.meta.hot) {
