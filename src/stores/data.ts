@@ -99,7 +99,7 @@ export const useDataStore = defineStore('data', () => {
 				layer = layers.value.find( l => l.name.toLowerCase() === layerName.toLowerCase() );
 				// if we didn't find an existing matching one, create one
 				if ( ! layer ) {
-					layer = { id: uid(), limit: false, required: false, name: layerName, pieces: [], tags: [], blockedTags: [] };
+					layer = { id: uid(), limit: false, required: false, name: layerName, pieces: [], tags: [], blockedTags: [], excludeFromKey: false };
 					layers.value.push( layer );
 				}
 			}

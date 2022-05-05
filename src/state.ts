@@ -9,6 +9,7 @@ export interface Layer {
 	required: boolean;
 	tags: string[];
 	blockedTags: string[];
+	excludeFromKey: boolean;
 }
 
 export interface Piece {

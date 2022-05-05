@@ -124,7 +124,7 @@ onmessage = function(e) {
 
 		if (valid) {
 			// generate a unique hash based on the attributes in the image
-			const keys = [...attributes.entries()].map(
+			const keys = [...attributes.entries()].filter( ([layer]) => !layer.excludeFromKey).map(
 				([layer, piece]) => piece.id
 			);
 			keys.sort();

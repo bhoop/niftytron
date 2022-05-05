@@ -32,6 +32,7 @@ function updateRequired( isRequired: boolean ) {
 <div class="text-sm flex flex-col gap-2">
 	<SidebarField label="Name" type="text" v-model="layer.name"/>
 	<SidebarField label="Require in all images" type="checkbox" :model-value="layer.required" @update:model-value="updateRequired"/>
+	<SidebarField label="Exclude from uniqueness" type="checkbox" v-model="layer.excludeFromKey"/>
 	<SidebarField v-if="!layer.required" label="Appearance limit" type="limit" v-model="layer.limit" placeholder="unlimited"/>
 	<SidebarField v-if="!layer.required" label="Tags" type="tags" v-model="layer.tags"/>
 	<SidebarField label="Blocked tags" type="tags" v-model="layer.blockedTags"/>

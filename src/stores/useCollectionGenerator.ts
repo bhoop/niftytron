@@ -23,8 +23,9 @@ export interface WorkerLayer {
 	tags?: string[];
 	blockedTags?: string[];
 	required?: true;
+	excludeFromKey?: true;
 	limit?: number;
-	pieces: WorkerPiece[]
+	pieces: WorkerPiece[];
 };
 export interface WorkerPiece {
 	id: string;
@@ -67,6 +68,7 @@ export function useCollectionGenerator() {
 		for ( const layer of args.layers ) {
 			const wlayer: WorkerLayer = { id: layer.id, pieces: [] };
 			if (layer.required) wlayer.required = true;
+			if (layer.excludeFromKey) wlayer.excludeFromKey = true;
 			if ( layer.tags.length > 0 ) wlayer.tags = layer.tags;
 			if ( layer.blockedTags.length > 0 ) wlayer.blockedTags = layer.blockedTags;
 			if ( layer.limit !== false ) wlayer.limit = layer.limit;
