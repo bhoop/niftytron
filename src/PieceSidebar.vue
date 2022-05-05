@@ -34,7 +34,7 @@ const renderLayer = ref('');
 <template>
 <div class="text-sm flex flex-col gap-2">
 	<SidebarField label="Name" type="text" v-model="piece.name"/>
-	<SidebarField label="Render layer" type="select" :select-value="piece.renderLayer?.name ?? layer.name" :model-value="piece.renderLayer?.id ?? ''" @update:model-value="updateRenderLayer" :placeholder="layer.name">
+	<SidebarField label="Render layer" type="select" :select-value="piece.renderLayer?.name ?? `Default`" :model-value="piece.renderLayer?.id ?? ''" @update:model-value="updateRenderLayer" :placeholder="layer.name">
 		<option v-for="rlayer in reverseLayers" :value="rlayer.id === layer.id ? '' : rlayer.id" class="text-right text-xs pl-3" :class="[rlayer === layer ? 'font-bold' : '']">{{ rlayer.name }}</option>
 	</SidebarField>
 	<SidebarField label="Tags" type="tags" v-model="piece.tags"/>
