@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
 import { useDataStore, useCollectionStore, type Piece, type Layer, type Image } from './state';
-import { SearchIcon, HashtagIcon, RefreshIcon, XIcon } from '@heroicons/vue/outline';
-import Preview from './Preview.vue';
 import { computed } from '@vue/reactivity';
-import AppNavigation from './AppNavigation.vue';
 import ImageModal from './ImageModal.vue';
-import AppHeader from './AppHeader.vue';
 import Collection from './Collection.vue';
 import UploadProgress from './UploadProgress.vue';
 import useAppNavigation from './app-navigation';
