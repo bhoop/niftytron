@@ -103,16 +103,15 @@ export const useCollectionStore = defineStore("collection", () => {
 	async function download() {
 		const imgdataCache = new Map();
 		const imgdata = async (layer: Layer, piece: Piece) => {
-			const key = `${layer.name}//${piece.name}`;
-			if (!imgdataCache.has(key)) {
+			if (!imgdataCache.has(piece.id)) {
 				const image = new Image();
 				await new Promise((resolve) => {
 					image.onload = () => resolve(image);
 					image.src = piece.src;
 				});
-				imgdataCache.set(key, image);
+				imgdataCache.set(piece.id, image);
 			}
-			return imgdataCache.get(key);
+			return imgdataCache.get(piece.id);
 		};
 
 		try {
@@ -142,11 +141,28 @@ export const useCollectionStore = defineStore("collection", () => {
 					// clear the canvas
 					context.clearRect(0, 0, canvas.width, canvas.height);
 					// stack layers onto the canvas
+					const customRenderLayer: Map<Layer, [Layer,Piece][]> = new Map();
+					for (const [layer,piece] of image.attributes) {
+						if (!piece || !piece.renderLayer) continue;
+						if (!customRenderLayer.has(piece.renderLayer))
+							customRenderLayer.set(piece.renderLayer, [[layer,piece]]);
+						else customRenderLayer.get(piece.renderLayer)!.push([layer,piece]);
+					}
 					for (const layer of data.layers) {
-						const piece = image.attributes.get(layer);
-						if (!piece) continue;
-						const img = await imgdata(layer, piece);
-						context.drawImage(img, 0, 0, 1000, 1000);
+						if (image.attributes.has(layer)) {
+							context.drawImage(
+								await imgdata(layer, image.attributes.get(layer)!),
+								0, 0, 1000, 1000
+							);
+						}
+						if (customRenderLayer.has(layer)) {
+							for (const [layer2,piece] of customRenderLayer.get(layer)!) {
+								context.drawImage(
+									await imgdata(layer2, piece),
+									0, 0, 1000, 1000
+								);
+							}
+						}
 					}
 					// write the image to a file
 					const filename = image.number + ".png";

@@ -19,6 +19,7 @@ export interface Piece {
 	blockedTags: string[];
 	src: string;
 	preview: string;
+	renderLayer?: Layer;
 }
 
 export interface Attribute {

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, useAttrs } from 'vue'
+import { SelectorIcon } from "@heroicons/vue/solid";
 
-const props = defineProps<{label:string, type:'text'|'number'|'checkbox'|'tags'|'limit', modelValue:any}>();
+const props = defineProps<{label:string, type:'text'|'number'|'checkbox'|'tags'|'limit'|'select', modelValue:any, selectValue?:string|null}>();
 const emit = defineEmits<{(e:'update:modelValue', value:any): void}>();
 
 const inputType = computed( () => {
@@ -42,6 +43,10 @@ function onInput(newValue: any) {
 		<div class="absolute left-2 right-1 pointer-events-none flex items-center">
 			<div class="py-1 font-semibold">{{ label }}</div>
 			<div class="h-0 flex-1 border-t border-neutral-400/40 border-dotted relative top-2 mx-2"/>
+			<div v-if="type === 'select'" class="absolute right-2 text-xs font-semibold flex items-center">
+				<div :class="[modelValue ? 'text-orange-600' : 'text-neutral-400']">{{ selectValue }}</div>
+				<SelectorIcon class="w-3 h-3 ml-0.5"/>
+			</div>
 		</div>
 		<input
 			v-if="type === 'checkbox'"
@@ -51,7 +56,9 @@ function onInput(newValue: any) {
 			@change="$emit('update:modelValue', ($event.target as HTMLInputElement).checked)"
 			class="ml-auto my-1"
 			/>
-		
+		<select v-else-if="type === 'select'" class="ml-auto mr-3 w-auto opacity-0" :value="modelValue" @change="onInput(($event.target as HTMLSelectElement).value)">
+			<slot/>
+		</select>
 		<input
 			v-else
 			:type="inputType"

@@ -5,7 +5,6 @@ import { PlusIcon } from '@heroicons/vue/outline';
 import { TagIcon, BanIcon, HashtagIcon } from '@heroicons/vue/solid';
 import useAppNavigation from "./app-navigation";
 import { computed, ref } from "vue";
-import TagField from "./TagField.vue";
 import SidebarField from "./SidebarField.vue";
 import SidebarIcon from "./SidebarIcon.vue";
 import CountLabel from "./CountLabel.vue";

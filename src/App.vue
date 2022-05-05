@@ -51,7 +51,7 @@ let visibleImages = computed(() => {
 	</template>
 	<template v-if="nav.activePiece">
 		<SidebarHeading :open="nav.focus === 'piece'" class="sticky top-10">Piece: {{ nav.activePiece.name }}</SidebarHeading>
-		<PieceSidebar v-if="nav.focus === 'piece'" :piece="nav.activePiece"/>
+		<PieceSidebar v-if="nav.focus === 'piece'" :layer="nav.activeLayer!" :piece="nav.activePiece"/>
 	</template>
 	<!-- <CollectionSidebar v-if="nav.focus.value === 'collection'"/>
 	<a v-else>Collection</a> -->

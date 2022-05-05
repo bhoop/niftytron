@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { BanIcon, BookmarkIcon, PhotographIcon, SparklesIcon } from "@heroicons/vue/outline";
 import { computed, ref } from "vue";
-import type { Piece } from "./state";
+import type { Piece, Layer } from "./state";
 import { useDataStore } from "./state";
-import TagField from "./TagField.vue";
 import SidebarField from "./SidebarField.vue";
 
-let props = defineProps<{ piece: Piece }>();
+let props = defineProps<{ layer: Layer, piece: Piece }>();
 let data = useDataStore();
 let fileInput = ref<HTMLInputElement>();
 
@@ -14,10 +13,30 @@ const bgimage = computed( () => props.piece.src
 	? `background-image:url('${props.piece.src}')`
 	: ""
 );
+
+function updateRenderLayer( newLayerId: string ) {
+	if ( newLayerId === props.layer.id ) {
+		delete props.piece.renderLayer;
+	} else {
+		props.piece.renderLayer = data.layers.find( l => l.id === newLayerId );
+		if ( ! props.piece.renderLayer ) delete props.piece.renderLayer;
+	}
+}
+
+const reverseLayers = computed( () => {
+	let reverse = [...data.layers ];
+	reverse.reverse();
+	return reverse;
+} );
+
+const renderLayer = ref('');
 </script>
 <template>
 <div class="text-sm flex flex-col gap-2">
 	<SidebarField label="Name" type="text" v-model="piece.name"/>
+	<SidebarField label="Render layer" type="select" :select-value="piece.renderLayer?.name ?? layer.name" :model-value="piece.renderLayer?.id ?? ''" @update:model-value="updateRenderLayer" :placeholder="layer.name">
+		<option v-for="rlayer in reverseLayers" :value="rlayer.id === layer.id ? '' : rlayer.id" class="text-right text-xs pl-3" :class="[rlayer === layer ? 'font-bold' : '']">{{ rlayer.name }}</option>
+	</SidebarField>
 	<SidebarField label="Tags" type="tags" v-model="piece.tags"/>
 	<SidebarField label="Blocked tags" type="tags" v-model="piece.blockedTags"/>
 	<SidebarField label="Appearance limit" type="limit" v-model="piece.limit" placeholder="unlimited"/>

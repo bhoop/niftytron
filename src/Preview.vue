@@ -6,17 +6,25 @@ const data  = useDataStore();
 const collection = useCollectionStore();
 
 const layers = computed( () => {
+	const renderLayers: Map<Layer, {piece:Piece, layer:Layer}[]> = new Map();
+	for ( const [ layer, piece ] of props.image.attributes ) {
+		if ( ! piece || ! piece.renderLayer ) continue;
+		if ( ! renderLayers.has( piece.renderLayer ) ) renderLayers.set( piece.renderLayer, [ { piece, layer } ] );
+		else renderLayers.get( piece.renderLayer )!.push( { piece, layer } );
+	}
 	const arr: Attribute[] = [];
 	for( const layer of data.layers ) {
-		const piece = props.image.attributes.get( layer );
-		if ( piece ) arr.push( { layer, piece } );
+		if( props.image.attributes.has( layer ) ) {
+			arr.push( { layer, piece: props.image.attributes.get( layer )! } );
+		}
+		if ( renderLayers.has( layer ) ) {
+			for ( const attr of renderLayers.get( layer )! ) {
+				arr.push( attr );
+			}
+		}
 	}
 	return arr;
 } );
-
-// const styleBgImage = computed( () => {
-// 	return unref(layers).map( attr => `url('${attr.piece.src}')` ).join(',');
-// } );
 
 </script>
 <template>
