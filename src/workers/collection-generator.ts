@@ -105,6 +105,10 @@ onmessage = function(e) {
 						if (includesBlockedTags(piece.piece.tags, blocks))
 							continue;
 						attributes.set(source.layer, piece.piece);
+						if (source.layer.blockedTags)
+							for (const t of source.layer.blockedTags) blocks.add(t);
+						if (piece.piece.blockedTags)
+							for (const t of piece.piece.blockedTags) blocks.add(t);
 					}
 					// if no piece fit and this is a required layer, stop creating this image and start over
 					if (source.layer.required && !attributes.has(source.layer))
