@@ -72,6 +72,13 @@ export const useCollectionStore = defineStore("collection", () => {
 	}
 
 	function updateFavorite(image: Image, layer: Layer, piece: Piece | null) {
+		// update
+		if ( piece === null ) {
+			image.attributes.delete( layer );
+		} else {
+			image.attributes.set( layer, piece );
+		}
+		favorites.value[ image.favorite as string ] = getImageFavorite( image.attributes );
 		// // remove the old key
 		// imageset.value.delete(image.key);
 		// favorites.value = favorites.value.filter( fav => image.favorite !== fav );

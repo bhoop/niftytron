@@ -26,7 +26,7 @@ let currentImageId = ref<string|null>(null);
 let search = ref<string>('');
 let sizeInput = ref('');
 
-let currentImage = computed(() => currentImageId.value === null ? null : collection.images.find( img => img.id === currentImageId.value ));
+let currentImage = computed(() => currentImageId.value === null ? null : collection.images.find( img => img?.id === currentImageId.value ));
 
 let visibleImages = computed(() => {
 	let output = collection.images;

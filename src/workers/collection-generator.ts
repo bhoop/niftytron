@@ -44,17 +44,22 @@ onmessage = function(e) {
 	shuffle(limited);
 
 	while (idlist.length > 0) {
+		console.log( `there are ${favorites.length} favorites` );
 		const attributes: Map< WorkerLayer, WorkerPiece > = new Map();
 		let valid: boolean = false;
 		let favorite: string | false = false;
 		// if there are favorite images, process them first
 		// favorite images ignore all tag blocks and/or limits
 		if (favorites.length !== 0) {
+			valid = true;
 			const [favId, favAttributes]: [string, string[]] = favorites.shift()!;
 			favorite = favId;
-			for (const pieceId in favAttributes) {
-				if ( ! pieceLookup[ pieceId ] ) continue;
+			for (const pieceId of favAttributes) {
+				if ( ! pieceLookup[ pieceId ] ) {
+					continue;
+				}
 				const { layer, piece } = pieceLookup[ pieceId ];
+				console.log('found', layer, piece);
 				attributes.set( layer, piece );
 			}
 		} else {
@@ -157,6 +162,7 @@ onmessage = function(e) {
 				favorite,
 				attributes: [...attributes.values()].map(v => v.id)
 			};
+			if ( favorite ) console.log( 'added favorited image' );
 			existing[image.key] = true;
 			done.push( image );
 
