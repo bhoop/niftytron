@@ -32,6 +32,9 @@ function onInput(newValue: any) {
 	else if ( props.type === 'limit' && newValue === '' ) {
 		emit( 'update:modelValue', false );
 	}
+	else if ( props.type === 'number' ) {
+		emit( 'update:modelValue', Number( newValue ) );
+	}
 	else {
 		emit( 'update:modelValue', newValue );
 	}
