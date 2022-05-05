@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
 import { useDataStore, useCollectionStore, type Piece, type Layer, type Image } from './state';
+import { ExclamationIcon } from '@heroicons/vue/outline';
 import { computed } from '@vue/reactivity';
 import ImageModal from './ImageModal.vue';
 import Collection from './Collection.vue';
@@ -61,6 +62,10 @@ let visibleImages = computed(() => {
 		<!-- Spacer -->
 		<div class="flex-1">
 			<div v-if="collection.generating.running" class="text-orange-500 animate-pulse">Generating collection... {{ Math.floor(collection.generating.progress * 100 ) }}%</div>
+			<div v-if="!collection.generating.running && collection.images.length < collection.size" class="text-red-500 font-semibold flex items-center">
+				<ExclamationIcon class="w-6 h-6 mr-2"/>
+				Only able to create {{ collection.images.length.toLocaleString() }} of {{ collection.size.toLocaleString() }} images
+			</div>
 		</div>
 		<!-- search box -->
 		<!-- <div class="h-8 relative rounded bg-neutral-200 border border-neutral-400 flex items-center flex-0 w-72" title="Size of collection">
