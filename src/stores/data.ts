@@ -56,8 +56,12 @@ export const useDataStore = defineStore('data', () => {
 		}, 1000 );
 	});
 
-	const upload = async ( files: File[] ) => {
-		const layerData: { [layername: string]: Piece[] } = {};
+	const upload = async ( input: File[]|FileList|null, forceLayer?: Layer, forcePiece?: Piece ) => {
+		let files: File[] = [];
+		if ( input === null ) return;
+		else if ( input instanceof FileList ) files = Array.from( input );
+		else files = input;
+
 		let i = 0;
 		uploading.value = { progress: 0.05, message: 'preparing to start...' };
 		for (const file of files) {
@@ -87,16 +91,30 @@ export const useDataStore = defineStore('data', () => {
 				.split(/_+\s*/, 2);
 			layerName = layerName[0].toUpperCase() + layerName.substring(1);
 			pieceName = pieceName[0].toUpperCase() + pieceName.substring(1);
-			if (!layerData[layerName]) layerData[layerName] = [];
-			layerData[layerName].push({ id: uid(), limit:false, name: pieceName, tags:[], blockedTags:[], ...sources });
+			// add a new layer or update an existing layer
+			let layer: Layer | undefined = forceLayer;
+			if ( ! layer ) {
+				// we aren't forcing a layer, so check to see if there's an existing one with the same name
+				layer = layers.value.find( l => l.name.toLowerCase() === layerName.toLowerCase() );
+				// if we didn't find an existing matching one, create one
+				if ( ! layer ) {
+					layer = { id: uid(), limit: false, required: true, name: layerName, pieces: [], tags: [], blockedTags: [] };
+					layers.value.push( layer );
+				}
+			}
+			// add a new piece or update an existing piece
+			let piece: Piece | undefined = forcePiece;
+			if ( ! piece ) {
+				// we aren't forcing a piece, so check to see if there's an existing one with the same name
+				piece = layer.pieces.find( p => p.name.toLowerCase() === pieceName.toLowerCase() );
+				// if we didn't find an existing piece, create a new one
+				if ( ! piece ) {
+					layer.pieces.push( { id: uid(), limit: false, name: pieceName, tags: [], blockedTags: [], ...sources } );
+				}
+			}
+			// update progress
 			uploading.value.progress = ++i / files.length;
 		}
-		uploading.value = { progress: 0.99, message: 'finalizing...' };
-		let layersArray: Layer[] = [];
-		for (const name in layerData) {
-			layersArray.push({ id: uid(), limit:false, required: true, name, pieces: layerData[name], tags:[], blockedTags:[] });
-		}
-		layers.value = layersArray;
 		uploading.value = false;
 	}
 

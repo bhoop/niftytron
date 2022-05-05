@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Layer } from "./state";
+import { useDataStore } from './state';
 import { PlusIcon } from '@heroicons/vue/outline';
 import { TagIcon, HashtagIcon } from '@heroicons/vue/solid';
 import useAppNavigation from "./app-navigation";
@@ -7,8 +8,10 @@ import { computed, ref } from "vue";
 import TagField from "./TagField.vue";
 import SidebarField from "./SidebarField.vue";
 import SidebarIcon from "./SidebarIcon.vue";
+
 const props = defineProps<{ layer: Layer }>();
 
+const data = useDataStore();
 const nav = useAppNavigation();
 const piecesInDisplayOrder = computed(() => {
 	let arr = [...props.layer.pieces];
@@ -45,7 +48,7 @@ const piecesInDisplayOrder = computed(() => {
 	</div>
 	<div class="flex">
 		<label class="mx-auto flex gap-2 items-center relative p-1 rounded-lg bg-orange-500 text-orange-900 cursor-pointer">
-			<input type="file" class="absolute hidden" multiple accept="image/pdf" @change="event => onSelectImages( ( event.target as HTMLInputElement).files )"/>
+			<input type="file" class="absolute hidden" multiple accept="image/pdf" @change="event => data.upload( ( event.target as HTMLInputElement).files, layer )"/>
 			<PlusIcon class="h-4 w-4"/>
 			add images
 		</label>

@@ -77,7 +77,7 @@ function onClickImage( image: Image ) {
 <template>
 	<div class="p-5 relative">
 		<div
-			class="w-full absolute top-0 left-0 h-screen pointer-events-none"
+			class="w-full absolute top-0 bottom-0 left-0 pointer-events-none"
 			ref="widthRuler"
 		/>
 		<div :style="[`min-height:calc(15rem*${container.rows})`]">

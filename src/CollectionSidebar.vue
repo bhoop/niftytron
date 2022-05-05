@@ -6,6 +6,7 @@ import { computed, ref } from 'vue';
 import { PlusIcon, CollectionIcon } from '@heroicons/vue/outline';
 import { TagIcon, CheckCircleIcon, ChartPieIcon, HashtagIcon, ExclamationCircleIcon } from '@heroicons/vue/solid';
 import SidebarIcon from './SidebarIcon.vue';
+import SidebarField from './SidebarField.vue';
 
 const collection = useCollectionStore();
 
@@ -24,21 +25,10 @@ function sortLayers( newSortOrder: Layer[] ) {
 	data.layers = reverse( newSortOrder );
 }
 
-async function onSelectImages( files: FileList | null ) {
-	if ( ! files ) return;
-	await data.upload( Array.from( files ) );
-}
-
 </script>
 <template>
 	<div class="text-sm">
-		<div class="flex items-center pl-1 pr-2 relative">
-			<div class="absolute left-2 right-1 pointer-events-none flex items-center">
-				<div class="py-1 font-semibold">Number of images</div>
-				<div class="h-0 flex-1 border-t border-neutral-400/40 border-dotted relative top-2 mx-2"/>
-			</div>
-			<input v-model="collection.size" type="number" class="w-full text-xs p-1 no-arrows bg-transparent text-orange-600 font-semibold text-right"/>
-		</div>
+		<SidebarField label="Number of images" type="number" min="1" step="1" v-model.lazy="collection.size"/>
 
 
 		<div class="py-1 px-2 font-semibold">Layers</div>
@@ -64,7 +54,7 @@ async function onSelectImages( files: FileList | null ) {
 		</SlickList>
 		<div class="flex">
 			<label class="mx-auto flex gap-2 items-center relative p-1 rounded-lg bg-orange-500 text-orange-900 cursor-pointer">
-				<input type="file" class="absolute hidden" multiple accept="image/pdf" @change="event => onSelectImages( ( event.target as HTMLInputElement).files )"/>
+				<input type="file" class="absolute hidden" multiple accept="image/pdf" @change="event => data.upload( ( event.target as HTMLInputElement).files )"/>
 				<PlusIcon class="h-4 w-4"/>
 				add images
 			</label>

@@ -4,7 +4,6 @@ import { useDataStore } from "./data";
 import { computed, ref, unref, watch, watchEffect } from "vue";
 import { useCollectionGenerator } from "./useCollectionGenerator";
 import uid from "../uid";
-import throttle from "../throttle";
 
 export const useCollectionStore = defineStore("collection", () => {
 	const size = ref(1000);
@@ -32,8 +31,10 @@ export const useCollectionStore = defineStore("collection", () => {
 
 	const images = computed(() => {
 		console.log('compute images', generator.images.value.size);
-		let arr = [...generator.images.value.values()].slice(0, size.value );
-		if ( arr.length < size.value ) arr = arr.concat( new Array( size.value - arr.length ).fill( null ) );
+		let arr = [...generator.images.value.values()].slice(
+			0,
+			Math.min(size.value, data.combinationCount)
+		);
 		arr.sort( ( a, b ) => {
 			if ( a === null && b !== null ) return 1;
 			if ( a !== null && b === null ) return -1;
@@ -79,17 +80,6 @@ export const useCollectionStore = defineStore("collection", () => {
 			image.attributes.set( layer, piece );
 		}
 		favorites.value[ image.favorite as string ] = getImageFavorite( image.attributes );
-		// // remove the old key
-		// imageset.value.delete(image.key);
-		// favorites.value = favorites.value.filter( fav => image.favorite !== fav );
-		// // add the new image
-		// const map: Image["attributes"] = new Map(image.attributes);
-		// if (piece === null) map.delete(layer);
-		// else map.set(layer, piece);
-		// const favoriteObject = getImageFavorite( map );
-		// const newImage = makeImage(image.id, map, favoriteObject);
-		// imageset.value.set( newImage.key, newImage );
-		// favorites.value.push( favoriteObject );
 	}
 
 	async function download() {
