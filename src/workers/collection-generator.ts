@@ -62,7 +62,6 @@ onmessage = function(e) {
 					continue;
 				}
 				const { layer, piece } = pieceLookup[ pieceId ];
-				console.log('found', layer, piece);
 				attributes.set( layer, piece );
 			}
 		} else {
@@ -71,9 +70,6 @@ onmessage = function(e) {
 			if (limited.length > 0) {
 				const r = limited.shift()!;
 				attributes.set( r.layer, r.piece );
-				if ( r.piece.limit ) {
-					console.log(`forcing ${r.piece.id} (limit:${r.piece.limit})`)
-				}
 				// move this limited item to the end of the list
 				limited.push( r );
 			}
@@ -120,11 +116,9 @@ onmessage = function(e) {
 				// we successfully generated an image
 				valid = true;
 			} catch (err) {
-				console.warn("failed to create image", err);
+				valid = false;
 			}
 		}
-		console.log('test', valid, failureCount, tryCount);
-		if ( tryCount > 5000 ) break;
 
 		// If we created a valid image, make sure it's unique in the set
 		let key: number = 0;
@@ -142,7 +136,6 @@ onmessage = function(e) {
 		}
 
 		if ( ! valid ) {
-			console.log('failed!');
 			failureCount++;
 			// if we've failed lots of times in a row to generate a valid image, stop
 			if ( failureCount >= size ) break;
@@ -156,7 +149,6 @@ onmessage = function(e) {
 				source.remaining--;
 				const psource = source.pieces.find((p) => p.piece === piece);
 				if (!psource) continue;
-				if( psource.piece.limit ) console.log(`decrementing psource#${psource.piece.id} (count=${psource.count}) (remaining=${psource.remaining})`);
 				psource.count++;
 				psource.remaining--;
 
@@ -182,7 +174,6 @@ onmessage = function(e) {
 				favorite,
 				attributes: [...attributes.values()].map(v => v.id)
 			};
-			if ( favorite ) console.log( 'added favorited image' );
 			existing[image.key] = true;
 			done.push( image );
 
