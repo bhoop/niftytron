@@ -57,10 +57,10 @@ let visibleImages = computed(() => {
 	<a v-else>Collection</a> -->
 </div>
 <div class="min-h-screen bg-neutral-200 ml-80">
-	<div class="p-3 pl-72 z-10 w-full sticky top-0 backdrop-blur-lg bg-neutral-200/80 flex items-center border-b border-neutral-300 transition-all">
+	<div class="p-3 z-10 w-full sticky top-0 backdrop-blur-lg bg-neutral-200/80 flex items-center border-b border-neutral-300 transition-all">
 		<!-- Spacer -->
 		<div class="flex-1">
-			<div v-if="collection.isGenerating" class="text-orange-500 animate-pulse">Generating collection...</div>
+			<div v-if="collection.generating.running" class="text-orange-500 animate-pulse">Generating collection... {{ Math.floor(collection.generating.progress * 100 ) }}%</div>
 		</div>
 		<!-- search box -->
 		<!-- <div class="h-8 relative rounded bg-neutral-200 border border-neutral-400 flex items-center flex-0 w-72" title="Size of collection">

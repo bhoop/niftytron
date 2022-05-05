@@ -50,6 +50,7 @@ export const useDataStore = defineStore('data', () => {
 	const key = ref(generateKeyFromLayers());
 	const keyTimer = ref(0);
 	watch(layers, () => {
+		console.log('layers change!');
 		clearTimeout(keyTimer.value);
 		keyTimer.value = setTimeout( ()=> {
 			key.value = generateKeyFromLayers();

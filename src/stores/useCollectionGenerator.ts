@@ -51,6 +51,8 @@ export function useCollectionGenerator() {
 		if ( worker.value ) {
 			worker.value.terminate();
 		}
+		status.value.running = true;
+		status.value.progress = 0;
 		if ( args.size === 0 ) return;
 		// reset state
 		images.value = new Map();
@@ -109,7 +111,9 @@ export function useCollectionGenerator() {
 				// merge newImages into images
 				images.value = new Map([...images.value, ...newImages]);
 				console.log('wrote', images.value.size, 'images');
+				status.value.progress = images.value.size / args.size;
 				if (images.value.size === args.size) {
+					status.value.running = false;
 					console.log("generation finished.");
 					worker.value!.terminate();
 				}
