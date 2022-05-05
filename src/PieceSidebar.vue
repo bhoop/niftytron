@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BanIcon, BookmarkIcon, PhotographIcon, SparklesIcon } from "@heroicons/vue/outline";
+import { PhotographIcon } from "@heroicons/vue/outline";
 import { computed, ref } from "vue";
 import type { Piece, Layer } from "./state";
 import { useDataStore } from "./state";
@@ -7,7 +7,6 @@ import SidebarField from "./SidebarField.vue";
 
 let props = defineProps<{ layer: Layer, piece: Piece }>();
 let data = useDataStore();
-let fileInput = ref<HTMLInputElement>();
 
 const bgimage = computed( () => props.piece.src
 	? `background-image:url('${props.piece.src}')`
@@ -28,14 +27,12 @@ const reverseLayers = computed( () => {
 	reverse.reverse();
 	return reverse;
 } );
-
-const renderLayer = ref('');
 </script>
 <template>
 <div class="text-sm flex flex-col gap-2">
 	<SidebarField label="Name" type="text" v-model="piece.name"/>
 	<SidebarField label="Render layer" type="select" :select-value="piece.renderLayer?.name ?? `Default`" :model-value="piece.renderLayer?.id ?? ''" @update:model-value="updateRenderLayer" :placeholder="layer.name">
-		<option v-for="rlayer in reverseLayers" :value="rlayer.id === layer.id ? '' : rlayer.id" class="text-right text-xs pl-3" :class="[rlayer === layer ? 'font-bold' : '']">{{ rlayer.name }}</option>
+		<option v-for="rlayer in reverseLayers" :value="rlayer.id === layer.id ? '' : rlayer.id" class="text-right text-xs pl-3" :class="[rlayer === layer ? 'font-bold' : '']">{{ ( rlayer === layer ? '➡️' : '') + rlayer.name }}</option>
 	</SidebarField>
 	<SidebarField label="Tags" type="tags" v-model="piece.tags"/>
 	<SidebarField label="Blocked tags" type="tags" v-model="piece.blockedTags"/>

@@ -56,7 +56,7 @@ function onInput(newValue: any) {
 			@change="$emit('update:modelValue', ($event.target as HTMLInputElement).checked)"
 			class="ml-auto my-1"
 			/>
-		<select v-else-if="type === 'select'" class="ml-auto mr-3 w-auto opacity-0" :value="modelValue" @change="onInput(($event.target as HTMLSelectElement).value)">
+		<select v-else-if="type === 'select'" class="mr-3 w-full opacity-0" :value="modelValue" @change="onInput(($event.target as HTMLSelectElement).value)">
 			<slot/>
 		</select>
 		<input
