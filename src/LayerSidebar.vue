@@ -20,14 +20,21 @@ const piecesInDisplayOrder = computed(() => {
 	return arr;
 });
 
+function updateRequired( isRequired: boolean ) {
+	props.layer.required = isRequired;
+	if ( isRequired ) {
+		props.layer.limit = false;
+	}
+}
+
 </script>
 <template>
 <div class="text-sm flex flex-col gap-2">
 	<SidebarField label="Name" type="text" v-model="layer.name"/>
-	<SidebarField label="Require in all images" type="checkbox" v-model="layer.required"/>
 	<SidebarField label="Tags" type="tags" v-model="layer.tags"/>
 	<SidebarField label="Blocked tags" type="tags" v-model="layer.blockedTags"/>
-	<SidebarField label="Appearance limit" type="limit" v-model="layer.limit" placeholder="unlimited"/>
+	<SidebarField label="Require in all images" type="checkbox" :model-value="layer.required" @update:model-value="updateRequired"/>
+	<SidebarField v-if="!layer.required" label="Appearance limit" type="limit" v-model="layer.limit" placeholder="unlimited"/>
 
 	<div class="px-2 font-semibold">Pieces</div>
 	<div>
