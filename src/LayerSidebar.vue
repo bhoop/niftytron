@@ -2,7 +2,7 @@
 import type { Layer } from "./state";
 import { useDataStore } from './state';
 import { PlusIcon } from '@heroicons/vue/outline';
-import { TagIcon, BanIcon, HashtagIcon } from '@heroicons/vue/solid';
+import { TagIcon, BanIcon, HashtagIcon, SwitchVerticalIcon } from '@heroicons/vue/solid';
 import useAppNavigation from "./app-navigation";
 import { computed, ref } from "vue";
 import SidebarField from "./SidebarField.vue";
@@ -23,6 +23,7 @@ function updateRequired( isRequired: boolean ) {
 	props.layer.required = isRequired;
 	if ( isRequired ) {
 		props.layer.limit = false;
+		props.layer.tags = [];
 	}
 }
 
@@ -30,10 +31,10 @@ function updateRequired( isRequired: boolean ) {
 <template>
 <div class="text-sm flex flex-col gap-2">
 	<SidebarField label="Name" type="text" v-model="layer.name"/>
-	<SidebarField label="Tags" type="tags" v-model="layer.tags"/>
-	<SidebarField label="Blocked tags" type="tags" v-model="layer.blockedTags"/>
 	<SidebarField label="Require in all images" type="checkbox" :model-value="layer.required" @update:model-value="updateRequired"/>
 	<SidebarField v-if="!layer.required" label="Appearance limit" type="limit" v-model="layer.limit" placeholder="unlimited"/>
+	<SidebarField v-if="!layer.required" label="Tags" type="tags" v-model="layer.tags"/>
+	<SidebarField label="Blocked tags" type="tags" v-model="layer.blockedTags"/>
 
 	<div class="px-2 font-semibold">Pieces</div>
 	<div>
@@ -44,7 +45,10 @@ function updateRequired( isRequired: boolean ) {
 			@click="nav.goto( layer, piece )"
 			>
 			<div class="mr-auto">{{ piece.name }}</div>
-			<CountLabel :id="piece.id"/>
+			<CountLabel :id="piece.id" class="mr-0.5"/>
+			<SidebarIcon title="This piece uses a custom render layer" :active="!!piece.renderLayer">
+				<SwitchVerticalIcon class="w-4 h-4"/>
+			</SidebarIcon>
 			<SidebarIcon title="This piece has tags" :active="piece.tags.length > 0">
 				<TagIcon class="w-4 h-4"/>
 			</SidebarIcon>
