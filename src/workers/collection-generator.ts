@@ -43,8 +43,11 @@ onmessage = function(e) {
 	}
 	shuffle(limited);
 
+	let failureCount = 0;
+	let tryCount = 0;
+
 	while (idlist.length > 0) {
-		console.log( `there are ${favorites.length} favorites` );
+		tryCount++;
 		const attributes: Map< WorkerLayer, WorkerPiece > = new Map();
 		let valid: boolean = false;
 		let favorite: string | false = false;
@@ -118,20 +121,33 @@ onmessage = function(e) {
 				valid = true;
 			} catch (err) {
 				console.warn("failed to create image", err);
-				continue;
+			}
+		}
+		console.log('test', valid, failureCount, tryCount);
+		if ( tryCount > 5000 ) break;
+
+		// If we created a valid image, make sure it's unique in the set
+		let key: number = 0;
+		if ( valid ) {
+			// generate a unique hash based on the attributes in the image
+			const keys = [...attributes.entries()]
+				.filter(([layer]) => !layer.excludeFromKey)
+				.map(([layer, piece]) => piece.id);
+			keys.sort();
+			key = hash(keys.join(""));
+			// if this image was already generated or it is invalid (includes traits/layers with blocked tags), start over
+			if (key in existing) {
+				valid = false;
 			}
 		}
 
-		if (valid) {
-			// generate a unique hash based on the attributes in the image
-			const keys = [...attributes.entries()].filter( ([layer]) => !layer.excludeFromKey).map(
-				([layer, piece]) => piece.id
-			);
-			keys.sort();
-			const key = hash(keys.join(""));
-			// if this image was already generated or it is invalid (includes traits/layers with blocked tags), start over
-			if ( key in existing ) continue;
-
+		if ( ! valid ) {
+			console.log('failed!');
+			failureCount++;
+			// if we've failed lots of times in a row to generate a valid image, stop
+			if ( failureCount >= size ) break;
+		} else {
+			failureCount = 0;
 			// update counts of limited-rate pieces
 			for (const [layer, piece] of attributes) {
 				const source = sources.find((l) => l.layer === layer);
@@ -181,6 +197,7 @@ onmessage = function(e) {
 	if ( done.length > 0 ) {
 		this.postMessage({type:"update", images:done});
 	}
+	this.postMessage({type:"finish"});
 }
 
 function generateIdList(limit: number) {

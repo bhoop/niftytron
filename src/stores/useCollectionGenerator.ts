@@ -39,7 +39,7 @@ export interface WorkerImage {
 	attributes: string[];
 	favorite: string | false;
 }
-export type WorkerMessage = { type: 'update', images: WorkerImage[] };
+export type WorkerMessage = { type: 'update', images: WorkerImage[] } | { type: 'finish' };
 
 export function useCollectionGenerator() {
 
@@ -90,8 +90,8 @@ export function useCollectionGenerator() {
 			}
 		);
 		worker.value.onmessage = (ev: MessageEvent<WorkerMessage>) => {
-			if ( ev.data.type === 'update' ) {
-				console.log('receive', ev.data.images.length, 'images');
+			switch ( ev.data.type ) {
+				case 'update':
 				const newImages: Map<number, Image> = new Map();
 				for (const newImage of ev.data.images) {
 					const attributes = newImage.attributes.reduce((map, pieceId) => {
@@ -114,11 +114,12 @@ export function useCollectionGenerator() {
 				images.value = new Map([...images.value, ...newImages]);
 				console.log('wrote', images.value.size, 'images');
 				status.value.progress = images.value.size / args.size;
-				if (images.value.size === args.size) {
-					status.value.running = false;
-					console.log("generation finished.");
-					worker.value!.terminate();
-				}
+				break;
+
+				case 'finish':
+				status.value.running = false;
+				console.log("generation finished.");
+				worker.value!.terminate();
 			}
 		};
 		// start the worker
