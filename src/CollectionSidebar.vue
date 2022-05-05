@@ -36,11 +36,11 @@ function sortLayers( newSortOrder: Layer[] ) {
 		<SlickList axis="y" :list="layersInDisplayOrder" @update:list="sortLayers" :pressDelay="150" :distance="10">
 			<SlickItem v-for="(layer,i) in layersInDisplayOrder" :key="layer.id" :index="i">
 				<div
-					class="group flex items-center p-2 cursor-pointer hover:text-orange-600 border-t border-neutral-400/50 bg-neutral-300 text-sm"
+					class="group flex items-center p-2 cursor-pointer hover:text-orange-600 border-t border-neutral-400/50 bg-neutral-300 text-sm select-none"
 					@click="goto( layer )"
 					>
+					<div class="mr-auto">{{ layer.name }} ({{ layer.pieces.length }})</div>
 					<CountLabel :id="layer.id"/>
-					<div class="ml-2 mr-auto">{{ layer.name }} ({{ layer.pieces.length }})</div>
 					<SidebarIcon title="This layer is required in all images" :active="layer.required">
 						<CheckCircleIcon class="w-4 h-4"/>
 					</SidebarIcon>

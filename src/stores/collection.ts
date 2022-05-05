@@ -27,7 +27,10 @@ export const useCollectionStore = defineStore("collection", () => {
 			favorites: favorites.value,
 		});
 	}
-	watch( collectionKey, regenerate );
+	watch( collectionKey, () => {
+		console.log('collection key changed!');
+		// regenerate()
+	} );
 
 	const images = computed(() => {
 		console.log('compute images', generator.images.value.size);

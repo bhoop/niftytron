@@ -44,8 +44,8 @@ function updateRequired( isRequired: boolean ) {
 			class="group flex items-center p-2 cursor-pointer hover:text-orange-600 border-t border-neutral-400/50 bg-neutral-300 text-sm"
 			@click="nav.goto( layer, piece )"
 			>
+			<div class="mr-auto">{{ piece.name }}</div>
 			<CountLabel :id="piece.id"/>
-			<div class="ml-2 mr-auto">{{ piece.name }}</div>
 			<SidebarIcon title="This piece has tags" :active="piece.tags.length > 0">
 				<TagIcon class="w-4 h-4"/>
 			</SidebarIcon>
