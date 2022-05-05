@@ -165,7 +165,7 @@ export const useCollectionStore = defineStore("collection", () => {
 						}
 					}
 					// write the image to a file
-					const filename = image.number + ".png";
+					const filename = (image.number - 1) + ".png";
 					const fileHandle = await dirHandle.getFileHandle(filename, {
 						create: true,
 					});
@@ -177,6 +177,27 @@ export const useCollectionStore = defineStore("collection", () => {
 					);
 					await writable.write(canvasBlob);
 					await writable.close();
+
+					// write the metadata to a file
+					const metadata = {
+						name: `Skull #${ image.number }`,
+						symbol: "",
+						image: filename,
+						properties: {
+							files: [{ uri: filename, type: "image/png" }],
+							category: "image",
+							creators: [],
+						},
+						description: "",
+						seller_fee_basis_points: 0,
+						attributes: [...image.attributes].map( ([layer,piece]) => ({ trait_type: layer.name, value: piece!.name }) ),
+						collection: {},
+					};
+					const mFilename = (image.number - 1)+".json";
+					const mHandle = await dirHandle.getFileHandle( mFilename, { create: true } );
+					const mWritable = await mHandle.createWritable({ keepExistingData: false });
+					await mWritable.write( JSON.stringify( metadata, null, '\t' ) );
+					await mWritable.close();
 
 					downloading.value.done++;
 				}
