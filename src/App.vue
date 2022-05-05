@@ -11,76 +11,72 @@ import Collection from './Collection.vue';
 import UploadProgress from './UploadProgress.vue';
 import useAppNavigation from './app-navigation';
 import DownloadProgress from './DownloadProgress.vue';
+import CollectionSidebar from './CollectionSidebar.vue';
+import SidebarHeading from './SidebarHeading.vue';
+import LayerSidebar from './LayerSidebar.vue';
+import PieceSidebar from './PieceSidebar.vue';
 
 // import { RefreshIcon } from '@heroicons/vue/solid';
 
 let data = useDataStore();
 let collection = useCollectionStore();
-const nav = useAppNavigation();
+const nav = reactive( useAppNavigation() );
 
-let currentImageId = ref<number|null>(null);
+let currentImageId = ref<string|null>(null);
 let search = ref<string>('');
 let sizeInput = ref('');
 
-let currentImage = computed(() => currentImageId.value === null ? null : collection.images.find( img => img?.id === currentImageId.value ));
+let currentImage = computed(() => currentImageId.value === null ? null : collection.images.find( img => img.id === currentImageId.value ));
 
 let visibleImages = computed(() => {
 	let output = collection.images;
-	if ( nav.activeLayer.value ) {
-		output = output.filter( img => img && img.attributes.has( nav.activeLayer.value! ) );
-		if ( nav.activePiece.value ) {
-			output = output.filter( img => img && img.attributes.get( nav.activeLayer.value! )! === nav.activePiece.value );
+	if ( nav.activeLayer ) {
+		output = output.filter( img => img && img.attributes.has( nav.activeLayer! ) );
+		if ( nav.activePiece ) {
+			output = output.filter( img => img && img.attributes.get( nav.activeLayer! )! === nav.activePiece );
 		}
 	}
-	if ( search.value !== '' ) {
-		let test = search.value.toLowerCase().split(/\W+/);
-		output = output.filter( img => img && test.every( term => img.search.includes( term ) ) );
-	}
+	// if ( search.value !== '' ) {
+	// 	let test = search.value.toLowerCase().split(/\W+/);
+	// 	output = output.filter( img => img && test.every( term => img.search.includes( term ) ) );
+	// }
 	return output;
 });
 
 </script>
 
 <template>
-<div class="min-h-screen bg-neutral-200">
+<div class="fixed top-0 left-0 h-screen w-80 pb-3 bg-neutral-300 border-r border-neutral-500/10 drop-shadow flex flex-col overflow-y-auto">
+	<SidebarHeading :open="nav.focus === 'collection'" class="sticky top-0" @select="nav.goto()">Collection</SidebarHeading>
+	<CollectionSidebar v-if="nav.focus === 'collection'"/>
+	<template v-if="nav.activeLayer">
+		<SidebarHeading :open="nav.focus === 'layer'" class="sticky top-10" @select="nav.goto( nav.activeLayer )">Layer: {{ nav.activeLayer.name }}</SidebarHeading>
+		<LayerSidebar v-if="nav.focus === 'layer'" :layer="nav.activeLayer"/>
+	</template>
+	<template v-if="nav.activePiece">
+		<SidebarHeading :open="nav.focus === 'piece'" class="sticky top-10">Piece: {{ nav.activePiece.name }}</SidebarHeading>
+		<PieceSidebar v-if="nav.focus === 'piece'" :piece="nav.activePiece"/>
+	</template>
+	<!-- <CollectionSidebar v-if="nav.focus.value === 'collection'"/>
+	<a v-else>Collection</a> -->
+</div>
+<div class="min-h-screen bg-neutral-200 ml-80">
 	<div class="p-3 pl-72 z-10 w-full sticky top-0 backdrop-blur-lg bg-neutral-200/80 flex items-center border-b border-neutral-300 transition-all">
 		<!-- Spacer -->
 		<div class="flex-1">
 			<div v-if="collection.isGenerating" class="text-orange-500 animate-pulse">Generating collection...</div>
 		</div>
 		<!-- search box -->
-		<div class="h-8 relative rounded bg-neutral-200 border border-neutral-400 flex items-center flex-0 w-72" title="Size of collection">
+		<!-- <div class="h-8 relative rounded bg-neutral-200 border border-neutral-400 flex items-center flex-0 w-72" title="Size of collection">
 			<SearchIcon class="absolute left-1.5 top-[0.25rem-1px] h-5 w-5 text-neutral-400"/>
 			<div class="bg-white rounded absolute top-0 left-8 right-0 h-full pointer-events-none"/>
 			<input type="search" placeholder="search" class="relative bg-transparent w-full py-1 px-2 pl-10 rounded"/>
-		</div>
+		</div> -->
 		<!-- Action buttons -->
 		<div class="flex-1 flex justify-end">
 			<button class="text-sm bg-green-600/80 rounded mr-3" @click="collection.download()">download</button>
 			<button class="text-sm bg-orange-500/80 rounded" @click="collection.regenerate()">regenerate</button>
 		</div>
-	</div>
-	<div class="w-72 flex flex-col gap-3 p-3 fixed left-0 top-0 h-screen z-10">
-		<!-- Collection Size Input -->
-		<div class="h-8 relative rounded bg-neutral-200 border border-neutral-400 p-px flex items-center mb-3" title="Size of collection">
-			<HashtagIcon class="absolute left-1.5 top-[0.25rem-1px] h-5 w-5 text-neutral-400"/>
-			<div class="bg-white rounded absolute top-0 left-8 right-0 h-full flex items-center justify-end text-neutral-400/80 text-xs pointer-events-none pl-1 pr-2">
-				<span class="invisible">{{ sizeInput === '' ? data.combinationCount.toString() : sizeInput }}</span>
-				<span class="ml-2">({{ data.combinationCountAbbr }} max)</span>
-			</div>
-			<input type="number" min="1" :max="data.combinationCount"
-				:value="collection.size"
-				@change="event => collection.changeSize(Number((event.target as HTMLInputElement).value))"
-				class=" relative bg-transparent w-full py-1 pl-10 pr-2 rounded no-arrows"
-				/>
-			<div
-				class="pointer-events-none opacity-0 bg-orange-400/30 absolute left-0 top-0 h-full transition-opacity animate-pulse"
-				:class="[collection.isGenerating && 'opacity-100']"
-				:style="{width: ( collection.generating ? collection.generating.progress * 100 : 0 ) + '%' }"
-				/>
-		</div>
-
-		<AppNavigation/>
 	</div>
 	<!-- <div v-if="data.layers.length === 0" class="h-screen flex items-center justify-center">
 		<label class="bg-orange-500 text-orange-200 rounded-lg px-4 py-1 text-xl font-light">
@@ -88,7 +84,7 @@ let visibleImages = computed(() => {
 			<input type="file" class="hidden" multiple accept="image/pdf" @change="event => onSelectImages( ( event.target as HTMLInputElement).files )"/>
 		</label>
 	</div> -->
-	<div class="pl-72">
+	<div>
 		<Collection :images="visibleImages" @select-image="image => currentImageId = image.id"/>
 	</div>
 </div>

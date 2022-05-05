@@ -35,7 +35,7 @@ onmessage = function(e) {
 		let source: Source = { layer: l, count: 0, remaining: l.limit ?? Infinity, pieces: [] };
 		for (const p of l.pieces) {
 			pieceLookup[p.id] = { layer: l, piece: p };
-			source.pieces.push({ piece: p, count: 0, remaining: l.limit ?? Infinity });
+			source.pieces.push({ piece: p, count: 0, remaining: p.limit ?? Infinity });
 			// every piece should show up at least once
 			limited.push( { layer: l, piece: p } );
 		}
@@ -63,6 +63,9 @@ onmessage = function(e) {
 			if (limited.length > 0) {
 				const r = limited.shift()!;
 				attributes.set( r.layer, r.piece );
+				if ( r.piece.limit ) {
+					console.log(`forcing ${r.piece.id} (limit:${r.piece.limit})`)
+				}
 				// move this limited item to the end of the list
 				limited.push( r );
 			}
@@ -128,6 +131,7 @@ onmessage = function(e) {
 				source.remaining--;
 				const psource = source.pieces.find((p) => p.piece === piece);
 				if (!psource) continue;
+				if( psource.piece.limit ) console.log(`decrementing psource#${psource.piece.id} (count=${psource.count}) (remaining=${psource.remaining})`);
 				psource.count++;
 				psource.remaining--;
 

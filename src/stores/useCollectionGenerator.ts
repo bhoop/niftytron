@@ -2,6 +2,7 @@ import { isRef, ref, unref, watchEffect } from "vue";
 import type { Ref } from "vue";
 import type { Favorite, FavoriteBag, Image, Layer, Piece } from "../state";
 import hash from "../hash";
+import uid from "../uid";
 
 type ImageMap = Map< number, Image >;
 interface Status {
@@ -95,6 +96,7 @@ export function useCollectionGenerator() {
 						return map;
 					}, new Map());
 					const image: Image = {
+						id: uid(),
 						...newImage,
 						attributes,
 					};

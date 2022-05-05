@@ -33,6 +33,7 @@ export interface FavoriteBag {
 export type Favorite = string[];
 
 export interface Image {
+	id: string;
 	number: number;
 	attributes: Map<Layer, Piece | null>;
 	key: number;
