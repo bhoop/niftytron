@@ -2,12 +2,13 @@
 import type { Layer } from "./state";
 import { useDataStore } from './state';
 import { PlusIcon } from '@heroicons/vue/outline';
-import { TagIcon, HashtagIcon } from '@heroicons/vue/solid';
+import { TagIcon, BanIcon, HashtagIcon } from '@heroicons/vue/solid';
 import useAppNavigation from "./app-navigation";
 import { computed, ref } from "vue";
 import TagField from "./TagField.vue";
 import SidebarField from "./SidebarField.vue";
 import SidebarIcon from "./SidebarIcon.vue";
+import CountLabel from "./CountLabel.vue";
 
 const props = defineProps<{ layer: Layer }>();
 
@@ -36,10 +37,13 @@ const piecesInDisplayOrder = computed(() => {
 			class="group flex items-center p-2 cursor-pointer hover:text-orange-600 border-t border-neutral-400/50 bg-neutral-300 text-sm"
 			@click="nav.goto( layer, piece )"
 			>
-			<!-- <div class="w-8 text-center py-0.5 text-xs bg-neutral-400/50 rounded-full group-hover:bg-orange-400/20" :title="`This layer has ${layer.pieces.length} piece${layer.pieces.length===1?'':'s'}`">{{ layer.pieces.length }}</div> -->
+			<CountLabel :id="piece.id"/>
 			<div class="ml-2 mr-auto">{{ piece.name }}</div>
-			<SidebarIcon title="This piece has tags" :active="piece.tags.length > 0 || piece.blockedTags.length > 0">
+			<SidebarIcon title="This piece has tags" :active="piece.tags.length > 0">
 				<TagIcon class="w-4 h-4"/>
+			</SidebarIcon>
+			<SidebarIcon title="This piece has blocked tags" :active="piece.blockedTags.length > 0">
+				<BanIcon class="w-4 h-4"/>
 			</SidebarIcon>
 			<SidebarIcon :title="`This piece will only appear in ${piece.limit!} image${piece.limit===1?'':'s'}`" :active="piece.limit !== false">
 				<HashtagIcon class="w-4 h-4"/>

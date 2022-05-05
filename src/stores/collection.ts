@@ -45,6 +45,21 @@ export const useCollectionStore = defineStore("collection", () => {
 		return arr;
 	});
 
+	const counts = computed( () => {
+		const map: Record<string, number> = {};
+		const incr = ( id: string ) => {
+			if ( ! map[id] ) map[id] = 1;
+			else map[id]++;
+		}
+		for ( const image of generator.images.value.values() ) {
+			for ( const [ layer, piece ] of image.attributes ) {
+				incr( layer.id );
+				if ( piece ) incr( piece.id );				
+			}
+		}
+		return map;
+	} );
+
 	function changeSize(newSize: number) {
 		const num = Number(newSize);
 		if (num > 0) {
@@ -166,6 +181,7 @@ export const useCollectionStore = defineStore("collection", () => {
 	return {
 		images,
 		size,
+		counts,
 		isGenerating: generator.status.value.running,
 		generating: generator.status,
 		regenerate,

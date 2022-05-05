@@ -4,9 +4,10 @@ import { useCollectionStore, useDataStore, type Layer, type Piece } from './stat
 import { SlickList, SlickItem } from 'vue-slicksort';
 import { computed, ref } from 'vue';
 import { PlusIcon, CollectionIcon } from '@heroicons/vue/outline';
-import { TagIcon, CheckCircleIcon, ChartPieIcon, HashtagIcon, ExclamationCircleIcon } from '@heroicons/vue/solid';
+import { TagIcon, CheckCircleIcon, BanIcon, HashtagIcon, ExclamationCircleIcon } from '@heroicons/vue/solid';
 import SidebarIcon from './SidebarIcon.vue';
 import SidebarField from './SidebarField.vue';
+import CountLabel from './CountLabel.vue';
 
 const collection = useCollectionStore();
 
@@ -38,13 +39,16 @@ function sortLayers( newSortOrder: Layer[] ) {
 					class="group flex items-center p-2 cursor-pointer hover:text-orange-600 border-t border-neutral-400/50 bg-neutral-300 text-sm"
 					@click="goto( layer )"
 					>
-					<div class="w-8 text-center py-0.5 text-xs bg-neutral-400/50 rounded-full group-hover:bg-orange-400/20" :title="`This layer has ${layer.pieces.length} piece${layer.pieces.length===1?'':'s'}`">{{ layer.pieces.length }}</div>
-					<div class="ml-2 mr-auto">{{ layer.name }}</div>
+					<CountLabel :id="layer.id"/>
+					<div class="ml-2 mr-auto">{{ layer.name }} ({{ layer.pieces.length }})</div>
 					<SidebarIcon title="This layer is required in all images" :active="layer.required">
 						<CheckCircleIcon class="w-4 h-4"/>
 					</SidebarIcon>
-					<SidebarIcon title="This layer has tags" :active="layer.tags.length > 0 || layer.blockedTags.length > 0">
+					<SidebarIcon title="This layer has tags" :active="layer.tags.length > 0">
 						<TagIcon class="w-4 h-4"/>
+					</SidebarIcon>
+					<SidebarIcon title="This layer has blocked tags" :active="layer.blockedTags.length > 0">
+						<BanIcon class="w-4 h-4"/>
 					</SidebarIcon>
 					<SidebarIcon :title="`This layer will only appear in ${layer.limit!} image${layer.limit===1?'':'s'}`" :active="layer.limit !== false">
 						<HashtagIcon class="w-4 h-4"/>
