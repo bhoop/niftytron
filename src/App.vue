@@ -53,7 +53,7 @@ function persistLayers() {
 }
 
 function persistCollection() {
-	const cache = collection.getStateForStorage( data.layers );
+	const cache = collection.getStateForStorage();
 	set( 'collection', cache );
 }
 
@@ -65,7 +65,7 @@ onBeforeMount( async () => {
 		for( const layer of storedLayers ) {
 			for( const piece of layer.pieces ) {
 				if ( piece.renderLayer ) {
-					const pointer = storedLayers.find( l => l.id === piece.renderLayer );
+					const pointer = storedLayers.find( (l:Layer) => l.id === piece.renderLayer );
 					if (pointer) piece.renderLayer = pointer;
 					else delete piece.renderLayer;
 				}

@@ -243,7 +243,7 @@ export const useCollectionStore = defineStore("collection", () => {
 		}));
 	}
 
-	function setStateFromStorage(cache, layers) {
+	function setStateFromStorage(cache: any, layers: Layer[]) {
 		prefix.value = cache.prefix;
 		symbol.value = cache.symbol;
 		name.value = cache.name;
