@@ -15,6 +15,13 @@ export const useCollectionStore = defineStore("collection", () => {
 		done: 0,
 		total: 0,
 	});
+	const prefix = ref('Skull #');
+	const name = ref('');
+	const family = ref('');
+	const symbol = ref('');
+	const description = ref('');
+	const sellerFeeBasisPoints = ref(0);
+	const creators = ref<{address:string, share:number}[]>([]);
 
 	const generator = useCollectionGenerator();
 	const collectionKey = computed( () => {
@@ -180,18 +187,21 @@ export const useCollectionStore = defineStore("collection", () => {
 
 					// write the metadata to a file
 					const metadata = {
-						name: `Skull #${ image.number }`,
-						symbol: "",
+						name: prefix.value + image.number,
+						symbol: symbol.value,
 						image: filename,
 						properties: {
 							files: [{ uri: filename, type: "image/png" }],
 							category: "image",
-							creators: [],
+							creators: creators.value.map( c => ({ ...c, share: Number(c.share) }) ),
 						},
-						description: "",
-						seller_fee_basis_points: 0,
+						description: description.value,
+						seller_fee_basis_points: Number(sellerFeeBasisPoints.value) || 0,
 						attributes: [...image.attributes].map( ([layer,piece]) => ({ trait_type: layer.name, value: piece!.name }) ),
-						collection: {},
+						collection: {
+							name: name.value,
+							family: family.value,
+						},
 					};
 					const mFilename = (image.number - 1)+".json";
 					const mHandle = await dirHandle.getFileHandle( mFilename, { create: true } );
@@ -218,7 +228,43 @@ export const useCollectionStore = defineStore("collection", () => {
 		downloading.value.running = false;
 	}
 
+	function getStateForStorage() {
+		return JSON.parse(JSON.stringify({
+			prefix: prefix.value,
+			symbol: symbol.value,
+			name: name.value,
+			family: family.value,
+			description: description.value,
+			sellerFeeBasisPoints: sellerFeeBasisPoints.value,
+			creators: creators.value,
+			size: size.value,
+			favorites: favorites.value,
+			images: generator.getImagesForCache(),
+		}));
+	}
+
+	function setStateFromStorage(cache, layers) {
+		prefix.value = cache.prefix;
+		symbol.value = cache.symbol;
+		name.value = cache.name;
+		family.value = cache.family;
+		description.value = cache.description;
+		sellerFeeBasisPoints.value = cache.sellerFeeBasisPoints;
+		creators.value = cache.creators;
+		favorites.value = cache.favorites;
+		size.value = cache.size;
+		// images
+		generator.restoreImagesFromCache(cache.images, layers);
+	}
+
 	return {
+		prefix,
+		symbol,
+		name,
+		family,
+		description,
+		sellerFeeBasisPoints,
+		creators,
 		images,
 		size,
 		counts,
@@ -231,6 +277,8 @@ export const useCollectionStore = defineStore("collection", () => {
 		download,
 		downloading,
 		stopDownload,
+		getStateForStorage,
+		setStateFromStorage,
 	};
 });
 

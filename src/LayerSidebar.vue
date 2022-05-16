@@ -8,6 +8,7 @@ import { computed, ref } from "vue";
 import SidebarField from "./SidebarField.vue";
 import SidebarIcon from "./SidebarIcon.vue";
 import CountLabel from "./CountLabel.vue";
+import Button from "./Button.vue";
 
 const props = defineProps<{ layer: Layer }>();
 
@@ -24,6 +25,13 @@ function updateRequired( isRequired: boolean ) {
 	if ( isRequired ) {
 		props.layer.limit = false;
 		props.layer.tags = [];
+	}
+}
+
+function tryToDelete() {
+	if ( confirm('Remove this layer and all of its pieces?' ) ) {
+		data.layers = data.layers.filter( l => l.id !== props.layer.id );
+		nav.goto();
 	}
 }
 
@@ -68,6 +76,11 @@ function updateRequired( isRequired: boolean ) {
 			add images
 		</label>
 	</div>
+	<Button
+		color="red"
+		class="mx-auto mt-3 mb-1"
+		@click="tryToDelete"
+		>delete layer</Button>
 
 	<div class="mx-auto text-xs text-neutral-500/30 font-mono">{{ layer.id }}</div>
 </div>

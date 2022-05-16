@@ -4,9 +4,12 @@ import { computed, ref } from "vue";
 import type { Piece, Layer } from "./state";
 import { useDataStore } from "./state";
 import SidebarField from "./SidebarField.vue";
+import useAppNavigation from "./app-navigation";
+import Button from "./Button.vue";
 
 let props = defineProps<{ layer: Layer, piece: Piece }>();
 let data = useDataStore();
+const nav = useAppNavigation();
 
 const bgimage = computed( () => props.piece.src
 	? `background-image:url('${props.piece.src}')`
@@ -27,6 +30,14 @@ const reverseLayers = computed( () => {
 	reverse.reverse();
 	return reverse;
 } );
+
+function tryToDelete() {
+	if ( confirm('Remove this piece?' ) ) {
+		props.layer.pieces = props.layer.pieces.filter( p => p.id !== props.piece.id );
+		nav.goto(props.layer);
+	}
+}
+
 </script>
 <template>
 <div class="text-sm flex flex-col gap-2">
@@ -51,6 +62,12 @@ const reverseLayers = computed( () => {
 		</div>
 		<!-- <input type="file" ref="fileInput" class="hidden"/> -->
 	</label>
+
+	<Button
+		color="red"
+		class="mx-auto mt-3 mb-1"
+		@click="tryToDelete"
+		>delete piece</Button>
 
 	<div class="mx-auto text-xs text-neutral-500/30 font-mono">{{ piece.id }}</div>
 </div>

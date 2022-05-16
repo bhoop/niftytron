@@ -4,6 +4,11 @@ import type { Favorite, FavoriteBag, Image, Layer, Piece } from "../state";
 import hash from "../hash";
 import uid from "../uid";
 
+type ImageCache = Array<
+	Omit<Image, 'attributes'>
+	& { attributes: Record<string, string> }
+>;
+
 type ImageMap = Map< number, Image >;
 interface Status {
 	running: boolean;
@@ -131,5 +136,40 @@ export function useCollectionGenerator() {
 	// 	generateCollection( layersSource, favoriteSource, size );
 	// } );
 
-	return { status, images, regenerate: generateCollection };
+	function getImagesForCache(): ImageCache {
+		return [...images.value.values()].map( img => ({
+			...img,
+			attributes: [...img.attributes.entries()].reduce((obj, [layer,piece]) => {
+				if ( piece ) {
+					obj[layer.id] = piece.id;
+				}
+				return obj;
+			}, {} as Record<string, string>)
+			})
+		);
+	}
+
+	function restoreImagesFromCache( cache: ImageCache, layers: Layer[] ) {
+		images.value = new Map( cache.map( img => {
+			const attributes: Map< Layer, Piece > = new Map();
+			for ( const layerId in img.attributes ) {
+				const layer = layers.find( l => l.id === layerId );
+				if ( layer ) {
+					const piece = layer.pieces.find( p => p.id === img.attributes[layerId]);
+					if ( piece ) {
+						attributes.set( layer, piece );
+					}
+				}
+			}
+			return [
+				img.number,
+				{
+					...img,
+					attributes
+				}
+			];
+		} ));
+	}
+
+	return { status, images, regenerate: generateCollection, getImagesForCache, restoreImagesFromCache };
 }
