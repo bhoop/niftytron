@@ -156,7 +156,7 @@ export const useCollectionStore = defineStore("collection", () => {
 						else customRenderLayer.get(piece.renderLayer)!.push([layer,piece]);
 					}
 					for (const layer of data.layers) {
-						if (image.attributes.has(layer)) {
+						if (image.attributes.has(layer) && !image.attributes.get(layer)!.renderLayer) {
 							context.drawImage(
 								await imgdata(layer, image.attributes.get(layer)!),
 								0, 0, 1000, 1000
