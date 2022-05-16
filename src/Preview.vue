@@ -10,11 +10,13 @@ const layers = computed( () => {
 	for ( const [ layer, piece ] of props.image.attributes ) {
 		if ( ! piece || ! piece.renderLayer ) continue;
 		if ( ! renderLayers.has( piece.renderLayer ) ) renderLayers.set( piece.renderLayer, [ { piece, layer } ] );
-		else renderLayers.get( piece.renderLayer )!.push( { piece, layer } );
+		else {
+			renderLayers.get( piece.renderLayer )!.push( { piece, layer } );
+		}
 	}
 	const arr: Attribute[] = [];
 	for( const layer of data.layers ) {
-		if( props.image.attributes.has( layer ) ) {
+		if( props.image.attributes.has( layer ) && ! props.image.attributes.get( layer )!.renderLayer ) {
 			arr.push( { layer, piece: props.image.attributes.get( layer )! } );
 		}
 		if ( renderLayers.has( layer ) ) {
