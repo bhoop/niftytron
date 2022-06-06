@@ -34,13 +34,8 @@ export const useCollectionStore = defineStore("collection", () => {
 			favorites: favorites.value,
 		});
 	}
-	watch( collectionKey, () => {
-		console.log('collection key changed!');
-		// regenerate()
-	} );
 
 	const images = computed(() => {
-		console.log('compute images', generator.images.value.size);
 		let arr = [...generator.images.value.values()].slice(
 			0,
 			Math.min(size.value, data.combinationCount)
@@ -125,7 +120,6 @@ export const useCollectionStore = defineStore("collection", () => {
 			const dirHandle = await (window as any).showDirectoryPicker({
 				writeable: true,
 			});
-			console.log("gotDirHandle", dirHandle);
 			downloading.value = {
 				running: true,
 				destination: dirHandle.name,
@@ -143,7 +137,7 @@ export const useCollectionStore = defineStore("collection", () => {
 				downloading.value.done < size.value
 			) {
 				// generate images in chunks so we don't lock up the main thread
-				for (let i = 0; i < chunkSize; i++) {
+				for (let i = 0, z = images.value.length; i < chunkSize && (index+i) < z; i++) {
 					const image = images.value[index + i];
 					// clear the canvas
 					context.clearRect(0, 0, canvas.width, canvas.height);
