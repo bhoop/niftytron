@@ -120,6 +120,8 @@ export const useCollectionStore = defineStore("collection", () => {
 			const dirHandle = await (window as any).showDirectoryPicker({
 				writeable: true,
 			});
+			const imagesDirHandle = await dirHandle.getDirectoryHandle( 'images', { create:true } );
+			const metadataDirHandle = await dirHandle.getDirectoryHandle( 'metadata', { create:true } );
 			downloading.value = {
 				running: true,
 				destination: dirHandle.name,
@@ -167,7 +169,7 @@ export const useCollectionStore = defineStore("collection", () => {
 					}
 					// write the image to a file
 					const filename = (image.number - 1) + ".png";
-					const fileHandle = await dirHandle.getFileHandle(filename, {
+					const fileHandle = await imagesDirHandle.getFileHandle(filename, {
 						create: true,
 					});
 					const writable = await fileHandle.createWritable({
@@ -198,7 +200,7 @@ export const useCollectionStore = defineStore("collection", () => {
 						},
 					};
 					const mFilename = (image.number - 1)+".json";
-					const mHandle = await dirHandle.getFileHandle( mFilename, { create: true } );
+					const mHandle = await metadataDirHandle.getFileHandle( mFilename, { create: true } );
 					const mWritable = await mHandle.createWritable({ keepExistingData: false });
 					await mWritable.write( JSON.stringify( metadata, null, '\t' ) );
 					await mWritable.close();
