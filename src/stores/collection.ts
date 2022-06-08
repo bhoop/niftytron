@@ -20,6 +20,7 @@ export const useCollectionStore = defineStore("collection", () => {
 	const family = ref('');
 	const symbol = ref('');
 	const description = ref('');
+	const externalUrl = ref('');
 	const sellerFeeBasisPoints = ref(0);
 	const creators = ref<{address:string, share:number}[]>([]);
 
@@ -186,6 +187,7 @@ export const useCollectionStore = defineStore("collection", () => {
 						name: prefix.value + image.number,
 						symbol: symbol.value,
 						image: filename,
+						externalUrl: externalUrl.value,
 						properties: {
 							files: [{ uri: filename, type: "image/png" }],
 							category: "image",
@@ -231,6 +233,7 @@ export const useCollectionStore = defineStore("collection", () => {
 			name: name.value,
 			family: family.value,
 			description: description.value,
+			externalUrl: externalUrl.value,
 			sellerFeeBasisPoints: sellerFeeBasisPoints.value,
 			creators: creators.value,
 			size: size.value,
@@ -249,6 +252,7 @@ export const useCollectionStore = defineStore("collection", () => {
 		creators.value = cache.creators;
 		favorites.value = cache.favorites;
 		size.value = cache.size;
+		externalUrl.value = cache.externalUrl || '';
 		// images
 		generator.restoreImagesFromCache(cache.images, layers);
 	}
@@ -259,6 +263,7 @@ export const useCollectionStore = defineStore("collection", () => {
 		name,
 		family,
 		description,
+		externalUrl,
 		sellerFeeBasisPoints,
 		creators,
 		images,
