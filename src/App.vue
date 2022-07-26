@@ -12,7 +12,7 @@ import CollectionSidebar from './CollectionSidebar.vue';
 import SidebarHeading from './SidebarHeading.vue';
 import LayerSidebar from './LayerSidebar.vue';
 import PieceSidebar from './PieceSidebar.vue';
-import { getMany, set } from 'idb-keyval';
+import { getMany, set, clear } from 'idb-keyval';
 
 // import { RefreshIcon } from '@heroicons/vue/solid';
 
@@ -99,6 +99,11 @@ onBeforeMount( async () => {
 	//       persist the state to storage
 } );
 
+function reset() {
+	clear();
+	window.location.reload();
+}
+
 </script>
 
 <template>
@@ -152,6 +157,7 @@ onBeforeMount( async () => {
 			<Collection :images="visibleImages" @select-image="image => currentImageId = image.id"/>
 		</div>
 	</div>
+	<button class="fixed bottom-4 right-4" @click="reset()">reset</button>
 </template>
 <div class="z-40 fixed top-0 left-0 w-screen h-screen pointer-events-none flex items-center justify-center">
 	<ImageModal v-if="currentImage" :image="currentImage" class="pointer-events-auto bg-white/80 backdrop-blur-xl shadow-2xl rounded border border-neutral-300" @close="currentImageId = null"/>
