@@ -74,14 +74,21 @@ onmessage = function(e) {
 				limited.push( r );
 			}
 
-			// create a list of blocked tags
+			// create a list of blocked tags and used tags
 			const blocks: Set<string> = new Set();
+			const usedTags: Set<string> = new Set();
 			for (const [layer, piece] of attributes) {
+				if ( layer.tags ) {
+					for (const t of layer.tags) usedTags.add(t);
+				}
 				if ( layer.blockedTags ) {
 					for (const t of layer.blockedTags) blocks.add(t);
 				}
 				if (piece.blockedTags ) {
 					for (const t of piece.blockedTags) blocks.add(t);
+				}
+				if (piece.tags) {
+					for (const t of piece.tags) usedTags.add(t);
 				}
 			}
 
@@ -91,9 +98,11 @@ onmessage = function(e) {
 				for (const source of sources) {
 					// don't pick a piece if it's already set
 					if (attributes.has(source.layer)) continue;
-					if (includesBlockedTags(source.layer.tags, blocks)) {
+					if (includesBlockedTags(source.layer.tags, blocks) || includesBlockedTags(usedTags, source.layer.blockedTags)) {
 						// if this layer is required, abort generating this image
-						if (source.layer.required) throw false;
+						if (source.layer.required) {
+							throw false;
+						}
 						// otherwise just skip it and move to the next layer
 						else continue;
 					}
@@ -101,17 +110,22 @@ onmessage = function(e) {
 					shuffle(source.pieces);
 					// go through the pieces and find one that works
 					for (const piece of source.pieces) {
-						if (includesBlockedTags(piece.piece.tags, blocks))
+						if (includesBlockedTags(piece.piece.tags, blocks) || includesBlockedTags(usedTags, piece.piece.blockedTags))
 							continue;
 						attributes.set(source.layer, piece.piece);
 						if (source.layer.blockedTags)
 							for (const t of source.layer.blockedTags) blocks.add(t);
 						if (piece.piece.blockedTags)
 							for (const t of piece.piece.blockedTags) blocks.add(t);
+						if (source.layer.tags)
+							for (const t of source.layer.tags) usedTags.add(t);
+						if (piece.piece.tags)
+							for (const t of piece.piece.tags) usedTags.add(t);
 					}
 					// if no piece fit and this is a required layer, stop creating this image and start over
-					if (source.layer.required && !attributes.has(source.layer))
+					if (source.layer.required && !attributes.has(source.layer)) {
 						throw false;
+					}
 				}
 				// we successfully generated an image
 				valid = true;
@@ -208,8 +222,15 @@ function shuffle(arr: any[]): void {
 	}
 }
 
-function includesBlockedTags(tags: string[]|undefined, blocks: Set<string>) {
-	return tags && tags.some((t) => blocks.has(t));
+function includesBlockedTags(tags: string[]|Set<string>|undefined, blocks: Set<string>|string[]|undefined) {
+	// if there are no tags or no blocks, then there's no check needed
+	if (tags === undefined || blocks === undefined) {
+		return false;
+	}
+	const test = [...tags];
+	const check = new Set(blocks);
+
+	return test && test.some((t) => check.has(t));
 }
 
 export {};
