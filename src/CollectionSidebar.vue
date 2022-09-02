@@ -62,6 +62,7 @@ function updateCreatorShare(index:number, share:number) {
 		<SidebarField label="Title" type="text" v-model="collection.name"/>
 		<SidebarField label="Family" type="text" v-model="collection.family"/>
 		<SidebarField label="Symbol" type="text" v-model="collection.symbol"/>
+		<SidebarField label="External URL" type="text" v-model="collection.externalUrl"/>
 		<SidebarField label="Description" type="text" v-model="collection.description"/>
 		<SidebarField label="Seller Fee Basis Points" type="number" step="1" v-model="collection.sellerFeeBasisPoints" class="no-arrows"/>
 		<SidebarField label="Image Title Prefix" type="text" v-model="collection.prefix"/>

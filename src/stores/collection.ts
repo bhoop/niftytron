@@ -20,6 +20,7 @@ export const useCollectionStore = defineStore("collection", () => {
 	const family = ref('');
 	const symbol = ref('');
 	const description = ref('');
+	const externalUrl = ref('');
 	const sellerFeeBasisPoints = ref(0);
 	const creators = ref<{address:string, share:number}[]>([]);
 
@@ -120,6 +121,8 @@ export const useCollectionStore = defineStore("collection", () => {
 			const dirHandle = await (window as any).showDirectoryPicker({
 				writeable: true,
 			});
+			const imagesDirHandle = await dirHandle.getDirectoryHandle( 'images', { create:true } );
+			const metadataDirHandle = await dirHandle.getDirectoryHandle( 'metadata', { create:true } );
 			downloading.value = {
 				running: true,
 				destination: dirHandle.name,
@@ -167,7 +170,7 @@ export const useCollectionStore = defineStore("collection", () => {
 					}
 					// write the image to a file
 					const filename = (image.number - 1) + ".png";
-					const fileHandle = await dirHandle.getFileHandle(filename, {
+					const fileHandle = await imagesDirHandle.getFileHandle(filename, {
 						create: true,
 					});
 					const writable = await fileHandle.createWritable({
@@ -184,6 +187,7 @@ export const useCollectionStore = defineStore("collection", () => {
 						name: prefix.value + image.number,
 						symbol: symbol.value,
 						image: filename,
+						externalUrl: externalUrl.value,
 						properties: {
 							files: [{ uri: filename, type: "image/png" }],
 							category: "image",
@@ -198,7 +202,7 @@ export const useCollectionStore = defineStore("collection", () => {
 						},
 					};
 					const mFilename = (image.number - 1)+".json";
-					const mHandle = await dirHandle.getFileHandle( mFilename, { create: true } );
+					const mHandle = await metadataDirHandle.getFileHandle( mFilename, { create: true } );
 					const mWritable = await mHandle.createWritable({ keepExistingData: false });
 					await mWritable.write( JSON.stringify( metadata, null, '\t' ) );
 					await mWritable.close();
@@ -229,6 +233,7 @@ export const useCollectionStore = defineStore("collection", () => {
 			name: name.value,
 			family: family.value,
 			description: description.value,
+			externalUrl: externalUrl.value,
 			sellerFeeBasisPoints: sellerFeeBasisPoints.value,
 			creators: creators.value,
 			size: size.value,
@@ -247,6 +252,7 @@ export const useCollectionStore = defineStore("collection", () => {
 		creators.value = cache.creators;
 		favorites.value = cache.favorites;
 		size.value = cache.size;
+		externalUrl.value = cache.externalUrl || '';
 		// images
 		generator.restoreImagesFromCache(cache.images, layers);
 	}
@@ -257,6 +263,7 @@ export const useCollectionStore = defineStore("collection", () => {
 		name,
 		family,
 		description,
+		externalUrl,
 		sellerFeeBasisPoints,
 		creators,
 		images,
