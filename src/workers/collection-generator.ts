@@ -29,10 +29,12 @@ onmessage = function(e) {
 	const layerLookup: { [key: string]: WorkerLayer } = {};
 	const pieceLookup: { [key: string]: { layer: WorkerLayer, piece: WorkerPiece } } = {};
 	let sources: Source[] = [];
+	let layerLimits: Map<string, number> = new Map();
 	let limited: Array<{ layer: WorkerLayer; piece: WorkerPiece }> = [];
 	for (const l of layers) {
 		layerLookup[l.id] = l;
 		let source: Source = { layer: l, count: 0, remaining: l.limit ?? Infinity, pieces: [] };
+		if (l.limit) layerLimits.set( l.id, l.limit );
 		for (const p of l.pieces) {
 			pieceLookup[p.id] = { layer: l, piece: p };
 			source.pieces.push({ piece: p, count: 0, remaining: p.limit ?? Infinity });
@@ -157,27 +159,40 @@ onmessage = function(e) {
 			failureCount = 0;
 			// update counts of limited-rate pieces
 			for (const [layer, piece] of attributes) {
-				const source = sources.find((l) => l.layer === layer);
-				if (!source) continue;
-				source.count++;
-				source.remaining--;
-				const psource = source.pieces.find((p) => p.piece === piece);
-				if (!psource) continue;
-				psource.count++;
-				psource.remaining--;
 
-				// if this is an unlimited piece, remove it from the "limited" list because it's been used once
-				if ( ! psource.piece.limit ) {
-					limited = limited.filter( x => x.piece !== piece );
-				}
-				// if this is a limited piece and it has reached its limit, remove it from the "limited" list and the source
-				else if ( psource.remaining <= 0 ) {
-					limited = limited.filter( x => x.piece !== piece );
-					source.pieces = source.pieces.filter( p => p.piece !== piece );
-				}
-				// if this layer has no more pieces or its piece limit has been reached, remove it from the sources
-				if ( source.pieces.length === 0 || source.remaining <= 0 ) {
-					sources = sources.filter( s => s.layer !== layer );
+				// if this layer has a limit, update it
+				if ( layerLimits.has(layer.id) ) {
+					let newLimit = layerLimits.get(layer.id)! - 1;
+					layerLimits.set( layer.id, newLimit );
+					if (newLimit === 0) {
+						// remove all sources that use this layer
+						sources = sources.filter( s => s.layer.id !== layer.id );
+						// remove all limited pieces that are in this layer
+						limited = limited.filter( l => l.layer.id !== layer.id ); 
+					}
+				} else {
+					const source = sources.find((l) => l.layer === layer);
+					if (!source) continue;
+					source.count++;
+					source.remaining--;
+					const psource = source.pieces.find((p) => p.piece === piece);
+					if (!psource) continue;
+					psource.count++;
+					psource.remaining--;
+
+					// if this is an unlimited piece, remove it from the "limited" list because it's been used once
+					if (!psource.piece.limit) {
+						limited = limited.filter((x) => x.piece !== piece);
+					}
+					// if this is a limited piece and it has reached its limit, remove it from the "limited" list and the source
+					else if (psource.remaining <= 0) {
+						limited = limited.filter((x) => x.piece !== piece);
+						source.pieces = source.pieces.filter((p) => p.piece !== piece);
+					}
+					// if this layer has no more pieces or its piece limit has been reached, remove it from the sources
+					if (source.pieces.length === 0 || source.remaining <= 0) {
+						sources = sources.filter((s) => s.layer !== layer);
+					}
 				}
 			}
 
