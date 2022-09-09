@@ -52,7 +52,7 @@ function updateCreatorAddress(index:number, wallet:string) {
 }
 function updateCreatorShare(index:number, share:number) {
 	collection.creators[index].share = share;
-	collection.creators[index-1].share = collection.creators.slice(0,  collection.creators.length-1).reduce((p,v) => p + v.share, 0);
+	collection.creators[collection.creators.length-1].share = collection.creators.slice(0,  collection.creators.length-1).reduce((p,v) => p + v.share, 0);
 }
 
 </script>
