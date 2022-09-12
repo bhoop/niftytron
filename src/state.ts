@@ -19,7 +19,6 @@ export interface Piece {
 	tags: string[];
 	blockedTags: string[];
 	src: string;
-	preview: string;
 	renderLayer?: Layer;
 }
 
