@@ -45,7 +45,7 @@ function tryToDelete() {
 	<SidebarField v-if="!layer.required" label="Tags" type="tags" v-model="layer.tags"/>
 	<SidebarField label="Blocked tags" type="tags" v-model="layer.blockedTags"/>
 
-	<div class="px-2 font-semibold">Pieces</div>
+	<div class="px-2 font-semibold">Traits</div>
 	<div>
 		<div
 			v-for="piece in piecesInDisplayOrder"
@@ -80,7 +80,7 @@ function tryToDelete() {
 		color="red"
 		class="mx-auto mt-3 mb-1"
 		@click="tryToDelete"
-		>delete layer</Button>
+		>delete attribute</Button>
 
 	<div class="mx-auto text-xs text-neutral-500/30 font-mono">{{ layer.id }}</div>
 </div>

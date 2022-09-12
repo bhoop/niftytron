@@ -33,7 +33,7 @@ function changeImagePiece( layer: Layer, pieceName: string ) {
 <template>
 	<div class="p-5 pr-10 pt-0">
 		<div class="pt-4 pb-5 flex items-center">
-			<div class="text-lg">Image #{{ image.number }}</div>
+			<div class="text-lg">{{ collection.prefix }}{{ image.number }}</div>
 			<StarIcon class="w-6 h-6 ml-2 cursor-pointer"
 				:class="[image.favorite ? 'fill-orange-500 stroke-0' : 'text-orange-500']"
 				@click="collection.toggleImageFavorite( image )"

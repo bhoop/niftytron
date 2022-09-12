@@ -16,7 +16,7 @@ export const useCollectionStore = defineStore("collection", () => {
 		total: 0,
 	});
 	const prefix = ref('Skull #');
-	const name = ref('');
+	const name = ref('Yo Skulls');
 	const family = ref('');
 	const symbol = ref('');
 	const description = ref('');

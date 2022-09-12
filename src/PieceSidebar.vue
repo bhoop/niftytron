@@ -67,7 +67,7 @@ function tryToDelete() {
 		color="red"
 		class="mx-auto mt-3 mb-1"
 		@click="tryToDelete"
-		>delete piece</Button>
+		>delete trait</Button>
 
 	<div class="mx-auto text-xs text-neutral-500/30 font-mono">{{ piece.id }}</div>
 </div>

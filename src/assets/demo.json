@@ -1,0 +1,3096 @@
+[
+	{
+		"limit": false,
+		"required": false,
+		"name": "Background",
+		"tags": [],
+		"blockedTags": [],
+		"pieces": [
+			{
+				"limit": false,
+				"name": "Blue",
+				"tags": [],
+				"blockedTags": [],
+				"src": "background_blue.png"
+			},
+			{
+				"limit": false,
+				"name": "Brown",
+				"tags": [],
+				"blockedTags": [],
+				"src": "background_brown.png"
+			},
+			{
+				"limit": false,
+				"name": "Dark green",
+				"tags": [],
+				"blockedTags": [],
+				"src": "background_dark green.png"
+			},
+			{
+				"limit": false,
+				"name": "Gold",
+				"tags": [],
+				"blockedTags": [],
+				"src": "background_gold.png"
+			},
+			{
+				"limit": false,
+				"name": "Green",
+				"tags": [],
+				"blockedTags": [],
+				"src": "background_green.png"
+			},
+			{
+				"limit": false,
+				"name": "Grey",
+				"tags": [],
+				"blockedTags": [],
+				"src": "background_grey.png"
+			},
+			{
+				"limit": false,
+				"name": "Orange",
+				"tags": [],
+				"blockedTags": [],
+				"src": "background_orange.png"
+			},
+			{
+				"limit": false,
+				"name": "Pink",
+				"tags": [],
+				"blockedTags": [],
+				"src": "background_pink.png"
+			},
+			{
+				"limit": false,
+				"name": "Purple",
+				"tags": [],
+				"blockedTags": [],
+				"src": "background_purple.png"
+			},
+			{
+				"limit": false,
+				"name": "Red",
+				"tags": [],
+				"blockedTags": [],
+				"src": "background_red.png"
+			},
+			{
+				"limit": false,
+				"name": "Teal",
+				"tags": [],
+				"blockedTags": [],
+				"src": "background_teal.png"
+			},
+			{
+				"limit": false,
+				"name": "Yellow",
+				"tags": [],
+				"blockedTags": [],
+				"src": "background_yellow.png"
+			}
+		]
+	},
+	{
+		"limit": false,
+		"required": false,
+		"name": "Extra",
+		"tags": [],
+		"blockedTags": [],
+		"pieces": [
+			{
+				"limit": false,
+				"name": "Bandaid chin",
+				"tags": [],
+				"blockedTags": [],
+				"src": "extra_bandaid chin.png"
+			},
+			{
+				"limit": false,
+				"name": "Bandaid head",
+				"tags": [],
+				"blockedTags": [],
+				"src": "extra_bandaid head.png"
+			},
+			{
+				"limit": false,
+				"name": "Chin cracks",
+				"tags": [],
+				"blockedTags": [],
+				"src": "extra_chin cracks.png"
+			},
+			{
+				"limit": false,
+				"name": "Eye scar",
+				"tags": [],
+				"blockedTags": [],
+				"src": "extra_eye scar.png"
+			},
+			{
+				"limit": false,
+				"name": "Forehead crack",
+				"tags": [],
+				"blockedTags": [],
+				"src": "extra_forehead crack.png"
+			},
+			{
+				"limit": false,
+				"name": "Full rings",
+				"tags": [],
+				"blockedTags": [],
+				"src": "extra_full rings.png"
+			},
+			{
+				"limit": false,
+				"name": "Halo",
+				"tags": [],
+				"blockedTags": [],
+				"src": "extra_halo.png"
+			},
+			{
+				"limit": false,
+				"name": "Morrigan wings",
+				"tags": [],
+				"blockedTags": [],
+				"src": "extra_morrigan wings.png"
+			},
+			{
+				"limit": false,
+				"name": "Piercings full",
+				"tags": [],
+				"blockedTags": [],
+				"src": "extra_piercings full.png"
+			},
+			{
+				"limit": false,
+				"name": "Rings and piercings",
+				"tags": [],
+				"blockedTags": [],
+				"src": "extra_rings and piercings.png"
+			},
+			{
+				"limit": false,
+				"name": "Rings",
+				"tags": [],
+				"blockedTags": [],
+				"src": "extra_rings.png"
+			},
+			{
+				"limit": false,
+				"name": "Socket piercings",
+				"tags": [],
+				"blockedTags": [],
+				"src": "extra_socket piercings.png"
+			},
+			{
+				"limit": false,
+				"name": "Vampire wings",
+				"tags": [],
+				"blockedTags": [],
+				"src": "extra_vampire wings.png"
+			},
+			{
+				"limit": false,
+				"name": "Wings black",
+				"tags": [],
+				"blockedTags": [],
+				"src": "extra_wings black.png"
+			},
+			{
+				"limit": false,
+				"name": "Wings",
+				"tags": [],
+				"blockedTags": [],
+				"src": "extra_wings.png"
+			}
+		]
+	},
+	{
+		"limit": false,
+		"required": false,
+		"name": "Body",
+		"tags": [],
+		"blockedTags": [],
+		"pieces": [
+			{
+				"limit": false,
+				"name": "Black",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_black.png"
+			},
+			{
+				"limit": false,
+				"name": "Blue",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_blue.png"
+			},
+			{
+				"limit": false,
+				"name": "Brain",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_brain.png"
+			},
+			{
+				"limit": false,
+				"name": "Brown",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_brown.png"
+			},
+			{
+				"limit": false,
+				"name": "Carved amber",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_carved amber.png"
+			},
+			{
+				"limit": false,
+				"name": "Carved jade",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_carved jade.png"
+			},
+			{
+				"limit": false,
+				"name": "Cheetah",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_cheetah.png"
+			},
+			{
+				"limit": false,
+				"name": "Citrine",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_citrine.png"
+			},
+			{
+				"limit": false,
+				"name": "Clown prince",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_clown prince.png"
+			},
+			{
+				"limit": false,
+				"name": "Cream",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_cream.png"
+			},
+			{
+				"limit": false,
+				"name": "Dalmation",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_dalmation.png"
+			},
+			{
+				"limit": false,
+				"name": "Dark lord",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_dark lord.png"
+			},
+			{
+				"limit": false,
+				"name": "Day of dead blood right",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_day of dead blood right.png"
+			},
+			{
+				"limit": false,
+				"name": "Day of dead midnight",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_day of dead midnight.png"
+			},
+			{
+				"limit": false,
+				"name": "Day of dead moonlight",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_day of dead moonlight.png"
+			},
+			{
+				"limit": false,
+				"name": "Day of dead sunlight",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_day of dead sunlight.png"
+			},
+			{
+				"limit": false,
+				"name": "Deadly nightshade",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_deadly nightshade.png"
+			},
+			{
+				"limit": false,
+				"name": "Desert camo",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_desert camo.png"
+			},
+			{
+				"limit": false,
+				"name": "Disco",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_disco.png"
+			},
+			{
+				"limit": false,
+				"name": "Dreamy",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_dreamy.png"
+			},
+			{
+				"limit": false,
+				"name": "Dry bones",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_dry bones.png"
+			},
+			{
+				"limit": false,
+				"name": "Evil brain",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_evil brain.png"
+			},
+			{
+				"limit": false,
+				"name": "Fish tank",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_fish tank.png"
+			},
+			{
+				"limit": false,
+				"name": "Forest camo",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_forest camo.png"
+			},
+			{
+				"limit": false,
+				"name": "Glass",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_glass.png"
+			},
+			{
+				"limit": false,
+				"name": "Glitch",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_glitch.png"
+			},
+			{
+				"limit": false,
+				"name": "Gold",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_gold.png"
+			},
+			{
+				"limit": false,
+				"name": "Green",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_green.png"
+			},
+			{
+				"limit": false,
+				"name": "Grey",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_grey.png"
+			},
+			{
+				"limit": false,
+				"name": "Ice",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_ice.png"
+			},
+			{
+				"limit": false,
+				"name": "Insane clown",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_insane clown.png"
+			},
+			{
+				"limit": false,
+				"name": "Jade",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_jade.png"
+			},
+			{
+				"limit": false,
+				"name": "Lava",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_lava.png"
+			},
+			{
+				"limit": false,
+				"name": "Lemonaid",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_lemonaid.png"
+			},
+			{
+				"limit": false,
+				"name": "Machine",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_machine.png"
+			},
+			{
+				"limit": false,
+				"name": "Make up",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_make up.png"
+			},
+			{
+				"limit": false,
+				"name": "Mint swirl",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_mint swirl.png"
+			},
+			{
+				"limit": false,
+				"name": "Night camo",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_night camo.png"
+			},
+			{
+				"limit": false,
+				"name": "Orange",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_orange.png"
+			},
+			{
+				"limit": false,
+				"name": "Pink",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_pink.png"
+			},
+			{
+				"limit": false,
+				"name": "Poison",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_poison.png"
+			},
+			{
+				"limit": false,
+				"name": "Potion",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_potion.png"
+			},
+			{
+				"limit": false,
+				"name": "Psychedelic",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_psychedelic.png"
+			},
+			{
+				"limit": false,
+				"name": "Purple amethyst",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_purple amethyst.png"
+			},
+			{
+				"limit": false,
+				"name": "Purple",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_purple.png"
+			},
+			{
+				"limit": false,
+				"name": "Rainbow",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_rainbow.png"
+			},
+			{
+				"limit": false,
+				"name": "Red",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_red.png"
+			},
+			{
+				"limit": false,
+				"name": "Robot",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_robot.png"
+			},
+			{
+				"limit": false,
+				"name": "Sangria",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_sangria.png"
+			},
+			{
+				"limit": false,
+				"name": "Slime",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_slime.png"
+			},
+			{
+				"limit": false,
+				"name": "Snake teal",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_snake teal.png"
+			},
+			{
+				"limit": false,
+				"name": "Space",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_space.png"
+			},
+			{
+				"limit": false,
+				"name": "Sunburn",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_sunburn.png"
+			},
+			{
+				"limit": false,
+				"name": "Tattoo biker",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_tattoo biker.png"
+			},
+			{
+				"limit": false,
+				"name": "Tattoo fighter",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_tattoo fighter.png"
+			},
+			{
+				"limit": false,
+				"name": "Tattoo night",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_tattoo night.png"
+			},
+			{
+				"limit": false,
+				"name": "Tattoo trash",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_tattoo trash.png"
+			},
+			{
+				"limit": false,
+				"name": "Tiger",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_tiger.png"
+			},
+			{
+				"limit": false,
+				"name": "Usa",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_usa.png"
+			},
+			{
+				"limit": false,
+				"name": "Viper",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_viper.png"
+			},
+			{
+				"limit": false,
+				"name": "White tiger",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_white tiger.png"
+			},
+			{
+				"limit": false,
+				"name": "White",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_white.png"
+			},
+			{
+				"limit": false,
+				"name": "Yakuza day",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_yakuza day.png"
+			},
+			{
+				"limit": false,
+				"name": "Yakuza night",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_yakuza night.png"
+			},
+			{
+				"limit": false,
+				"name": "Yellow",
+				"tags": [],
+				"blockedTags": [],
+				"src": "body_yellow.png"
+			}
+		]
+	},
+	{
+		"limit": false,
+		"required": false,
+		"name": "Shirt",
+		"tags": [],
+		"blockedTags": [],
+		"pieces": [
+			{
+				"limit": false,
+				"name": "Admiral formal",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_admiral formal.png"
+			},
+			{
+				"limit": false,
+				"name": "Admiral",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_admiral.png"
+			},
+			{
+				"limit": false,
+				"name": "Adventurer",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_adventurer.png"
+			},
+			{
+				"limit": false,
+				"name": "Archer",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_archer.png"
+			},
+			{
+				"limit": false,
+				"name": "Astro",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_astro.png"
+			},
+			{
+				"limit": false,
+				"name": "Bananas",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_bananas.png"
+			},
+			{
+				"limit": false,
+				"name": "Beach bum",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_beach bum.png"
+			},
+			{
+				"limit": false,
+				"name": "Biker gang",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_biker gang.png"
+			},
+			{
+				"limit": false,
+				"name": "Black coat",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_black coat.png"
+			},
+			{
+				"limit": false,
+				"name": "Black hoodie",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_black hoodie.png"
+			},
+			{
+				"limit": false,
+				"name": "Black knight",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_black knight.png"
+			},
+			{
+				"limit": false,
+				"name": "Black suit",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_black suit.png"
+			},
+			{
+				"limit": false,
+				"name": "Boxcar",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_boxcar.png"
+			},
+			{
+				"limit": false,
+				"name": "Cardinal",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_cardinal.png"
+			},
+			{
+				"limit": false,
+				"name": "Cat",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_cat.png"
+			},
+			{
+				"limit": false,
+				"name": "Chef",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_chef.png"
+			},
+			{
+				"limit": false,
+				"name": "Clown prince",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_clown prince.png"
+			},
+			{
+				"limit": false,
+				"name": "Crown",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_crown.png"
+			},
+			{
+				"limit": false,
+				"name": "Cyber",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_cyber.png"
+			},
+			{
+				"limit": false,
+				"name": "Cyberpunk",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_cyberpunk.png"
+			},
+			{
+				"limit": false,
+				"name": "Dark noir",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_dark noir.png"
+			},
+			{
+				"limit": false,
+				"name": "Detective",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_detective.png"
+			},
+			{
+				"limit": false,
+				"name": "Diamond jersey",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_diamond jersey.png"
+			},
+			{
+				"limit": false,
+				"name": "Diamond",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_diamond.png"
+			},
+			{
+				"limit": false,
+				"name": "Dragon dynasty",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_dragon dynasty.png"
+			},
+			{
+				"limit": false,
+				"name": "Dragon warrior",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_dragon warrior.png"
+			},
+			{
+				"limit": false,
+				"name": "Drone",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_drone.png"
+			},
+			{
+				"limit": false,
+				"name": "Duster",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_duster.png"
+			},
+			{
+				"limit": false,
+				"name": "Eighties",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_eighties.png"
+			},
+			{
+				"limit": false,
+				"name": "Eyes",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_eyes.png"
+			},
+			{
+				"limit": false,
+				"name": "Fall night",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_fall night.png"
+			},
+			{
+				"limit": false,
+				"name": "Fast food",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_fast food.png"
+			},
+			{
+				"limit": false,
+				"name": "Floral",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_floral.png"
+			},
+			{
+				"limit": false,
+				"name": "Football eleven",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_football eleven.png"
+			},
+			{
+				"limit": false,
+				"name": "Football twenty three",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_football twenty three.png"
+			},
+			{
+				"limit": false,
+				"name": "Frogs",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_frogs.png"
+			},
+			{
+				"limit": false,
+				"name": "Ghost detective",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_ghost detective.png"
+			},
+			{
+				"limit": false,
+				"name": "Gold king",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_gold king.png"
+			},
+			{
+				"limit": false,
+				"name": "Golden priest",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_golden priest.png"
+			},
+			{
+				"limit": false,
+				"name": "Golf yuppie",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_golf yuppie.png"
+			},
+			{
+				"limit": false,
+				"name": "Golfer",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_golfer.png"
+			},
+			{
+				"limit": false,
+				"name": "Halloween",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_halloween.png"
+			},
+			{
+				"limit": false,
+				"name": "Head chef",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_head chef.png"
+			},
+			{
+				"limit": false,
+				"name": "Hero",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_hero.png"
+			},
+			{
+				"limit": false,
+				"name": "High priest",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_high priest.png"
+			},
+			{
+				"limit": false,
+				"name": "Jade dynasty",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_jade dynasty.png"
+			},
+			{
+				"limit": false,
+				"name": "Kanji",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_kanji.png"
+			},
+			{
+				"limit": false,
+				"name": "Knight",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_knight.png"
+			},
+			{
+				"limit": false,
+				"name": "Leather jacket",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_leather jacket.png"
+			},
+			{
+				"limit": false,
+				"name": "Lotus warrior",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_lotus warrior.png"
+			},
+			{
+				"limit": false,
+				"name": "Lotus",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_lotus.png"
+			},
+			{
+				"limit": false,
+				"name": "Lumberjack",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_lumberjack.png"
+			},
+			{
+				"limit": false,
+				"name": "Magician",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_magician.png"
+			},
+			{
+				"limit": false,
+				"name": "Mob boss",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_mob boss.png"
+			},
+			{
+				"limit": false,
+				"name": "Monastery",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_monastery.png"
+			},
+			{
+				"limit": false,
+				"name": "Monk",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_monk.png"
+			},
+			{
+				"limit": false,
+				"name": "Motocross",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_motocross.png"
+			},
+			{
+				"limit": false,
+				"name": "Napoloen black",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_napoloen black.png"
+			},
+			{
+				"limit": false,
+				"name": "Napoloen blue",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_napoloen blue.png"
+			},
+			{
+				"limit": false,
+				"name": "Napoloen red",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_napoloen red.png"
+			},
+			{
+				"limit": false,
+				"name": "None",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_none.png"
+			},
+			{
+				"limit": false,
+				"name": "One",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_one.png"
+			},
+			{
+				"limit": false,
+				"name": "Padding",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_padding.png"
+			},
+			{
+				"limit": false,
+				"name": "Pajamas",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_pajamas.png"
+			},
+			{
+				"limit": false,
+				"name": "Patches",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_patches.png"
+			},
+			{
+				"limit": false,
+				"name": "Pharaoh",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_pharaoh.png"
+			},
+			{
+				"limit": false,
+				"name": "Pin stripe",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_pin stripe.png"
+			},
+			{
+				"limit": false,
+				"name": "Pirate",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_pirate.png"
+			},
+			{
+				"limit": false,
+				"name": "Plaid green",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_plaid green.png"
+			},
+			{
+				"limit": false,
+				"name": "Playboy",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_playboy.png"
+			},
+			{
+				"limit": false,
+				"name": "Poison clown",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_poison clown.png"
+			},
+			{
+				"limit": false,
+				"name": "Poker",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_poker.png"
+			},
+			{
+				"limit": false,
+				"name": "Power armor blue",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_power armor blue.png"
+			},
+			{
+				"limit": false,
+				"name": "Power armor red",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_power armor red.png"
+			},
+			{
+				"limit": false,
+				"name": "Prisoner",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_prisoner.png"
+			},
+			{
+				"limit": false,
+				"name": "Punk",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_punk.png"
+			},
+			{
+				"limit": false,
+				"name": "Purple pimp",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_purple pimp.png"
+			},
+			{
+				"limit": false,
+				"name": "Racer",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_racer.png"
+			},
+			{
+				"limit": false,
+				"name": "Rainbow",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_rainbow.png"
+			},
+			{
+				"limit": false,
+				"name": "Ravens",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_ravens.png"
+			},
+			{
+				"limit": false,
+				"name": "Red and black coat",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_red and black coat.png"
+			},
+			{
+				"limit": false,
+				"name": "Red hoodie",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_red hoodie.png"
+			},
+			{
+				"limit": false,
+				"name": "Red suit",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_red suit.png"
+			},
+			{
+				"limit": false,
+				"name": "Red wings",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_red wings.png"
+			},
+			{
+				"limit": false,
+				"name": "Referee",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_referee.png"
+			},
+			{
+				"limit": false,
+				"name": "Sailor",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_sailor.png"
+			},
+			{
+				"limit": false,
+				"name": "Sazai",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_sazai.png"
+			},
+			{
+				"limit": false,
+				"name": "Shot taker",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_shot taker.png"
+			},
+			{
+				"limit": false,
+				"name": "Skull blossom",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_skull blossom.png"
+			},
+			{
+				"limit": false,
+				"name": "Skull burst",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_skull burst.png"
+			},
+			{
+				"limit": false,
+				"name": "Skull collar",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_skull collar.png"
+			},
+			{
+				"limit": false,
+				"name": "Skull samaruai",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_skull samaruai.png"
+			},
+			{
+				"limit": false,
+				"name": "Smiley hoodie",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_smiley hoodie.png"
+			},
+			{
+				"limit": false,
+				"name": "Snake jacket",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_snake jacket.png"
+			},
+			{
+				"limit": false,
+				"name": "Soccer gold",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_soccer gold.png"
+			},
+			{
+				"limit": false,
+				"name": "Soccer player",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_soccer player.png"
+			},
+			{
+				"limit": false,
+				"name": "Soccer red",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_soccer red.png"
+			},
+			{
+				"limit": false,
+				"name": "Soccer yellow",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_soccer yellow.png"
+			},
+			{
+				"limit": false,
+				"name": "Soldier",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_soldier.png"
+			},
+			{
+				"limit": false,
+				"name": "Spider jersey",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_spider jersey.png"
+			},
+			{
+				"limit": false,
+				"name": "Student",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_student.png"
+			},
+			{
+				"limit": false,
+				"name": "Summer",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_summer.png"
+			},
+			{
+				"limit": false,
+				"name": "Suspenders",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_suspenders.png"
+			},
+			{
+				"limit": false,
+				"name": "Swoll",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_swoll.png"
+			},
+			{
+				"limit": false,
+				"name": "Tech pockets",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_tech pockets.png"
+			},
+			{
+				"limit": false,
+				"name": "Tech vest",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_tech vest.png"
+			},
+			{
+				"limit": false,
+				"name": "Techwear arctic",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_techwear arctic.png"
+			},
+			{
+				"limit": false,
+				"name": "Techwear city",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_techwear city.png"
+			},
+			{
+				"limit": false,
+				"name": "Techwear red",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_techwear red.png"
+			},
+			{
+				"limit": false,
+				"name": "Tie",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_tie.png"
+			},
+			{
+				"limit": false,
+				"name": "Tiger armor",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_tiger armor.png"
+			},
+			{
+				"limit": false,
+				"name": "Tiger",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_tiger.png"
+			},
+			{
+				"limit": false,
+				"name": "Triangles",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_triangles.png"
+			},
+			{
+				"limit": false,
+				"name": "Tuxedo black",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_tuxedo black.png"
+			},
+			{
+				"limit": false,
+				"name": "Tuxedo gold",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_tuxedo gold.png"
+			},
+			{
+				"limit": false,
+				"name": "Vest green",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_vest green.png"
+			},
+			{
+				"limit": false,
+				"name": "Vest white",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_vest white.png"
+			},
+			{
+				"limit": false,
+				"name": "Voroni",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_voroni.png"
+			},
+			{
+				"limit": false,
+				"name": "Warlock",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_warlock.png"
+			},
+			{
+				"limit": false,
+				"name": "Weed",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_weed.png"
+			},
+			{
+				"limit": false,
+				"name": "White hoodie",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_white hoodie.png"
+			},
+			{
+				"limit": false,
+				"name": "White suit",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_white suit.png"
+			},
+			{
+				"limit": false,
+				"name": "Yakuza",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_yakuza.png"
+			},
+			{
+				"limit": false,
+				"name": "Yellow bird",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_yellow bird.png"
+			},
+			{
+				"limit": false,
+				"name": "Yellow jersey",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_yellow jersey.png"
+			},
+			{
+				"limit": false,
+				"name": "Yo collar",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_yo collar.png"
+			},
+			{
+				"limit": false,
+				"name": "Yoga",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_yoga.png"
+			},
+			{
+				"limit": false,
+				"name": "Yoskulls",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_yoskulls.png"
+			},
+			{
+				"limit": false,
+				"name": "Youngster",
+				"tags": [],
+				"blockedTags": [],
+				"src": "shirt_youngster.png"
+			}
+		]
+	},
+	{
+		"limit": false,
+		"required": false,
+		"name": "Eyes",
+		"tags": [],
+		"blockedTags": [],
+		"pieces": [
+			{
+				"limit": false,
+				"name": "3D",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_3d.png"
+			},
+			{
+				"limit": false,
+				"name": "Arrows",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_arrows.png"
+			},
+			{
+				"limit": false,
+				"name": "Blood",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_blood.png"
+			},
+			{
+				"limit": false,
+				"name": "Bloodshot",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_bloodshot.png"
+			},
+			{
+				"limit": false,
+				"name": "Blue",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_blue.png"
+			},
+			{
+				"limit": false,
+				"name": "Bored gold",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_bored gold.png"
+			},
+			{
+				"limit": false,
+				"name": "Bored red",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_bored red.png"
+			},
+			{
+				"limit": false,
+				"name": "Bored teal",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_bored teal.png"
+			},
+			{
+				"limit": false,
+				"name": "Ceramic",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_ceramic.png"
+			},
+			{
+				"limit": false,
+				"name": "Disco",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_disco.png"
+			},
+			{
+				"limit": false,
+				"name": "Dots",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_dots.png"
+			},
+			{
+				"limit": false,
+				"name": "Eight ball",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_eight ball.png"
+			},
+			{
+				"limit": false,
+				"name": "Empty",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_empty.png"
+			},
+			{
+				"limit": false,
+				"name": "Flesh",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_flesh.png"
+			},
+			{
+				"limit": false,
+				"name": "Glasses bored 2",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_glasses bored 2.png"
+			},
+			{
+				"limit": false,
+				"name": "Glasses bored",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_glasses bored.png"
+			},
+			{
+				"limit": false,
+				"name": "Glasses peppermint",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_glasses peppermint.png"
+			},
+			{
+				"limit": false,
+				"name": "Glasses red eyes",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_glasses red eyes.png"
+			},
+			{
+				"limit": false,
+				"name": "Glasses round dark",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_glasses round dark.png"
+			},
+			{
+				"limit": false,
+				"name": "Glasses round green",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_glasses round green.png"
+			},
+			{
+				"limit": false,
+				"name": "Glasses round red",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_glasses round red.png"
+			},
+			{
+				"limit": false,
+				"name": "Glow",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_glow.png"
+			},
+			{
+				"limit": false,
+				"name": "Gold coins",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_gold coins.png"
+			},
+			{
+				"limit": false,
+				"name": "Hypnotic rings",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_hypnotic rings.png"
+			},
+			{
+				"limit": false,
+				"name": "Lava",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_lava.png"
+			},
+			{
+				"limit": false,
+				"name": "Lens",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_lens.png"
+			},
+			{
+				"limit": false,
+				"name": "Love",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_love.png"
+			},
+			{
+				"limit": false,
+				"name": "Madness",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_madness.png"
+			},
+			{
+				"limit": false,
+				"name": "Money",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_money.png"
+			},
+			{
+				"limit": false,
+				"name": "Monocle bored",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_monocle bored.png"
+			},
+			{
+				"limit": false,
+				"name": "Monocle",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_monocle.png"
+			},
+			{
+				"limit": false,
+				"name": "Mushrooms",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_mushrooms.png"
+			},
+			{
+				"limit": false,
+				"name": "Patch",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_patch.png"
+			},
+			{
+				"limit": false,
+				"name": "Pirate patch",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_pirate patch.png"
+			},
+			{
+				"limit": false,
+				"name": "Power reader bored",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_power reader bored.png"
+			},
+			{
+				"limit": false,
+				"name": "Power reader",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_power reader.png"
+			},
+			{
+				"limit": false,
+				"name": "Pretty",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_pretty.png"
+			},
+			{
+				"limit": false,
+				"name": "Questions",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_questions.png"
+			},
+			{
+				"limit": false,
+				"name": "Red void",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_red void.png"
+			},
+			{
+				"limit": false,
+				"name": "Red x",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_red x.png"
+			},
+			{
+				"limit": false,
+				"name": "Red",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_red.png"
+			},
+			{
+				"limit": false,
+				"name": "Reptile",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_reptile.png"
+			},
+			{
+				"limit": false,
+				"name": "Reptile2",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_reptile2.png"
+			},
+			{
+				"limit": false,
+				"name": "Robot socket",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_robot socket.png"
+			},
+			{
+				"limit": false,
+				"name": "Robot",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_robot.png"
+			},
+			{
+				"limit": false,
+				"name": "Scales orange",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_scales orange.png"
+			},
+			{
+				"limit": false,
+				"name": "Scales purple",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_scales purple.png"
+			},
+			{
+				"limit": false,
+				"name": "Silver coins",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_silver coins.png"
+			},
+			{
+				"limit": false,
+				"name": "Ski cool",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_ski cool.png"
+			},
+			{
+				"limit": false,
+				"name": "Ski heat",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_ski heat.png"
+			},
+			{
+				"limit": false,
+				"name": "Slime",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_slime.png"
+			},
+			{
+				"limit": false,
+				"name": "Space",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_space.png"
+			},
+			{
+				"limit": false,
+				"name": "Spiral blue",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_spiral blue.png"
+			},
+			{
+				"limit": false,
+				"name": "Spiral purple",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_spiral purple.png"
+			},
+			{
+				"limit": false,
+				"name": "Spiral red",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_spiral red.png"
+			},
+			{
+				"limit": false,
+				"name": "Stars",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_stars.png"
+			},
+			{
+				"limit": false,
+				"name": "Steampunk",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_steampunk.png"
+			},
+			{
+				"limit": false,
+				"name": "Sunglasses beach",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_sunglasses beach.png"
+			},
+			{
+				"limit": false,
+				"name": "Sunglasses blue",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_sunglasses blue.png"
+			},
+			{
+				"limit": false,
+				"name": "Sunglasses bright",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_sunglasses bright.png"
+			},
+			{
+				"limit": false,
+				"name": "Sunglasses gold",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_sunglasses gold.png"
+			},
+			{
+				"limit": false,
+				"name": "Twist blue",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_twist blue.png"
+			},
+			{
+				"limit": false,
+				"name": "Twist purple",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_twist purple.png"
+			},
+			{
+				"limit": false,
+				"name": "Web",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_web.png"
+			},
+			{
+				"limit": false,
+				"name": "White",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_white.png"
+			},
+			{
+				"limit": false,
+				"name": "X",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_x.png"
+			},
+			{
+				"limit": false,
+				"name": "Yellow eyeballs",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_yellow eyeballs.png"
+			},
+			{
+				"limit": false,
+				"name": "Yellow sink",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_yellow sink.png"
+			},
+			{
+				"limit": false,
+				"name": "Yellow",
+				"tags": [],
+				"blockedTags": [],
+				"src": "eyes_yellow.png"
+			}
+		]
+	},
+	{
+		"limit": "1000",
+		"required": false,
+		"name": "Headgear",
+		"tags": [],
+		"blockedTags": [],
+		"pieces": [
+			{
+				"limit": false,
+				"name": "Adventure hat",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_adventure hat.png"
+			},
+			{
+				"limit": false,
+				"name": "Alien",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_alien.png"
+			},
+			{
+				"limit": false,
+				"name": "Antlers",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_antlers.png"
+			},
+			{
+				"limit": false,
+				"name": "Arrows",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_arrows.png"
+			},
+			{
+				"limit": false,
+				"name": "Backwards black",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_backwards black.png"
+			},
+			{
+				"limit": false,
+				"name": "Backwards red",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_backwards red.png"
+			},
+			{
+				"limit": false,
+				"name": "Backwards white",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_backwards white.png"
+			},
+			{
+				"limit": false,
+				"name": "Balding",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_balding.png"
+			},
+			{
+				"limit": false,
+				"name": "Bat",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_bat.png"
+			},
+			{
+				"limit": false,
+				"name": "Beach bucket",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_beach bucket.png"
+			},
+			{
+				"limit": false,
+				"name": "Beanie black",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_beanie black.png"
+			},
+			{
+				"limit": false,
+				"name": "Beanie grey",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_beanie grey.png"
+			},
+			{
+				"limit": false,
+				"name": "Beanie pink",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_beanie pink.png"
+			},
+			{
+				"limit": false,
+				"name": "Birthday",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_birthday.png"
+			},
+			{
+				"limit": false,
+				"name": "Black and gold",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_black and gold.png"
+			},
+			{
+				"limit": false,
+				"name": "Black cap",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_black cap.png"
+			},
+			{
+				"limit": false,
+				"name": "Blue headphones",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_blue headphones.png"
+			},
+			{
+				"limit": false,
+				"name": "Bucket hat",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_bucket hat.png"
+			},
+			{
+				"limit": false,
+				"name": "Butcher knife",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_butcher knife.png"
+			},
+			{
+				"limit": false,
+				"name": "Chef",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_chef.png"
+			},
+			{
+				"limit": false,
+				"name": "Clown prince",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_clown prince.png"
+			},
+			{
+				"limit": false,
+				"name": "Cowboy",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_cowboy.png"
+			},
+			{
+				"limit": false,
+				"name": "Crown of horns",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_crown of horns.png"
+			},
+			{
+				"limit": false,
+				"name": "Crown",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_crown.png"
+			},
+			{
+				"limit": false,
+				"name": "Devil horns",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_devil horns.png"
+			},
+			{
+				"limit": false,
+				"name": "Ear flaps",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_ear flaps.png"
+			},
+			{
+				"limit": false,
+				"name": "Emo blue",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_emo blue.png"
+			},
+			{
+				"limit": false,
+				"name": "Emo",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_emo.png"
+			},
+			{
+				"limit": false,
+				"name": "Evil officer",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_evil officer.png"
+			},
+			{
+				"limit": false,
+				"name": "Fast food",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_fast food.png"
+			},
+			{
+				"limit": false,
+				"name": "Fiesta",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_fiesta.png"
+			},
+			{
+				"limit": false,
+				"name": "Flamehead",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_flamehead.png"
+			},
+			{
+				"limit": false,
+				"name": "Flat brim full net",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_flat brim full net.png"
+			},
+			{
+				"limit": false,
+				"name": "Flat brim hat brown",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_flat brim hat brown.png"
+			},
+			{
+				"limit": false,
+				"name": "Flat brim hat green",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_flat brim hat green.png"
+			},
+			{
+				"limit": false,
+				"name": "Flat brim hat grey",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_flat brim hat grey.png"
+			},
+			{
+				"limit": false,
+				"name": "Flat brim hat teal",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_flat brim hat teal.png"
+			},
+			{
+				"limit": false,
+				"name": "Flat cap",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_flat cap.png"
+			},
+			{
+				"limit": false,
+				"name": "Footballer",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_footballer.png"
+			},
+			{
+				"limit": false,
+				"name": "Ghostflame",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_ghostflame.png"
+			},
+			{
+				"limit": false,
+				"name": "Headphones and flat brim",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_headphones and flat brim.png"
+			},
+			{
+				"limit": false,
+				"name": "Headphones red",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_headphones red.png"
+			},
+			{
+				"limit": false,
+				"name": "Helmet",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_helmet.png"
+			},
+			{
+				"limit": false,
+				"name": "Horn king",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_horn king.png"
+			},
+			{
+				"limit": false,
+				"name": "Horned beanie",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_horned beanie.png"
+			},
+			{
+				"limit": false,
+				"name": "Horned flap",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_horned flap.png"
+			},
+			{
+				"limit": false,
+				"name": "Horned flat brim",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_horned flat brim.png"
+			},
+			{
+				"limit": false,
+				"name": "Hornrows",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_hornrows.png"
+			},
+			{
+				"limit": false,
+				"name": "Horns tyrant",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_horns tyrant.png"
+			},
+			{
+				"limit": false,
+				"name": "Magician",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_magician.png"
+			},
+			{
+				"limit": false,
+				"name": "Napoleon black",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_napoleon black.png"
+			},
+			{
+				"limit": false,
+				"name": "Napoleon",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_napoleon.png"
+			},
+			{
+				"limit": false,
+				"name": "Navidad",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_navidad.png"
+			},
+			{
+				"limit": false,
+				"name": "None",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_none.png"
+			},
+			{
+				"limit": false,
+				"name": "Octopus",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_octopus.png"
+			},
+			{
+				"limit": false,
+				"name": "Octopus2",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_octopus2.png"
+			},
+			{
+				"limit": false,
+				"name": "Officer",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_officer.png"
+			},
+			{
+				"limit": false,
+				"name": "Outlaw",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_outlaw.png"
+			},
+			{
+				"limit": false,
+				"name": "Pharoah",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_pharoah.png"
+			},
+			{
+				"limit": false,
+				"name": "Pirate",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_pirate.png"
+			},
+			{
+				"limit": false,
+				"name": "Poker",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_poker.png"
+			},
+			{
+				"limit": false,
+				"name": "Punk horns",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_punk horns.png"
+			},
+			{
+				"limit": false,
+				"name": "Red cap",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_red cap.png"
+			},
+			{
+				"limit": false,
+				"name": "Rice hat",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_rice hat.png"
+			},
+			{
+				"limit": false,
+				"name": "Safari",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_safari.png"
+			},
+			{
+				"limit": false,
+				"name": "Sailor",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_sailor.png"
+			},
+			{
+				"limit": false,
+				"name": "Samurai",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_samurai.png"
+			},
+			{
+				"limit": false,
+				"name": "Siesta",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_siesta.png"
+			},
+			{
+				"limit": false,
+				"name": "Skull",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_skull.png"
+			},
+			{
+				"limit": false,
+				"name": "Slick black",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_slick black.png"
+			},
+			{
+				"limit": false,
+				"name": "Slick white",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_slick white.png"
+			},
+			{
+				"limit": false,
+				"name": "Spinny",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_spinny.png"
+			},
+			{
+				"limit": false,
+				"name": "Summer",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_summer.png"
+			},
+			{
+				"limit": false,
+				"name": "Super black",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_super black.png"
+			},
+			{
+				"limit": false,
+				"name": "Super blue",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_super blue.png"
+			},
+			{
+				"limit": false,
+				"name": "Super gold",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_super gold.png"
+			},
+			{
+				"limit": false,
+				"name": "Super rose",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_super rose.png"
+			},
+			{
+				"limit": false,
+				"name": "Super white",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_super white.png"
+			},
+			{
+				"limit": false,
+				"name": "Tight beanie",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_tight beanie.png"
+			},
+			{
+				"limit": false,
+				"name": "Top hat",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_top hat.png"
+			},
+			{
+				"limit": false,
+				"name": "Tri hat",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_tri hat.png"
+			},
+			{
+				"limit": false,
+				"name": "Uranium flame",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_uranium flame.png"
+			},
+			{
+				"limit": false,
+				"name": "Viking",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_viking.png"
+			},
+			{
+				"limit": false,
+				"name": "Watermelon",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_watermelon.png"
+			},
+			{
+				"limit": false,
+				"name": "Weed",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_weed.png"
+			},
+			{
+				"limit": false,
+				"name": "White cap",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_white cap.png"
+			},
+			{
+				"limit": false,
+				"name": "Winter beanie",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_winter beanie.png"
+			},
+			{
+				"limit": false,
+				"name": "Witch",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_witch.png"
+			},
+			{
+				"limit": false,
+				"name": "Wolf",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_wolf.png"
+			},
+			{
+				"limit": false,
+				"name": "Wrap",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_wrap.png"
+			},
+			{
+				"limit": false,
+				"name": "Yellow cap",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_yellow cap.png"
+			},
+			{
+				"limit": false,
+				"name": "Yellow horns",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_yellow horns.png"
+			},
+			{
+				"limit": false,
+				"name": "Yoskulls",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_yoskulls.png"
+			},
+			{
+				"limit": false,
+				"name": "Zebra",
+				"tags": [],
+				"blockedTags": [],
+				"src": "headgear_zebra.png"
+			}
+		]
+	},
+	{
+		"limit": false,
+		"required": false,
+		"name": "Teeth",
+		"tags": [],
+		"blockedTags": [],
+		"pieces": [
+			{
+				"limit": false,
+				"name": "Black beard",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_black beard.png"
+			},
+			{
+				"limit": false,
+				"name": "Black mustache",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_black mustache.png"
+			},
+			{
+				"limit": false,
+				"name": "Bling",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_bling.png"
+			},
+			{
+				"limit": false,
+				"name": "Blond beard",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_blond beard.png"
+			},
+			{
+				"limit": false,
+				"name": "Blood",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_blood.png"
+			},
+			{
+				"limit": false,
+				"name": "Braces",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_braces.png"
+			},
+			{
+				"limit": false,
+				"name": "Buck",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_buck.png"
+			},
+			{
+				"limit": false,
+				"name": "Chunky",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_chunky.png"
+			},
+			{
+				"limit": false,
+				"name": "Cigar and stache",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_cigar and stache.png"
+			},
+			{
+				"limit": false,
+				"name": "Cigar",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_cigar.png"
+			},
+			{
+				"limit": false,
+				"name": "Dead teeth",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_dead teeth.png"
+			},
+			{
+				"limit": false,
+				"name": "Dentures",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_dentures.png"
+			},
+			{
+				"limit": false,
+				"name": "Dog tongue",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_dog tongue.png"
+			},
+			{
+				"limit": false,
+				"name": "Dwarf",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_dwarf.png"
+			},
+			{
+				"limit": false,
+				"name": "Fangs",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_fangs.png"
+			},
+			{
+				"limit": false,
+				"name": "Fire",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_fire.png"
+			},
+			{
+				"limit": false,
+				"name": "Frog",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_frog.png"
+			},
+			{
+				"limit": false,
+				"name": "Gas mask",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_gas mask.png"
+			},
+			{
+				"limit": false,
+				"name": "Giant teeth",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_giant teeth.png"
+			},
+			{
+				"limit": false,
+				"name": "Gold teeth",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_gold teeth.png"
+			},
+			{
+				"limit": false,
+				"name": "Gold top",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_gold top.png"
+			},
+			{
+				"limit": false,
+				"name": "Green",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_green.png"
+			},
+			{
+				"limit": false,
+				"name": "Healthy",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_healthy.png"
+			},
+			{
+				"limit": false,
+				"name": "Lick beard",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_lick beard.png"
+			},
+			{
+				"limit": false,
+				"name": "Lick",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_lick.png"
+			},
+			{
+				"limit": false,
+				"name": "Long beard",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_long beard.png"
+			},
+			{
+				"limit": false,
+				"name": "Mushrooms",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_mushrooms.png"
+			},
+			{
+				"limit": false,
+				"name": "Orange mustache",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_orange mustache.png"
+			},
+			{
+				"limit": false,
+				"name": "Orange soul patch",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_orange soul patch.png"
+			},
+			{
+				"limit": false,
+				"name": "Pharaoh",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_pharaoh.png"
+			},
+			{
+				"limit": false,
+				"name": "Piercings",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_piercings.png"
+			},
+			{
+				"limit": false,
+				"name": "Pipe",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_pipe.png"
+			},
+			{
+				"limit": false,
+				"name": "Pirate beard",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_pirate beard.png"
+			},
+			{
+				"limit": false,
+				"name": "Prospector",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_prospector.png"
+			},
+			{
+				"limit": false,
+				"name": "Red",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_red.png"
+			},
+			{
+				"limit": false,
+				"name": "Slime",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_slime.png"
+			},
+			{
+				"limit": false,
+				"name": "Sloppy",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_sloppy.png"
+			},
+			{
+				"limit": false,
+				"name": "Steel jaw",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_steel jaw.png"
+			},
+			{
+				"limit": false,
+				"name": "Tusks",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_tusks.png"
+			},
+			{
+				"limit": false,
+				"name": "Viking",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_viking.png"
+			},
+			{
+				"limit": false,
+				"name": "White beard",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_white beard.png"
+			},
+			{
+				"limit": false,
+				"name": "White soul patch",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_white soul patch.png"
+			},
+			{
+				"limit": false,
+				"name": "White",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_white.png"
+			},
+			{
+				"limit": false,
+				"name": "Wise",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_wise.png"
+			},
+			{
+				"limit": false,
+				"name": "Yellow full",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_yellow full.png"
+			},
+			{
+				"limit": false,
+				"name": "Yellow gap",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_yellow gap.png"
+			},
+			{
+				"limit": false,
+				"name": "Yellow missing",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_yellow missing.png"
+			},
+			{
+				"limit": false,
+				"name": "Yellow sparse",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_yellow sparse.png"
+			},
+			{
+				"limit": false,
+				"name": "Yellow whistle",
+				"tags": [],
+				"blockedTags": [],
+				"src": "teeth_yellow whistle.png"
+			}
+		]
+	}
+]

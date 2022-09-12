@@ -97,7 +97,7 @@ function updateCreatorShare(index:number, share:number) {
 		</div>
 
 
-		<div class="py-1 px-2 mt-1 font-semibold">Layers</div>
+		<div class="py-1 px-2 mt-1 font-semibold">Attributes</div>
 		<SlickList axis="y" :list="layersInDisplayOrder" @update:list="sortLayers" :pressDelay="150" :distance="10">
 			<SlickItem v-for="(layer,i) in layersInDisplayOrder" :key="layer.id" :index="i">
 				<div
