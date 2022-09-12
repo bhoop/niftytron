@@ -145,7 +145,7 @@
 				"limit": false,
 				"name": "Halo",
 				"tags": [],
-				"blockedTags": [],
+				"blockedTags": ["hats"],
 				"src": "extra_halo.png"
 			},
 			{
@@ -2078,7 +2078,7 @@
 		"limit": false,
 		"required": false,
 		"name": "Headgear",
-		"tags": [],
+		"tags": ["hats"],
 		"blockedTags": [],
 		"pieces": [
 			{

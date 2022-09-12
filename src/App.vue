@@ -233,12 +233,12 @@ function showstate() {
 		<button class="fixed bottom-12 right-4" @click="showstate()">
 			state
 		</button>
-		<div
+		<textarea
 			v-if="stateVisible"
 			class="fixed top-20 bottom-20 right-10 left-10 bg-white whitespace-pre z-50 overflow-auto p-10 font-mono text-sm"
 		>
 			{{ statejson }}
-		</div>
+		</textarea>
 	</template>
 	<div
 		class="z-40 fixed top-0 left-0 w-screen h-screen pointer-events-none flex items-center justify-center"
