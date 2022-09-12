@@ -98,13 +98,13 @@ function persistCollection() {
 onBeforeMount(async () => {
 	data.layers = demoState.map((l) => ({
 		...l,
-		limit: Number(l.limit),
+		limit: Number(l.limit) || false,
 		id: createUniqueId(),
 		excludeFromKey: false,
 		pieces: l.pieces.map((p) => ({
 			...p,
 			id: createUniqueId(),
-			limit: Number(l.limit),
+			limit: Number(l.limit) || false,
 			excludeFromKey: false,
 			src: new URL(`./assets/images/${p.src}`, import.meta.url).href,
 		})),

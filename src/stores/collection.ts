@@ -6,7 +6,7 @@ import { useCollectionGenerator } from "./useCollectionGenerator";
 import uid from "../uid";
 
 export const useCollectionStore = defineStore("collection", () => {
-	const size = ref(1000);
+	const size = ref(100);
 	const data = useDataStore();
 	const favorites = ref<FavoriteBag>({});
 	const downloading = ref({
