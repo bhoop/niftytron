@@ -110,51 +110,6 @@ onBeforeMount(async () => {
 		})),
 	}));
 	initialized.value = true;
-	return;
-	const [storedLayers, storedCollection] = await getMany([
-		"layers",
-		"collection",
-	]);
-
-	// rehydrate layers
-	if (storedLayers) {
-		for (const layer of storedLayers) {
-			for (const piece of layer.pieces) {
-				if (piece.renderLayer) {
-					const pointer = storedLayers.find(
-						(l: Layer) => l.id === piece.renderLayer
-					);
-					if (pointer) piece.renderLayer = pointer;
-					else delete piece.renderLayer;
-				}
-			}
-		}
-		data.layers = storedLayers;
-	}
-
-	// rehydrate collection
-	if (storedCollection) {
-		collection.setStateFromStorage(storedCollection, storedLayers);
-	}
-
-	let dataTimer = 0;
-	data.$subscribe(() => {
-		clearTimeout(dataTimer);
-		dataTimer = setTimeout(persistLayers, 500);
-	});
-	let collectionTimer = 0;
-	collection.$subscribe(() => {
-		clearTimeout(collectionTimer);
-		collectionTimer = setTimeout(persistCollection, 500);
-	});
-	initialized.value = true;
-
-	// todo: load cached state from storage
-	// todo: initialize data store
-	// todo: initialize collection store
-	// todo: when the data store key changes,
-	//       or the collection store key changes,
-	//       persist the state to storage
 });
 
 function reset() {

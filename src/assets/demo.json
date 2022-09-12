@@ -2075,7 +2075,7 @@
 		]
 	},
 	{
-		"limit": "1000",
+		"limit": false,
 		"required": false,
 		"name": "Headgear",
 		"tags": [],
