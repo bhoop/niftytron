@@ -64,17 +64,17 @@ function updateCreatorShare(index:number, share:number) {
 	<SidebarBox>
 		<div class="relative">
 			<SidebarHeading class="sticky top-0 bg-white rounded-t">
-				Collection Details
+				Collection Settings
 			</SidebarHeading>
 			<div class="flex flex-col gap-y-2 pr-4 py-3 pl-1">
-				<SidebarField label="Number of images" type="number" min="1" step="1" v-model.lazy="collection.size" help="Help Help!"/>
-				<SidebarField label="Title" type="text" v-model="collection.name"/>
-				<SidebarField label="Family" type="text" v-model="collection.family"/>
-				<SidebarField label="Symbol" type="text" v-model="collection.symbol"/>
+				<SidebarField label="Number of images" type="number" min="1" step="1" v-model.lazy="collection.size" class="no-arrows" help="Number of exported NFTs in your collection."/>
+				<SidebarField label="Collection name" type="text" v-model="collection.name" help="The name of your collection or sub-collection eg. 'YoSkulls' or 'YoSkulls Season 1'. Will be displayed as the title of your collection."/>
+				<SidebarField label="Collection family" type="text" v-model="collection.family" help="The name of the family this collection belongs to in case you're making multiple variations on a theme eg 'YoSkulls. Must be unique across your whole project and never a general term like 'cars', 'art', or similar."/>
+				<SidebarField label="Symbol" type="text" v-model="collection.symbol" help="The ticker or symbol which represents your collection on the blockchain eg. 'YOSKULLS'. Twelve character limit." maxlength="12"/>
 				<SidebarField label="External URL" type="text" v-model="collection.externalUrl"/>
-				<SidebarField label="Description" type="textarea" v-model="collection.description"/>
-				<SidebarField label="Seller Fee Basis Points" type="number" step="1" v-model="collection.sellerFeeBasisPoints" class="no-arrows"/>
-				<SidebarField label="Image Title Prefix" type="text" v-model="collection.prefix"/>
+				<SidebarField label="Description" type="textarea" v-model="collection.description" help="The general description for your collection that each NFT will display. 128 character limit." maxlength="128"/>
+				<SidebarField label="Royalties" type="percent" v-model="collection.sellerFeeBasisPoints" help="The percentage of royalties collected from each secondary sale." step="0.01" min="0" max="100"/>
+				<SidebarField label="Base NFT name" type="text" v-model="collection.prefix" help="The base name of your NFT eg. 'YoSkull #' which will name your NFTs 'YoSkull #1', 'YoSkull #2', etc."/>
 			</div>
 			<div class="py-1 px-2 font-semibold flex items-end">
 				Creators

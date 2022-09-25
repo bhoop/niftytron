@@ -4,18 +4,20 @@ import { QuestionMarkCircleIcon, ChevronDownIcon } from '@heroicons/vue/20/solid
 
 const props = defineProps<{
 	label:string,
-	type:'text'|'textarea'|'number'|'checkbox'|'tags'|'limit'|'select',
+	type:'text'|'textarea'|'number'|'checkbox'|'tags'|'limit'|'select'|'percent',
 	modelValue:any,
 	selectValue?:string|null,
 	help?: string,
 	disabled?: string|false,
+	suffix?: string,
 }>();
 const emit = defineEmits<{(e:'update:modelValue', value:any): void}>();
 
 const inputType = computed( () => {
 	if ( ! props.type ) return 'text';
 	switch( props.type ) {
-		case 'limit': return 'number';
+		case 'limit':
+		case 'percent': return 'number';
 		case 'tags': return 'text';
 		default: return props.type;
 	}
@@ -66,10 +68,14 @@ onBeforeUnmount( () => {
 	resizeObserver.value.unobserve( shadowEl.value! );
 } );
 
+function showHelp() {
+	alert( props.help );
+}
+
 </script>
 <template>
-	<label class="flex items-center relative" ref="boxEl">
-		<div class="w-6 h-4 px-1" :class="[ ( ! props.help || props.help === '') && 'invisible' ]" :title="props.help">
+	<label class="flex items-center relative" ref="boxEl" :title="props.help">
+		<div class="w-6 h-4 px-1" :class="[ ( ! props.help || props.help === '') && 'invisible' ]" :title="props.help" @click="showHelp()">
 			<QuestionMarkCircleIcon/>
 		</div>
 		<div v-if="type === 'checkbox'" class="h-6 w-full border border-dotted border-neutral-400/40 rounded-sm flex justify-end pr-2">
@@ -84,6 +90,8 @@ onBeforeUnmount( () => {
 		<template v-else-if="type === 'select'" class="h-6 w-full border border-dotted border-neutral-400/40 rounded-sm flex justify-end">
 			<select
 				class="peer bg-transparent appearance-none h-6 w-full border border-dotted rounded-sm pr-2 outline-none text-xs"
+				:title="props.help"
+				v-bind="$attrs"
 				:class="[
 					props.disabled
 						? 'border-neutral-200/50'
@@ -113,17 +121,29 @@ onBeforeUnmount( () => {
 		<input
 			v-else
 			:type="inputType"
+			:title="props.help"
 			v-bind="$attrs"
 			:value="inputValue"
 			@input="onInput(($event.target as HTMLInputElement).value)"
 			:readonly="!!props.disabled"
-			class="peer pr-2 h-6 w-full text-xs no-arrows bg-transparent text-orange-600 font-semibold text-right outline-none rounded-sm border border-dotted"
+			class="peer pr-2 h-6 w-full text-xs bg-transparent text-orange-500 font-semibold text-right outline-none rounded-sm border border-dotted"
 			:class="[
+				props.suffix && 'pr-5',
+				type === 'percent' && 'arrows-percent pr-1',
 				props.disabled
 					? 'text-neutral-500/50 placeholder-neutral-500/50 cursor-default border-neutral-200/50'
 					: 'border-neutral-400/40 focus:border-orange-400 focus:border-solid focus:ring focus:ring-orange-100 selection:bg-orange-300/50 placeholder-orange-500/50 focus:placeholder-orange-500/0'
 			]"
 			/>
+		<div
+			v-if="type === 'percent'"
+			class="absolute right-6 text-xs font-semibold pointer-events-none mt-px"
+			:class="[
+				props.disabled
+					? 'text-neutral-500/50 cursor-default'
+					: 'text-orange-500/60'
+			]"
+		>%</div>
 		<!-- label -->
 		<div
 			class="pl-2 h-6 flex items-center absolute left-6 top-0 bottom-0 pointer-events-none text-xs font-semibold transition-all "
