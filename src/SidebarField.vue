@@ -1,8 +1,16 @@
 <script setup lang="ts">
-import { computed, useAttrs } from 'vue'
-import { SelectorIcon } from "@heroicons/vue/solid";
+import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
+import { ChevronUpDownIcon } from "@heroicons/vue/24/solid";
+import { QuestionMarkCircleIcon } from '@heroicons/vue/20/solid';
 
-const props = defineProps<{label:string, type:'text'|'number'|'checkbox'|'tags'|'limit'|'select', modelValue:any, selectValue?:string|null}>();
+const props = defineProps<{
+	label:string,
+	type:'text'|'textarea'|'number'|'checkbox'|'tags'|'limit'|'select',
+	modelValue:any,
+	selectValue?:string|null,
+	help?: string,
+	disabled?: string|false,
+}>();
 const emit = defineEmits<{(e:'update:modelValue', value:any): void}>();
 
 const inputType = computed( () => {
@@ -40,25 +48,40 @@ function onInput(newValue: any) {
 	}
 }
 
+const boxEl = ref<HTMLLabelElement>();
+const labelEl = ref<HTMLDivElement>();
+const shadowEl = ref<HTMLDivElement>();
+const resizeObserver = ref<ResizeObserver>( new ResizeObserver( checkLabelOverlap ) );
+const labelIsCollapsed = ref<boolean>(false);
+function checkLabelOverlap() {
+	const labelEdge = labelEl.value!.getBoundingClientRect().right;
+	const shadowEdge = shadowEl.value!.getBoundingClientRect().left;
+	labelIsCollapsed.value = shadowEdge < labelEdge;
+}
+
+onMounted( () => {
+	resizeObserver.value.observe( shadowEl.value! );
+	checkLabelOverlap();
+} );
+onBeforeUnmount( () => {
+	resizeObserver.value.unobserve( shadowEl.value! );
+} );
+
 </script>
 <template>
-	<label class="flex items-center pl-1 pr-2 relative">
-		<div class="absolute left-2 right-1 pointer-events-none flex items-center">
-			<div class="py-1 font-semibold">{{ label }}</div>
-			<div class="h-0 flex-1 border-t border-neutral-400/40 border-dotted relative top-2 mx-2"/>
-			<div v-if="type === 'select'" class="absolute right-2 text-xs font-semibold flex items-center">
-				<div :class="[modelValue ? 'text-orange-600' : 'text-neutral-400']">{{ selectValue }}</div>
-				<SelectorIcon class="w-3 h-3 ml-0.5"/>
-			</div>
+	<label class="flex items-center relative" ref="boxEl">
+		<div class="w-6 h-4 px-1" :class="[ ( ! props.help || props.help === '') && 'invisible' ]" :title="props.help">
+			<QuestionMarkCircleIcon/>
 		</div>
-		<input
-			v-if="type === 'checkbox'"
-			type="checkbox"
-			v-bind="$attrs"
-			:checked="modelValue"
-			@change="$emit('update:modelValue', ($event.target as HTMLInputElement).checked)"
-			class="ml-auto my-1"
-			/>
+		<div v-if="type === 'checkbox'" class="h-6 w-full border border-dotted border-neutral-400/40 rounded-sm flex justify-end pr-2">
+			<input
+				type="checkbox"
+				v-bind="$attrs"
+				:checked="modelValue"
+				@change="$emit('update:modelValue', ($event.target as HTMLInputElement).checked)"
+				class="ml-auto my-1 accent-orange-500 text-orange-300"
+				/>
+		</div>
 		<select v-else-if="type === 'select'" class="mr-3 w-full opacity-0" :value="modelValue" @change="onInput(($event.target as HTMLSelectElement).value)">
 			<slot/>
 		</select>
@@ -68,7 +91,29 @@ function onInput(newValue: any) {
 			v-bind="$attrs"
 			:value="inputValue"
 			@input="onInput(($event.target as HTMLInputElement).value)"
-			class="w-full text-xs p-1 no-arrows bg-transparent text-orange-600 font-semibold text-right"
+			:readonly="!!props.disabled"
+			class="peer pr-2 h-6 w-full text-xs no-arrows bg-transparent text-orange-600 font-semibold text-right outline-none rounded-sm border border-dotted"
+			:class="[
+				props.disabled
+					? 'text-neutral-500/50 placeholder-neutral-500/50 cursor-default border-neutral-200/50'
+					: 'border-neutral-400/40 focus:border-orange-400 focus:border-solid focus:ring focus:ring-orange-100 selection:bg-orange-300/50 placeholder-orange-500/50 focus:placeholder-orange-500/0'
+			]"
 			/>
+		<!-- label -->
+		<div
+			class="pl-2 h-6 flex items-center absolute left-6 top-0 bottom-0 pointer-events-none text-xs font-semibold transition-all "
+			:class="[
+				labelIsCollapsed ? 'text-[9px] -translate-y-0.5 translate-x-0.5 px-1 h-1.5 bg-white' : '',
+				props.disabled
+					? 'text-neutral-500/50'
+					: 'text-neutral-600 peer-focus:font-normal'
+			]"
+			>{{ label }}</div>
+		<div
+			ref="labelEl"
+			class="pl-1 pr-2 absolute left-6 top-0 bottom-0 pointer-events-none text-xs font-semibold invisible"
+			>{{ label }}</div>
+		<!-- width calculator -->
+		<div ref="shadowEl" class="h-6 absolute right-0 top-0 pr-2 text-xs font-semibold text-right border pointer-events-none whitespace-pre invisible">{{ inputValue }}</div>
 	</label>
 </template>

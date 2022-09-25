@@ -7,7 +7,7 @@ import {
 	type Layer,
 	type Image,
 } from "./state";
-import { ExclamationIcon } from "@heroicons/vue/outline";
+// import { ExclamationIcon } from "@heroicons/vue/outline";
 import { computed } from "@vue/reactivity";
 import ImageModal from "./ImageModal.vue";
 import Collection from "./Collection.vue";
@@ -21,6 +21,7 @@ import PieceSidebar from "./PieceSidebar.vue";
 import { getMany, set, clear } from "idb-keyval";
 import demoState from "./assets/demo.json";
 import createUniqueId from "./uid";
+import Breadcrumbs from "./Breadcrumbs.vue";
 
 // import { RefreshIcon } from '@heroicons/vue/solid';
 
@@ -110,6 +111,7 @@ onBeforeMount(async () => {
 		})),
 	}));
 	initialized.value = true;
+	collection.regenerate();
 });
 
 function reset() {
@@ -124,140 +126,31 @@ function showstate() {
 </script>
 
 <template>
-	<div
-		v-if="!initialized"
-		class="flex w-screen h-screen items-center justify-center"
-	>
-		<div
-			class="animate-spin inline-block w-8 h-8 border-4 rounded-full border-neutral-300 border-t-neutral-100"
-			role="status"
-		/>
+	<div class="fixed top-0 left-0 w-full h-12 bg-neutral-300 grid items-center grid-cols-[1fr_auto_1fr] gap-x-10 px-2">
+		<Breadcrumbs class="text-sm" :layers="data.layers" :layer="nav.activeLayer" :piece="nav.activePiece" @nav="(l,p) => nav.goto(l,p)"/>
+		<div class="text-sm font-semibold tracking-widest">NFT ART GENERATOR</div>
+		<div class="text-right">Buttons</div>
 	</div>
-	<template v-else>
-		<div
-			class="fixed top-0 left-0 h-screen w-80 pb-3 bg-neutral-300 border-r border-neutral-500/10 drop-shadow flex flex-col overflow-y-auto"
-		>
-			<SidebarHeading
-				:open="nav.focus === 'collection'"
-				class="sticky top-0"
-				@select="nav.goto()"
-				>Collection</SidebarHeading
-			>
-			<CollectionSidebar v-if="nav.focus === 'collection'" />
-			<template v-if="nav.activeLayer">
-				<SidebarHeading
-					:open="nav.focus === 'layer'"
-					class="sticky top-10"
-					@select="nav.goto(nav.activeLayer)"
-					>Attribute: {{ nav.activeLayer.name }}</SidebarHeading
-				>
-				<LayerSidebar
-					v-if="nav.focus === 'layer'"
-					:layer="nav.activeLayer"
-				/>
-			</template>
-			<template v-if="nav.activePiece">
-				<SidebarHeading :open="nav.focus === 'piece'" class="sticky top-10"
-					>Trait: {{ nav.activePiece.name }}</SidebarHeading
-				>
-				<PieceSidebar
-					v-if="nav.focus === 'piece'"
-					:layer="nav.activeLayer!"
-					:piece="nav.activePiece"
-				/>
-			</template>
-			<!-- <CollectionSidebar v-if="nav.focus.value === 'collection'"/>
-		<a v-else>Collection</a> -->
-		</div>
-		<div class="min-h-screen bg-neutral-200 ml-80">
-			<div
-				class="p-3 z-10 w-full sticky top-0 backdrop-blur-lg bg-neutral-200/80 flex items-center border-b border-neutral-300 transition-all"
-			>
-				<!-- Spacer -->
-				<div class="flex-1">
-					<div
-						v-if="collection.generating.running"
-						class="text-orange-500 animate-pulse"
-					>
-						Generating collection...
-						{{ Math.floor(collection.generating.progress * 100) }}%
-					</div>
-					<div
-						v-if="
-							!collection.generating.running &&
-							collection.images.length < collection.size
-						"
-						class="text-red-500 font-semibold flex items-center"
-					>
-						<ExclamationIcon class="w-6 h-6 mr-2" />
-						Only able to create
-						{{ collection.images.length.toLocaleString() }} of
-						{{ collection.size.toLocaleString() }} images
-					</div>
-				</div>
-				<!-- search box -->
-				<!-- <div class="h-8 relative rounded bg-neutral-200 border border-neutral-400 flex items-center flex-0 w-72" title="Size of collection">
-				<SearchIcon class="absolute left-1.5 top-[0.25rem-1px] h-5 w-5 text-neutral-400"/>
-				<div class="bg-white rounded absolute top-0 left-8 right-0 h-full pointer-events-none"/>
-				<input type="search" placeholder="search" class="relative bg-transparent w-full py-1 px-2 pl-10 rounded"/>
-			</div> -->
-				<!-- Action buttons -->
-				<div class="flex-1 flex justify-end">
-					<button
-						class="text-sm bg-green-600/80 rounded mr-3"
-						@click="collection.download()"
-					>
-						export
-					</button>
-					<button
-						class="text-sm bg-orange-500/80 rounded"
-						@click="collection.regenerate()"
-					>
-						regenerate collection
-					</button>
-				</div>
-			</div>
-			<!-- <div v-if="data.layers.length === 0" class="h-screen flex items-center justify-center">
-			<label class="bg-orange-500 text-orange-200 rounded-lg px-4 py-1 text-xl font-light">
-				Add Images
-				<input type="file" class="hidden" multiple accept="image/pdf" @change="event => onSelectImages( ( event.target as HTMLInputElement).files )"/>
-			</label>
-		</div> -->
-			<div>
-				<Collection
-					:images="visibleImages"
-					@select-image="(image) => (currentImageId = image.id)"
-				/>
-			</div>
-		</div>
-		<button class="fixed bottom-12 right-4" @click="showstate()">
-			state
-		</button>
-		<textarea
-			v-if="stateVisible"
-			class="fixed top-20 bottom-20 right-10 left-10 bg-white whitespace-pre z-50 overflow-auto p-10 font-mono text-sm"
-		>
-			{{ statejson }}
-		</textarea>
-	</template>
 	<div
-		class="z-40 fixed top-0 left-0 w-screen h-screen pointer-events-none flex items-center justify-center"
+		class="fixed top-12 left-0 bottom-0 w-80 grid grid-cols-1 overflow-y-auto overflow-x-hidden"
 	>
-		<ImageModal
-			v-if="currentImage"
-			:image="currentImage"
-			class="pointer-events-auto bg-white/80 backdrop-blur-xl shadow-2xl rounded border border-neutral-300"
-			@close="currentImageId = null"
-		/>
+		<Transition :name="`sidebar-${nav.direction}`">
+			<CollectionSidebar
+				v-if="nav.focus === 'collection'"
+				class="col-start-1 row-start-1"
+				/>
+			<LayerSidebar
+				v-else-if="nav.focus === 'layer'"
+				:layer="nav.activeLayer"
+ 				class="col-start-1 row-start-1"
+ 			/>
+			<PieceSidebar
+				v-else-if="nav.focus === 'piece'"
+				:layer="nav.activeLayer!"
+				:piece="nav.activePiece"
+				class="col-start-1 row-start-1"
+			/>
+		</Transition>
 	</div>
-	<Transition name="modal">
-		<UploadProgress :upload="data.uploading" v-if="data.uploading" />
-		<DownloadProgress
-			v-else-if="collection.downloading.running"
-			:done="collection.downloading.done"
-			:total="collection.size"
-			:destination="collection.downloading.destination"
-			@cancel="collection.stopDownload"
-		/>
-	</Transition>
+
 </template>

@@ -1,6 +1,22 @@
+@import url('https://rsms.me/inter/inter.css');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+	font-family: 'Inter', sans-serif;
+}
+
+body {
+	@apply bg-neutral-100;
+}
+
+@supports (font-variation-settings: normal) {
+	html {
+		font-family: 'Inter var', sans-serif;
+	}
+}
 
 .checkered {
 	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEX///+/v7+jQ3Y5AAAAD0lEQVQI12Ng+I8V4RIGAH6/D/EIQoVRAAAAAElFTkSuQmCC');
@@ -27,4 +43,42 @@ input[type=number].no-arrows::-webkit-inner-spin-button {
 .modal-enter-from,
 .modal-leave-to {
 	opacity: 0;
+}
+
+.sidebar-forward-enter-active,
+.sidebar-forward-leave-active,
+.sidebar-backward-enter-active,
+.sidebar-backward-leave-active {
+	height: 100%;
+	overflow: hidden;
+	transition: transform 0.2s ease-out;
+}
+
+.sidebar-forward-enter-to {
+	transform: translateX(0%);
+}
+.sidebar-forward-enter-from {
+	transform: translateX(100%);
+}
+.sidebar-forward-leave-to {
+	transform: translateX(-100%);
+}
+.sidebar-forward-leave-from {
+	transform: translateX(0%);
+}
+
+.sidebar-backward-enter-to {
+	transform: translateX(0%);
+}
+
+.sidebar-backward-enter-from {
+	transform: translateX(-100%);
+}
+
+.sidebar-backward-leave-to {
+	transform: translateX(100%);
+}
+
+.sidebar-backward-leave-from {
+	transform: translateX(0%);
 }

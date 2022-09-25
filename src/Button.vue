@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import { Cog6ToothIcon } from '@heroicons/vue/24/solid';
 
-const props = defineProps<{color?: 'default'|'red'|'green'}>();
+const props = defineProps<{
+	color?: 'default'|'red'|'green',
+	icon?: 'edit',
+}>();
 const colors = computed( () => {
 	switch( props.color ) {
 		case 'red':
@@ -16,5 +20,10 @@ const colors = computed( () => {
 		type="button"
 		class="rounded text-xs px-1.5 py-0.5 flex items-center text-black/80 border drop-shadow active:drop-shadow-sm active:-translate-x-px active:translate-y-px transition-all select-none"
 		:class="[colors]"
-		><slot/></button>
+		>
+		<div v-if="props.icon" class="mr-1 w-3 h-3">
+			<Cog6ToothIcon v-if="props.icon === 'edit'"/>
+		</div>
+		<slot/>
+	</button>
 </template>

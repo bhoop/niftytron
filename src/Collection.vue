@@ -86,7 +86,7 @@ function onClickImage( image: Image ) {
 				class="grid grid-cols-[repeat(auto-fill,15rem)]"
 				:style="`position:relative; top:${offset * cellSize}px`"
 			>
-				<div v-for="image of displaySlice" class="h-60 flex">
+				<div v-for="image of displaySlice" :key="image.key" class="h-60 flex">
 					<div class="m-px self-stretch flex-1 border border-neutral-500/30 bg-neutral-100/50" :class="[image && image.favorite !== false && 'bg-radial from-orange-400 to-orange-100']">
 						<Preview :image="image" @click="onClickImage(image)" />
 					</div>

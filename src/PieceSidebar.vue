@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { PhotographIcon } from "@heroicons/vue/outline";
+import { PhotoIcon } from "@heroicons/vue/24/outline";
 import { computed, ref } from "vue";
 import type { Piece, Layer } from "./state";
 import { useDataStore } from "./state";
 import SidebarField from "./SidebarField.vue";
 import useAppNavigation from "./app-navigation";
 import Button from "./Button.vue";
+import SidebarHeading from "./SidebarHeading.vue";
 
 let props = defineProps<{ layer: Layer, piece: Piece }>();
 let data = useDataStore();
@@ -41,6 +42,7 @@ function tryToDelete() {
 </script>
 <template>
 <div class="text-sm flex flex-col gap-2">
+	<SidebarHeading>Trait Details</SidebarHeading>
 	<SidebarField label="Name" type="text" v-model="piece.name"/>
 	<SidebarField label="Render layer" type="select" :select-value="piece.renderLayer?.name ?? `Default`" :model-value="piece.renderLayer?.id ?? ''" @update:model-value="updateRenderLayer" :placeholder="layer.name">
 		<option v-for="rlayer in reverseLayers" :value="rlayer.id === layer.id ? '' : rlayer.id" class="text-right text-xs pl-3" :class="[rlayer === layer ? 'font-bold' : '']">{{ ( rlayer === layer ? '➡️' : '') + rlayer.name }}</option>
@@ -52,7 +54,7 @@ function tryToDelete() {
 	<label
 		class="mt-3 rounded bg-neutral-200 border border-neutral-400 p-px flex items-top"
 	>
-		<PhotographIcon class="mt-1 h-6 w-6 text-neutral-400 mx-1" />
+		<PhotoIcon class="mt-1 h-6 w-6 text-neutral-400 mx-1" />
 		<div class="vue-grid w-full checkered">
 			<div
 				class="aspect-square w-full bg-cover"

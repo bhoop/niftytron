@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import type { Layer } from "./state";
 import { useDataStore } from './state';
-import { PlusIcon } from '@heroicons/vue/outline';
-import { TagIcon, BanIcon, HashtagIcon, SwitchVerticalIcon } from '@heroicons/vue/solid';
+import { ArrowLeftIcon } from "@heroicons/vue/24/solid";
+import { TagIcon, NoSymbolIcon, HashtagIcon, ArrowsUpDownIcon } from '@heroicons/vue/24/solid';
 import useAppNavigation from "./app-navigation";
 import { computed, ref } from "vue";
 import SidebarField from "./SidebarField.vue";
 import SidebarIcon from "./SidebarIcon.vue";
 import CountLabel from "./CountLabel.vue";
 import Button from "./Button.vue";
+import SidebarHeading from "./SidebarHeading.vue";
+import SidebarBox from "./SidebarBox.vue";
 
 const props = defineProps<{ layer: Layer }>();
 
@@ -37,44 +39,46 @@ function tryToDelete() {
 
 </script>
 <template>
-<div class="text-sm flex flex-col gap-2">
-	<SidebarField label="Name" type="text" v-model="layer.name"/>
-	<SidebarField label="Require in all images" type="checkbox" :model-value="layer.required" @update:model-value="updateRequired"/>
-	<SidebarField label="Exclude from uniqueness" type="checkbox" v-model="layer.excludeFromKey"/>
-	<SidebarField v-if="!layer.required" label="Appearance limit" type="limit" v-model="layer.limit" placeholder="unlimited"/>
-	<SidebarField v-if="!layer.required" label="Tags" type="tags" v-model="layer.tags"/>
-	<SidebarField label="Blocked tags" type="tags" v-model="layer.blockedTags"/>
-
-	<div class="px-2 font-semibold">Traits</div>
+<SidebarBox>
+	<div class="relative">
+		<SidebarHeading>
+			<button title="Return to collection details" @click="nav.goto()"><ArrowLeftIcon class="w-5 h-5 ml-1 mr-2 text-orange-500 hover:text-orange-700 active:text-orange-400"/></button>
+			Attribute Details
+		</SidebarHeading>
+		<div class="flex flex-col gap-y-2 pr-4 py-3 pl-1">
+			<SidebarField label="Name" type="text" v-model="layer.name"/>
+			<SidebarField label="Require in all images" type="checkbox" :model-value="layer.required" @update:model-value="updateRequired"/>
+			<SidebarField label="Exclude from uniqueness" type="checkbox" v-model="layer.excludeFromKey"/>
+			<SidebarField :disabled="layer.required" label="Appearance limit" type="limit" v-model="layer.limit" placeholder="∞"/>
+			<SidebarField :disabled="layer.required" label="Tags" type="tags" v-model="layer.tags"/>
+			<SidebarField label="Blocked tags" type="tags" v-model="layer.blockedTags"/>
+		</div>
+	</div>
+	<SidebarHeading>
+		Traits
+	</SidebarHeading>
 	<div>
 		<div
 			v-for="piece in piecesInDisplayOrder"
 			:key="piece.id"
-			class="group flex items-center p-2 cursor-pointer hover:text-orange-600 border-t border-neutral-400/50 bg-neutral-300 text-sm"
+			class="group flex items-center p-2 text-sm select-none"
 			@click="nav.goto( layer, piece )"
 			>
-			<div class="mr-auto">{{ piece.name }}</div>
+			<div class="mr-auto cursor-pointer text-orange-500" title="View trait details">{{ piece.name }}</div>
 			<CountLabel :id="piece.id" class="mr-0.5"/>
 			<SidebarIcon title="This piece uses a custom render layer" :active="!!piece.renderLayer">
-				<SwitchVerticalIcon class="w-4 h-4"/>
+				<ArrowsUpDownIcon class="w-4 h-4"/>
 			</SidebarIcon>
 			<SidebarIcon title="This piece has tags" :active="piece.tags.length > 0">
 				<TagIcon class="w-4 h-4"/>
 			</SidebarIcon>
 			<SidebarIcon title="This piece has blocked tags" :active="piece.blockedTags.length > 0">
-				<BanIcon class="w-4 h-4"/>
+				<NoSymbolIcon class="w-4 h-4"/>
 			</SidebarIcon>
 			<SidebarIcon :title="`This piece will only appear in ${piece.limit!} image${piece.limit===1?'':'s'}`" :active="piece.limit !== false">
 				<HashtagIcon class="w-4 h-4"/>
 			</SidebarIcon>
 		</div>
-	</div>
-	<div class="flex">
-		<label class="mx-auto flex gap-2 items-center relative p-1 rounded-lg bg-orange-500 text-orange-900 cursor-pointer">
-			<input type="file" class="absolute hidden" multiple accept="image/pdf" @change="event => data.upload( ( event.target as HTMLInputElement).files, layer )"/>
-			<PlusIcon class="h-4 w-4"/>
-			add images
-		</label>
 	</div>
 	<Button
 		color="red"
@@ -83,5 +87,5 @@ function tryToDelete() {
 		>delete attribute</Button>
 
 	<div class="mx-auto text-xs text-neutral-500/30 font-mono">{{ layer.id }}</div>
-</div>
+</SidebarBox>
 </template>
