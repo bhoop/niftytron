@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PhotoIcon } from "@heroicons/vue/24/outline";
+import { PhotoIcon, ArrowLeftIcon } from "@heroicons/vue/24/outline";
 import { computed, ref } from "vue";
 import type { Piece, Layer } from "./state";
 import { useDataStore } from "./state";
@@ -7,6 +7,7 @@ import SidebarField from "./SidebarField.vue";
 import useAppNavigation from "./app-navigation";
 import Button from "./Button.vue";
 import SidebarHeading from "./SidebarHeading.vue";
+import SidebarBox from "./SidebarBox.vue";
 
 let props = defineProps<{ layer: Layer, piece: Piece }>();
 let data = useDataStore();
@@ -41,29 +42,28 @@ function tryToDelete() {
 
 </script>
 <template>
-<div class="text-sm flex flex-col gap-2">
-	<SidebarHeading>Trait Details</SidebarHeading>
-	<SidebarField label="Name" type="text" v-model="piece.name"/>
-	<SidebarField label="Render layer" type="select" :select-value="piece.renderLayer?.name ?? `Default`" :model-value="piece.renderLayer?.id ?? ''" @update:model-value="updateRenderLayer" :placeholder="layer.name">
-		<option v-for="rlayer in reverseLayers" :value="rlayer.id === layer.id ? '' : rlayer.id" class="text-right text-xs pl-3" :class="[rlayer === layer ? 'font-bold' : '']">{{ ( rlayer === layer ? '➡️' : '') + rlayer.name }}</option>
-	</SidebarField>
-	<SidebarField label="Tags" type="tags" v-model="piece.tags"/>
-	<SidebarField label="Blocked tags" type="tags" v-model="piece.blockedTags"/>
-	<SidebarField label="Appearance limit" type="limit" v-model="piece.limit" placeholder="unlimited"/>
+<SidebarBox>
+	<SidebarHeading>
+		<button title="Return to attribute details" @click="nav.goto(props.layer)"><ArrowLeftIcon class="w-5 h-5 ml-1 mr-2 text-orange-500 hover:text-orange-700 active:text-orange-400"/></button>
+		Trait Details
+	</SidebarHeading>
+	<div class="flex flex-col gap-y-2 pr-4 py-3 pl-1">
+		<SidebarField label="Name" type="text" v-model="piece.name"/>
+		<SidebarField label="Render layer" type="select" :select-value="piece.renderLayer?.name ?? `Default`" :model-value="piece.renderLayer?.id ?? ''" @update:model-value="updateRenderLayer" :placeholder="layer.name">
+			<option v-for="rlayer in reverseLayers" :value="rlayer.id === layer.id ? '' : rlayer.id" class="text-right text-xs pl-3" :class="[rlayer === layer ? 'font-bold' : '']">{{ ( rlayer === layer ? '➡️' : '') + rlayer.name }}</option>
+		</SidebarField>
+		<SidebarField label="Tags" type="tags" v-model="piece.tags"/>
+		<SidebarField label="Blocked tags" type="tags" v-model="piece.blockedTags"/>
+		<SidebarField label="Appearance limit" type="limit" v-model="piece.limit" placeholder="∞"/>
+	</div>
 
-	<label
-		class="mt-3 rounded bg-neutral-200 border border-neutral-400 p-px flex items-top"
-	>
-		<PhotoIcon class="mt-1 h-6 w-6 text-neutral-400 mx-1" />
-		<div class="vue-grid w-full checkered">
-			<div
-				class="aspect-square w-full bg-cover"
-				:style="[bgimage]"
-			>
-			</div>
+	<div class="vue-grid checkered rounded bg-neutral-200 border border-neutral-400 mx-3">
+		<div
+			class="aspect-square w-full bg-cover"
+			:style="bgimage"
+		>
 		</div>
-		<!-- <input type="file" ref="fileInput" class="hidden"/> -->
-	</label>
+	</div>
 
 	<Button
 		color="red"
@@ -72,5 +72,5 @@ function tryToDelete() {
 		>delete trait</Button>
 
 	<div class="mx-auto text-xs text-neutral-500/30 font-mono">{{ piece.id }}</div>
-</div>
+</SidebarBox>
 </template>

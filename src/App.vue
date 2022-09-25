@@ -128,7 +128,7 @@ function showstate() {
 <template>
 	<div class="fixed top-0 left-0 w-full h-12 bg-neutral-300 grid items-center grid-cols-[1fr_auto_1fr] gap-x-10 px-2">
 		<Breadcrumbs class="text-sm" :layers="data.layers" :layer="nav.activeLayer" :piece="nav.activePiece" @nav="(l,p) => nav.goto(l,p)"/>
-		<div class="text-sm font-semibold tracking-widest">NFT ART GENERATOR</div>
+		<div class="text-sm font-semibold tracking-widest">NFT ART MACHINE</div>
 		<div class="text-right">Buttons</div>
 	</div>
 	<div

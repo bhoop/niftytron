@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
-import { ChevronUpDownIcon } from "@heroicons/vue/24/solid";
-import { QuestionMarkCircleIcon } from '@heroicons/vue/20/solid';
+import { QuestionMarkCircleIcon, ChevronDownIcon } from '@heroicons/vue/20/solid';
 
 const props = defineProps<{
 	label:string,
@@ -82,9 +81,35 @@ onBeforeUnmount( () => {
 				class="ml-auto my-1 accent-orange-500 text-orange-300"
 				/>
 		</div>
-		<select v-else-if="type === 'select'" class="mr-3 w-full opacity-0" :value="modelValue" @change="onInput(($event.target as HTMLSelectElement).value)">
-			<slot/>
-		</select>
+		<template v-else-if="type === 'select'" class="h-6 w-full border border-dotted border-neutral-400/40 rounded-sm flex justify-end">
+			<select
+				class="peer bg-transparent appearance-none h-6 w-full border border-dotted rounded-sm pr-2 outline-none text-xs"
+				:class="[
+					props.disabled
+						? 'border-neutral-200/50'
+						: 'border-neutral-400/40 focus:border-orange-400 focus:border-solid focus:ring focus:ring-orange-100'
+				]"
+				:value="modelValue"
+				@change="onInput(($event.target as HTMLSelectElement).value)"
+				>
+				<slot/>
+			</select>
+			<div class="absolute left-7 right-1 h-5 font-semibold flex items-center justify-end pointer-events-none bg-white text-xs">
+				<div
+					:class="[
+						props.disabled
+							? 'text-neutral-500/50'
+							: (
+								modelValue
+								? 'text-orange-500'
+								: 'text-orange-500/50'
+							)
+							// : 'border-neutral-400/40 focus:border-orange-400 focus:border-solid focus:ring focus:ring-orange-100 selection:bg-orange-300/50 placeholder-orange-500/50 focus:placeholder-orange-500/0'
+					]"
+					>{{ selectValue }}</div>
+				<ChevronDownIcon class="w-4 h-4 ml-0.5 text-orange-500"/>
+			</div>
+		</template>
 		<input
 			v-else
 			:type="inputType"

@@ -49,8 +49,8 @@ function tryToDelete() {
 			<SidebarField label="Name" type="text" v-model="layer.name"/>
 			<SidebarField label="Require in all images" type="checkbox" :model-value="layer.required" @update:model-value="updateRequired"/>
 			<SidebarField label="Exclude from uniqueness" type="checkbox" v-model="layer.excludeFromKey"/>
-			<SidebarField :disabled="layer.required" label="Appearance limit" type="limit" v-model="layer.limit" placeholder="∞"/>
-			<SidebarField :disabled="layer.required" label="Tags" type="tags" v-model="layer.tags"/>
+			<SidebarField :disabled="layer.required && 'Cannot set appearance limit when required in all images'" label="Appearance limit" type="limit" v-model="layer.limit" placeholder="∞"/>
+			<SidebarField :disabled="layer.required && 'Cannot apply tags when required in all images'" label="Tags" type="tags" v-model="layer.tags"/>
 			<SidebarField label="Blocked tags" type="tags" v-model="layer.blockedTags"/>
 		</div>
 	</div>
