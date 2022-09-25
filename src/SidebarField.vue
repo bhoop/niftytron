@@ -130,6 +130,7 @@ function showHelp() {
 			:class="[
 				props.suffix && 'pr-5',
 				type === 'percent' && 'arrows-percent pr-1',
+				type === 'limit' && 'no-arrows',
 				props.disabled
 					? 'text-neutral-500/50 placeholder-neutral-500/50 cursor-default border-neutral-200/50'
 					: 'border-neutral-400/40 focus:border-orange-400 focus:border-solid focus:ring focus:ring-orange-100 selection:bg-orange-300/50 placeholder-orange-500/50 focus:placeholder-orange-500/0'

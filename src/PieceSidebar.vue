@@ -45,16 +45,16 @@ function tryToDelete() {
 <SidebarBox>
 	<SidebarHeading>
 		<button title="Return to attribute details" @click="nav.goto(props.layer)"><ArrowLeftIcon class="w-5 h-5 ml-1 mr-2 text-orange-500 hover:text-orange-700 active:text-orange-400"/></button>
-		Trait Details
+		Trait Settings
 	</SidebarHeading>
 	<div class="flex flex-col gap-y-2 pr-4 py-3 pl-1">
-		<SidebarField label="Name" type="text" v-model="piece.name"/>
+		<SidebarField label="Trait name" type="text" v-model="piece.name" help="The name of the individual trait inside of the attribute eg. 'Blue Hat', 'Red Hat', etc."/>
 		<SidebarField label="Render layer" type="select" :select-value="piece.renderLayer?.name ?? `Default`" :model-value="piece.renderLayer?.id ?? ''" @update:model-value="updateRenderLayer" :placeholder="layer.name">
 			<option v-for="rlayer in reverseLayers" :value="rlayer.id === layer.id ? '' : rlayer.id" class="text-right text-xs pl-3" :class="[rlayer === layer ? 'font-bold' : '']">{{ ( rlayer === layer ? '➡️' : '') + rlayer.name }}</option>
 		</SidebarField>
-		<SidebarField label="Tags" type="tags" v-model="piece.tags"/>
-		<SidebarField label="Blocked tags" type="tags" v-model="piece.blockedTags"/>
-		<SidebarField label="Appearance limit" type="limit" v-model="piece.limit" placeholder="∞"/>
+		<SidebarField label="Appearance limit" type="limit" v-model="piece.limit" placeholder="∞" help="If defined, then no more than X generated NFTs will include this trait. Traits with appearance limits are more likely to appear in the collection (up to their limit)."/>
+		<SidebarField label="Tags" type="tags" v-model="piece.tags" help="Space-separated list of terms that can be used by other attributes/traits to avoid appearing with this trait in an NFT image."/>
+		<SidebarField label="Blocked tags" type="tags" v-model="piece.blockedTags" help="Space-separated list of tags in other attributes/traits that this trait should never appear with in an NFT iamge."/>
 	</div>
 
 	<div class="vue-grid checkered rounded bg-neutral-200 border border-neutral-400 mx-3">

@@ -50,7 +50,7 @@ function tryToDelete() {
 			<SidebarField label="Require in all images" type="checkbox" :model-value="layer.required" @update:model-value="updateRequired" help="If checked, every NFT in the collection must have one of this attribute's traits."/>
 			<SidebarField label="Exclude from uniqueness" type="checkbox" v-model="layer.excludeFromKey" help="If checked, this attribute will not be included in the uniqueness check during NFT generation. Useful for a background layer to avoid duplicate NFTs that only differ in background trait."/>
 			<SidebarField :disabled="layer.required && 'Cannot set appearance limit when required in all images'" label="Appearance limit" type="limit" v-model="layer.limit" placeholder="∞" help="If defined, then no more than X generated NFTs will include a trait from this attribute. Traits with appearance limits are more likely to appear in the collection (up to their limit)."/>
-			<SidebarField :disabled="layer.required && 'Cannot apply tags when required in all images'" label="Tags" type="tags" v-model="layer.tags" help="Space-separated list of categories to apply to every trait in this attribute that can be used by other attributes/traits to avoid appearing together in an NFT."/>
+			<SidebarField :disabled="layer.required && 'Cannot apply tags when required in all images'" label="Tags" type="tags" v-model="layer.tags" help="Space-separated list of terms to apply to every trait in this attribute that can be used by other attributes/traits to avoid appearing together in an NFT."/>
 			<SidebarField label="Blocked tags" type="tags" v-model="layer.blockedTags" help="Space-separated list of tags in other attributes and/or traits that this attribute's traits should never appear with in the same NFT image."/>
 		</div>
 	</div>
