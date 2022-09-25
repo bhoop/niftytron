@@ -43,15 +43,15 @@ function tryToDelete() {
 	<div class="relative">
 		<SidebarHeading>
 			<button title="Return to collection details" @click="nav.goto()"><ArrowLeftIcon class="w-5 h-5 ml-1 mr-2 text-orange-500 hover:text-orange-700 active:text-orange-400"/></button>
-			Attribute Details
+			Attribute Settings
 		</SidebarHeading>
 		<div class="flex flex-col gap-y-2 pr-4 py-3 pl-1">
-			<SidebarField label="Name" type="text" v-model="layer.name"/>
-			<SidebarField label="Require in all images" type="checkbox" :model-value="layer.required" @update:model-value="updateRequired"/>
-			<SidebarField label="Exclude from uniqueness" type="checkbox" v-model="layer.excludeFromKey"/>
-			<SidebarField :disabled="layer.required && 'Cannot set appearance limit when required in all images'" label="Appearance limit" type="limit" v-model="layer.limit" placeholder="∞"/>
-			<SidebarField :disabled="layer.required && 'Cannot apply tags when required in all images'" label="Tags" type="tags" v-model="layer.tags"/>
-			<SidebarField label="Blocked tags" type="tags" v-model="layer.blockedTags"/>
+			<SidebarField label="Attribute name" type="text" v-model="layer.name" help="The name of this group of traits eg. 'Hats'."/>
+			<SidebarField label="Require in all images" type="checkbox" :model-value="layer.required" @update:model-value="updateRequired" help="If checked, every NFT in the collection must have one of this attribute's traits."/>
+			<SidebarField label="Exclude from uniqueness" type="checkbox" v-model="layer.excludeFromKey" help="If checked, this attribute will not be included in the uniqueness check during NFT generation. Useful for a background layer to avoid duplicate NFTs that only differ in background trait."/>
+			<SidebarField :disabled="layer.required && 'Cannot set appearance limit when required in all images'" label="Appearance limit" type="limit" v-model="layer.limit" placeholder="∞" help="If defined, then no more than X generated NFTs will include a trait from this attribute. Traits with appearance limits are more likely to appear in the collection (up to their limit)."/>
+			<SidebarField :disabled="layer.required && 'Cannot apply tags when required in all images'" label="Tags" type="tags" v-model="layer.tags" help="Space-separated list of categories to apply to every trait in this attribute that can be used by other attributes/traits to avoid appearing together in an NFT."/>
+			<SidebarField label="Blocked tags" type="tags" v-model="layer.blockedTags" help="Space-separated list of tags in other attributes and/or traits that this attribute's traits should never appear with in the same NFT image."/>
 		</div>
 	</div>
 	<SidebarHeading>
