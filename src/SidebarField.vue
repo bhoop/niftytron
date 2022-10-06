@@ -76,14 +76,14 @@ function showHelp() {
 </script>
 <template>
 	<label class="flex items-center relative" ref="boxEl" :title="props.help">
-		<FieldHelpIcon :class="(!props.help || props.help==='') && 'invisible'" :help="props.help"/>
+		<FieldHelpIcon class="flex-0" :class="(!props.help || props.help==='') && 'invisible'" :help="props.help || ''"/>
 		<div v-if="type === 'checkbox'" class="h-6 w-full border border-dotted border-neutral-400/40 rounded-sm flex justify-end pr-2">
 			<input
 				type="checkbox"
 				v-bind="$attrs"
 				:checked="modelValue"
 				@change="$emit('update:modelValue', ($event.target as HTMLInputElement).checked)"
-				class="ml-auto my-1 accent-orange-500 text-orange-300"
+				class="ml-auto my-1 accent-orange-500 text-orange-300 min-w-0 flex-1"
 				/>
 		</div>
 		<template v-else-if="type === 'select'" class="h-6 w-full border border-dotted border-neutral-400/40 rounded-sm flex justify-end">
@@ -125,6 +125,7 @@ function showHelp() {
 			:value="inputValue"
 			@input="onInput(($event.target as HTMLInputElement).value)"
 			:readonly="!!props.disabled"
+			autocomplete="off"
 			class="peer pr-2 h-6 w-full text-xs bg-transparent text-orange-500 font-semibold text-right outline-none rounded-sm border border-dotted"
 			:class="[
 				props.suffix && 'pr-5',

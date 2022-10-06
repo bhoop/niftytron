@@ -8,7 +8,7 @@
 	}
 </script>
 <template>
-	<div class="w-6 h-4 px-1" :title="props.help" @click="showHelp()">
+	<div class="min-w-[1.5rem] w-6 h-4 px-1" :title="props.help" @click="showHelp()">
 		<QuestionMarkCircleIcon/>
 	</div>
 </template>
