@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
 import { QuestionMarkCircleIcon, ChevronDownIcon } from '@heroicons/vue/20/solid';
+import FieldHelpIcon from './FieldHelpIcon.vue';
 
 const props = defineProps<{
 	label:string,
@@ -75,9 +76,7 @@ function showHelp() {
 </script>
 <template>
 	<label class="flex items-center relative" ref="boxEl" :title="props.help">
-		<div class="w-6 h-4 px-1" :class="[ ( ! props.help || props.help === '') && 'invisible' ]" :title="props.help" @click="showHelp()">
-			<QuestionMarkCircleIcon/>
-		</div>
+		<FieldHelpIcon :class="(!props.help || props.help==='') && 'invisible'" :help="props.help"/>
 		<div v-if="type === 'checkbox'" class="h-6 w-full border border-dotted border-neutral-400/40 rounded-sm flex justify-end pr-2">
 			<input
 				type="checkbox"
