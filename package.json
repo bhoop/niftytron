@@ -20,7 +20,8 @@
 		"uuid": "^8.3.2",
 		"vue": "^3.2.25",
 		"vue-resize-observer": "^2.0.15",
-		"vue-slicksort": "^2.0.0-alpha.5"
+		"vue-slicksort": "^2.0.0-alpha.5",
+		"vue-virtual-scroll-grid": "^1.7.1"
 	},
 	"devDependencies": {
 		"@vitejs/plugin-vue": "^3.1.0",

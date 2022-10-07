@@ -83,7 +83,7 @@ function showHelp() {
 				v-bind="$attrs"
 				:checked="modelValue"
 				@change="$emit('update:modelValue', ($event.target as HTMLInputElement).checked)"
-				class="ml-auto my-1 accent-orange-500 text-orange-300 min-w-0 flex-1"
+				class="ml-auto my-1 accent-orange-500 text-orange-300 min-w-0 flex-0"
 				/>
 		</div>
 		<template v-else-if="type === 'select'" class="h-6 w-full border border-dotted border-neutral-400/40 rounded-sm flex justify-end">

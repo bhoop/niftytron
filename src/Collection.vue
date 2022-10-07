@@ -9,71 +9,78 @@ import {
 } from "vue";
 import type { Image } from "./state";
 import Preview from "./Preview.vue";
+import Grid from "vue-virtual-scroll-grid";
+import watermarkImg from "./assets/watermark.png";
 
 const props = defineProps<{ images: Image[] }>();
 const emit = defineEmits<{ (e: 'select-image', image:Image): void }>();
 
-const cellSize = 240;
-const widthRuler = ref();
-const state = reactive({ scroll: 0, top: 0, width: 0 });
-const tmpScroll = ref({scroll:0, top:0});
-
-const container = computed(() => {
-	// how many images can we fit in a row?
-	const cols = Math.floor(state.width / cellSize);
-	// how many rows will it take to hold all the images?
-	const rows = Math.ceil(props.images.length / cols);
-	return { rows, cols };
-});
-
-const offset = computed(() => {
-	if (widthRuler.value) {
-		// if ( widthRuler.value.getBoundingClientRect().top * -1 < cellSize ) return 0;
-		const ydiff = state.scroll + widthRuler.value.getBoundingClientRect().top;
-		const above = Math.floor((state.scroll - ydiff) / cellSize) - 10;
-		return Math.max(0, above);
-	} else {
-		return 0;
+function throttle( fn, timer = 300 ) {
+	if ( ! fn._busy ) {
+		fn._busy = true;
+		setTimeout( () => {
+			fn._busy = false;
+			fn();
+		}, timer );
 	}
-});
+}
 
-const displaySlice = computed(() => {
-	const start = offset.value * container.value.cols;
-	return props.images.slice(start, start + container.value.cols * 30 );
-});
+let probe = ref<HTMLDivElement>();
+let box = ref<HTMLDivElement>();
+let grid = ref( { rows: 0, cols: 0 } );
+function updateRenderboxDimensions() {
+	if ( probe.value && box.value ) {
+		grid.value = {
+			cols: Math.floor( box.value.offsetWidth / probe.value.offsetWidth ),
+			rows: Math.ceil( box.value.offsetHeight / probe.value.offsetHeight ),
+		};
+		console.log('updateRenderBoxDimensions', box.value.offsetWidth, probe.value.offsetWidth, grid.value);
+	}
+}
+let resizeObserver = new ResizeObserver( () => { 
+	throttle( updateRenderboxDimensions );
+} );
 
-const scrollListener = () => {
-	tmpScroll.value = { scroll: window.scrollY, top: widthRuler.value.getBoundingClientRect().top };
-	requestAnimationFrame( () => {
-		state.scroll = tmpScroll.value.scroll;
-		state.top = tmpScroll.value.top;
-	} );
-};
-const resizeListener = ([entry]: ResizeObserverEntry[]) => {
-	state.width = entry.contentRect.width;
-};
-
-const resizeObserver = new ResizeObserver(resizeListener);
-
-onMounted(() => {
-	// listen to scroll events
-	state.scroll = window.scrollY;
-	window.addEventListener("scroll", scrollListener);
-	// listen for resizes
-	resizeObserver.observe(widthRuler.value);
+onMounted( () => {
+	updateRenderboxDimensions();
+	resizeObserver.observe( box.value! );
 });
 
 onBeforeUnmount(() => {
-	window.removeEventListener("scroll", scrollListener);
-	resizeObserver.unobserve(widthRuler.value);
+	resizeObserver.unobserve( box.value! );
 });
 
-function onClickImage( image: Image ) {
-	if ( image && image.attributes.size > 0 ) {
-		emit( 'select-image', image );
-	}
+function gridPageProvider( pageNum: number, pageLen: number ) {
+	console.log('gridPageProvider', pageNum, pageLen, props.images.slice( pageNum * pageLen, (pageNum + 1) * pageLen ) );
+	return Promise.resolve( props.images.slice( pageNum * pageLen, (pageNum + 1) * pageLen ) );
 }
+
 </script>
+<template>
+	<div ref="box" class="ml-80 mt-12 relative flex justify-around">
+		<Grid
+			:length="props.images.length"
+			:pageSize="(grid.rows * 2 )|| 1"
+			:pageProvider="gridPageProvider"
+			class="grid p-1.5 justify-items-center justify-around"
+			:style="`grid-template-columns: repeat(${grid.cols}, 15rem)`"
+			>
+			<template v-slot:probe><div class="w-60 h-60" ref="probe"/></template>
+			<template v-slot:placeholder="{style}"><div class="w-60 h-60 bg-red-200" :style="style">WAIT</div></template>
+			<template v-slot:default="{item, style}">
+				<div class="w-60 h-60 overflow-hidden p-1.5 relative grid grid-cols-1 grid-rows-1 items-stretch justify-items-stretch hover:p-0.5 transition-all cursor-pointer" :style="style">
+					<div class="col-start-1 row-start-1 bg-green-200"></div>
+					<img :src="watermarkImg" class="col-start-1 row-start-1" />
+				</div>
+			</template>
+		</Grid>
+	</div>
+	<!-- <div class="bg-blue-400/50 mt-12 w-12" :style="`height:${state.scrollHeight}px`"/>
+	<div ref="renderBox" class="bg-green-500/50 fixed left-80 top-12 right-3 bottom-0 grid overflow-hidden" :style="`grid-template-columns:repeat(${renderBoxDims.cols}, 1fr); grid-auto-rows: minmax(min-content, max-content)`">
+		<div v-for="img in state.images" class="bg-yellow-200 aspect-square">{{ img }}</div>
+	</div> -->
+</template>
+<!--
 <template>
 	<div class="p-5 relative">
 		<div
@@ -95,3 +102,4 @@ function onClickImage( image: Image ) {
 		</div>
 	</div>
 </template>
+-->

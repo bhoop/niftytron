@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, onBeforeMount } from "vue";
+import { ref, reactive, onBeforeMount, onMounted } from "vue";
 import {
 	useDataStore,
 	useCollectionStore,
@@ -22,6 +22,7 @@ import { getMany, set, clear } from "idb-keyval";
 import demoState from "./assets/demo.json";
 import createUniqueId from "./uid";
 import Breadcrumbs from "./Breadcrumbs.vue";
+import Button from "./Button.vue";
 
 // import { RefreshIcon } from '@heroicons/vue/solid';
 
@@ -81,6 +82,8 @@ let visibleImages = computed(() => {
 	return output;
 });
 
+let allimages = new Array(987).fill(null).map((...a) => a[1]);
+
 function persistLayers() {
 	// let cacheLayers = JSON.parse(JSON.stringify(data.layers));
 	// for( const layer of cacheLayers ) {
@@ -110,6 +113,7 @@ onBeforeMount(async () => {
 			src: new URL(`./assets/images/${p.src}`, import.meta.url).href,
 		})),
 	}));
+
 	initialized.value = true;
 	collection.regenerate();
 });
@@ -126,10 +130,12 @@ function showstate() {
 </script>
 
 <template>
-	<div class="fixed top-0 left-0 w-full h-12 bg-neutral-300 grid items-center grid-cols-[1fr_auto_1fr] gap-x-10 px-2">
-		<Breadcrumbs class="text-sm" :layers="data.layers" :layer="nav.activeLayer" :piece="nav.activePiece" @nav="(l,p) => nav.goto(l,p)"/>
+	<div class="fixed top-0 left-0 w-full h-12 bg-neutral-300 grid items-center grid-cols-[1fr_auto_1fr] gap-x-10 px-2 z-10">
+		<Breadcrumbs class="text-sm" :root="collection.name" :layers="data.layers" :layer="nav.activeLayer" :piece="nav.activePiece" @nav="(l,p) => nav.goto(l,p)"/>
 		<div class="text-sm font-semibold tracking-widest">NFT ART MACHINE</div>
-		<div class="text-right">Buttons</div>
+		<div class="ml-auto mr-1 flex gap-3">
+			<Button icon="refresh">Regenerate</Button>
+		</div>
 	</div>
 	<div
 		class="fixed top-12 left-0 bottom-0 w-80 grid grid-cols-1 overflow-y-auto overflow-x-hidden"
@@ -152,5 +158,7 @@ function showstate() {
 			/>
 		</Transition>
 	</div>
+
+	<Collection :images="allimages"/>
 
 </template>

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { Cog6ToothIcon } from '@heroicons/vue/24/solid';
+import { Cog6ToothIcon, ArrowPathIcon } from '@heroicons/vue/24/solid';
 
 const props = defineProps<{
 	color?: 'default'|'red'|'green',
-	icon?: 'edit',
+	icon?: 'edit'|'refresh',
 }>();
 const colors = computed( () => {
 	switch( props.color ) {
@@ -23,6 +23,7 @@ const colors = computed( () => {
 		>
 		<div v-if="props.icon" class="mr-1 w-3 h-3">
 			<Cog6ToothIcon v-if="props.icon === 'edit'"/>
+			<ArrowPathIcon v-else-if="props.icon === 'refresh'"/>
 		</div>
 		<slot/>
 	</button>
