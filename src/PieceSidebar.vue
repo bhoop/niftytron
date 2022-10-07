@@ -54,7 +54,7 @@ function tryToDelete() {
 		</SidebarField>
 		<SidebarField label="Appearance limit" type="limit" v-model="piece.limit" placeholder="∞" help="If defined, then no more than X generated NFTs will include this trait. Traits with appearance limits are more likely to appear in the collection (up to their limit)."/>
 		<SidebarField label="Tags" type="tags" v-model="piece.tags" help="Space-separated list of terms that can be used by other attributes/traits to avoid appearing with this trait in an NFT image."/>
-		<SidebarField label="Blocked tags" type="tags" v-model="piece.blockedTags" help="Space-separated list of tags in other attributes/traits that this trait should never appear with in an NFT iamge."/>
+		<SidebarField label="Blocked tags" type="tags" v-model="piece.blockedTags" help="Space-separated list of tags in other attributes/traits that this trait should never appear with in an NFT image."/>
 	</div>
 
 	<div class="vue-grid checkered rounded bg-neutral-200 border border-neutral-400 mx-3">
