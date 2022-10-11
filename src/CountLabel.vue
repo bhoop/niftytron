@@ -1,14 +1,21 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useCollectionStore } from './state';
+import { computed, unref } from 'vue';
+import { useGenerationStore } from './state';
 
 const props = defineProps<{id:string}>();
 
-const collection = useCollectionStore();
+const gen = useGenerationStore();
 
-const count = computed( () => collection.counts[ props.id ] ?? 0 );
+const count = computed( () => {
+	try {
+		return gen.counts[props.id] ?? 0;
+	} catch ( err ) {}
+	return 0;
+} );
 
-const rate = computed( () => collection.size > 0 ? count.value / collection.size : null );
+const rate = computed( () => {
+	return gen.size > 0 ? count.value / gen.size : null;
+} );
 
 </script>
 <template>

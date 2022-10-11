@@ -3,6 +3,7 @@ import { ref, reactive, onBeforeMount, onMounted } from "vue";
 import {
 	useDataStore,
 	useCollectionStore,
+	useGenerationStore,
 	type Piece,
 	type Layer,
 	type Image,
@@ -28,10 +29,11 @@ import Button from "./Button.vue";
 
 let data = useDataStore();
 let collection = useCollectionStore();
+let generation = useGenerationStore();
 const nav = reactive(useAppNavigation());
 const initialized = ref(false);
 
-let currentImageId = ref<string | null>(null);
+let currentImage = ref<Image>();
 let search = ref<string>("");
 let sizeInput = ref("");
 
@@ -56,14 +58,14 @@ let statejson = computed(() => {
 	);
 });
 
-let currentImage = computed(() =>
-	currentImageId.value === null
-		? null
-		: collection.images.find((img) => img?.id === currentImageId.value)
-);
+// let currentImage = computed(() =>
+// 	currentImageId.value === null
+// 		? null
+// 		: collection.images.find((img) => img?.id === currentImageId.value)
+// );
 
 let visibleImages = computed(() => {
-	let output = collection.images;
+	let output = generation.images;
 	if (nav.activeLayer) {
 		output = output.filter(
 			(img) => img && img.attributes.has(nav.activeLayer!)
@@ -75,14 +77,8 @@ let visibleImages = computed(() => {
 			);
 		}
 	}
-	// if ( search.value !== '' ) {
-	// 	let test = search.value.toLowerCase().split(/\W+/);
-	// 	output = output.filter( img => img && test.every( term => img.search.includes( term ) ) );
-	// }
 	return output;
 });
-
-let allimages = new Array(987).fill(null).map((...a) => a[1]);
 
 function persistLayers() {
 	// let cacheLayers = JSON.parse(JSON.stringify(data.layers));
@@ -115,7 +111,7 @@ onBeforeMount(async () => {
 	}));
 
 	initialized.value = true;
-	collection.regenerate();
+	generation.generate( collection.size, data.layers );
 });
 
 function reset() {
@@ -127,6 +123,9 @@ let stateVisible = ref(false);
 function showstate() {
 	stateVisible.value = !stateVisible.value;
 }
+
+let regenerationRequired = computed( () => collection.key !== generation.key );
+let canExport = computed( () => (!regenerationRequired) );
 </script>
 
 <template>
@@ -134,7 +133,22 @@ function showstate() {
 		<Breadcrumbs class="text-sm" :root="collection.name" :layers="data.layers" :layer="nav.activeLayer" :piece="nav.activePiece" @nav="(l,p) => nav.goto(l,p)"/>
 		<div class="text-sm font-semibold tracking-widest">NFT ART MACHINE</div>
 		<div class="ml-auto mr-1 flex gap-3">
-			<Button icon="refresh">Regenerate</Button>
+			<Button
+				icon="refresh"
+				@click="generation.generate(collection.size, data.layers)"
+				title="Click to generate a new set of images."
+				>
+				Regenerate
+				<span class="flex h-3 w-3 absolute -top-1.5 -right-1.5" v-if="regenerationRequired">
+					<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+					<span class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+				</span>
+			</Button>
+			<Button
+				title="Click to download collection as .zip file"
+				color="green"
+				icon="export"
+				>Export</Button>
 		</div>
 	</div>
 	<div
@@ -147,18 +161,28 @@ function showstate() {
 				/>
 			<LayerSidebar
 				v-else-if="nav.focus === 'layer'"
-				:layer="nav.activeLayer"
+				:layer="nav.activeLayer!"
  				class="col-start-1 row-start-1"
  			/>
 			<PieceSidebar
 				v-else-if="nav.focus === 'piece'"
 				:layer="nav.activeLayer!"
-				:piece="nav.activePiece"
+				:piece="nav.activePiece!"
 				class="col-start-1 row-start-1"
 			/>
 		</Transition>
 	</div>
 
-	<Collection :images="allimages"/>
+	<Collection :images="visibleImages" @select-image="(image) => (currentImage = image)"/>
 
+	<div
+		class="z-40 fixed top-0 left-0 w-screen h-screen pointer-events-none flex items-center justify-center"
+	>
+		<ImageModal
+			v-if="currentImage"
+			:image="currentImage"
+			class="pointer-events-auto bg-white/80 backdrop-blur-xl shadow-2xl rounded border border-neutral-300"
+			@close="currentImage = undefined"
+		/>
+	</div>
 </template>

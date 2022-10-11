@@ -10,7 +10,7 @@ html {
 
 body {
 	@apply bg-neutral-100;
-	overflow: scroll;
+	overflow-y: scroll;
 }
 
 @supports (font-variation-settings: normal) {

@@ -37,6 +37,7 @@ export interface WorkerPiece {
 	tags?: string[];
 	blockedTags?: string[];
 	limit?: number;
+	src: string;
 };
 export interface WorkerImage {
 	number: number;
@@ -114,16 +115,13 @@ export function useCollectionGenerator() {
 					}
 					newImages.set(image.key, image);
 				}
-				console.log('converted', newImages.size, 'images');
 				// merge newImages into images
 				images.value = new Map([...images.value, ...newImages]);
-				console.log('wrote', images.value.size, 'images');
 				status.value.progress = images.value.size / args.size;
 				break;
 
 				case 'finish':
 				status.value.running = false;
-				console.log("generation finished.");
 				worker.value!.terminate();
 			}
 		};

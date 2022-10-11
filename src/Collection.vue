@@ -6,11 +6,12 @@ import {
 	reactive,
 	ref,
 	unref,
+	watchEffect,
 } from "vue";
 import type { Image } from "./state";
 import Preview from "./Preview.vue";
+import PreviewCanvas from "./PreviewCanvas.vue";
 import Grid from "vue-virtual-scroll-grid";
-import watermarkImg from "./assets/watermark.png";
 
 const props = defineProps<{ images: Image[] }>();
 const emit = defineEmits<{ (e: 'select-image', image:Image): void }>();
@@ -30,11 +31,12 @@ let box = ref<HTMLDivElement>();
 let grid = ref( { rows: 0, cols: 0 } );
 function updateRenderboxDimensions() {
 	if ( probe.value && box.value ) {
+		let cols = Math.floor( box.value.offsetWidth / probe.value.offsetWidth );
+		console.log('calc rows', props.images.length, cols);
 		grid.value = {
-			cols: Math.floor( box.value.offsetWidth / probe.value.offsetWidth ),
-			rows: Math.ceil( box.value.offsetHeight / probe.value.offsetHeight ),
+			cols,
+			rows: Math.ceil( props.images.length / cols ),
 		};
-		console.log('updateRenderBoxDimensions', box.value.offsetWidth, probe.value.offsetWidth, grid.value);
 	}
 }
 let resizeObserver = new ResizeObserver( () => { 
@@ -50,27 +52,35 @@ onBeforeUnmount(() => {
 	resizeObserver.unobserve( box.value! );
 });
 
-function gridPageProvider( pageNum: number, pageLen: number ) {
-	console.log('gridPageProvider', pageNum, pageLen, props.images.slice( pageNum * pageLen, (pageNum + 1) * pageLen ) );
-	return Promise.resolve( props.images.slice( pageNum * pageLen, (pageNum + 1) * pageLen ) );
+let visibleImages = computed(()=>{
+	return props.images;
+});
+
+function makePageProvider( images: Image[] ) {
+	return ( num: number, len: number ) => Promise.resolve( images.slice( num * len, ( num+1)*len ) );
 }
+let gridPageProvider = computed( () => makePageProvider( props.images ) );
 
 </script>
 <template>
-	<div ref="box" class="ml-80 mt-12 relative flex justify-around">
+	<div class="w-60 absolute pointer-events-none" ref="probe"/>
+	<div ref="box" class="overflow-visible absolute top-12 left-80 right-0 bottom-0 grid p-1.5" style="grid-template-columns: repeat(auto-fill, 15rem)">
 		<Grid
 			:length="props.images.length"
-			:pageSize="(grid.rows * 2 )|| 1"
+			:pageSize="100"
 			:pageProvider="gridPageProvider"
 			class="grid p-1.5 justify-items-center justify-around"
 			:style="`grid-template-columns: repeat(${grid.cols}, 15rem)`"
 			>
 			<template v-slot:probe><div class="w-60 h-60" ref="probe"/></template>
 			<template v-slot:placeholder="{style}"><div class="w-60 h-60 bg-red-200" :style="style">WAIT</div></template>
-			<template v-slot:default="{item, style}">
-				<div class="w-60 h-60 overflow-hidden p-1.5 relative grid grid-cols-1 grid-rows-1 items-stretch justify-items-stretch hover:p-0.5 transition-all cursor-pointer" :style="style">
-					<div class="col-start-1 row-start-1 bg-green-200"></div>
-					<img :src="watermarkImg" class="col-start-1 row-start-1" />
+			<template v-slot:default="{item, style, index}">
+				<div
+					class="w-60 h-60 p-1.5 relative grid grid-cols-1 grid-rows-1 items-stretch justify-items-stretch hover:p-0.5 transition-all cursor-pointer"
+					:style="style"
+					@click="emit('select-image', item)"
+					>
+					<Preview :image="item" class="col-start-1 row-start-1"/>
 				</div>
 			</template>
 		</Grid>

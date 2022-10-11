@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { Cog6ToothIcon, ArrowPathIcon } from '@heroicons/vue/24/solid';
+import { ArrowDownTrayIcon } from '@heroicons/vue/20/solid';
 
 const props = defineProps<{
 	color?: 'default'|'red'|'green',
-	icon?: 'edit'|'refresh',
+	icon?: 'edit'|'refresh'|'export',
 }>();
 const colors = computed( () => {
 	switch( props.color ) {
 		case 'red':
 			return 'text-red-100 bg-red-500 border-red-600 hover:bg-red-400 hover:border-red-500/50';
+		case 'green':
+			return 'text-green-100 bg-green-500 border-green-600 hover:bg-green-400 hover:border-green-500/50';
 		default:
 			return 'bg-orange-400 border-orange-500 hover:bg-orange-300 hover:border-orange-400/50';
 	}
@@ -24,6 +27,7 @@ const colors = computed( () => {
 		<div v-if="props.icon" class="mr-1 w-3 h-3">
 			<Cog6ToothIcon v-if="props.icon === 'edit'"/>
 			<ArrowPathIcon v-else-if="props.icon === 'refresh'"/>
+			<ArrowDownTrayIcon v-else-if="props.icon === 'export'"/>
 		</div>
 		<slot/>
 	</button>

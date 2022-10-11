@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, unref } from "vue";
+import { computed, ref, watch, watchEffect } from "vue";
 import {
 	type Image,
 	type Attribute,
@@ -40,18 +40,12 @@ const layers = computed(() => {
 	}
 	return arr;
 });
+
 </script>
 <template>
 	<div class="relative bg-cover bg-center w-full aspect-square">
 		<div v-if="!image" class="">LOADING</div>
-		<div
-			v-else-if="!image.attributes.size"
-			class="w-full h-full bg-red-500/50 relative"
-		>
-			{{ collection.isGenerating ? "PENDING" : "EMPTY" }}
-			<div class="absolute left-0 bottom-0 h-px w-full bg-blue-500"></div>
-		</div>
-		<template v-else-if="image">
+		<template v-else>
 			<img
 				v-for="{ layer, piece } in layers"
 				:src="piece.src"

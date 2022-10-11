@@ -1,5 +1,6 @@
 export { useCollectionStore } from "./stores/collection";
 export { useDataStore } from "./stores/data";
+export { useGenerationStore } from "./stores/generation";
 
 export interface Layer {
 	id: string;

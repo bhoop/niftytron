@@ -1,5 +1,5 @@
 import hash from '../hash';
-import type { WorkerData, WorkerLayer, WorkerPiece, WorkerImage } from '../stores/useCollectionGenerator';
+import type { WorkerData, WorkerLayer, WorkerPiece, WorkerImage } from '../stores/generation';
 
 interface Source {
 	layer: WorkerLayer;
@@ -14,12 +14,12 @@ interface SourcePiece {
 	count: number;
 }
 
-onmessage = function(e) {
+onmessage = async function(e) {
 	const { layers, favorites: favBag, size }: WorkerData = JSON.parse(e.data);
 
 	// initialize state
 	let done: WorkerImage[] = [];
-	const existing: Record<number,any> = {};
+	const existing: Record<number, any> = {};
 	const favorites = [...Object.entries(favBag)];
 
 	// generate IDs
@@ -27,19 +27,30 @@ onmessage = function(e) {
 
 	// make some lookups to make things easier
 	const layerLookup: { [key: string]: WorkerLayer } = {};
-	const pieceLookup: { [key: string]: { layer: WorkerLayer, piece: WorkerPiece } } = {};
+	const pieceLookup: {
+		[key: string]: { layer: WorkerLayer; piece: WorkerPiece };
+	} = {};
 	let sources: Source[] = [];
 	let layerLimits: Map<string, number> = new Map();
 	let limited: Array<{ layer: WorkerLayer; piece: WorkerPiece }> = [];
 	for (const l of layers) {
 		layerLookup[l.id] = l;
-		let source: Source = { layer: l, count: 0, remaining: l.limit ?? Infinity, pieces: [] };
-		if (l.limit) layerLimits.set( l.id, l.limit );
+		let source: Source = {
+			layer: l,
+			count: 0,
+			remaining: l.limit ?? Infinity,
+			pieces: [],
+		};
+		if (l.limit) layerLimits.set(l.id, l.limit);
 		for (const p of l.pieces) {
 			pieceLookup[p.id] = { layer: l, piece: p };
-			source.pieces.push({ piece: p, count: 0, remaining: p.limit ?? Infinity });
+			source.pieces.push({
+				piece: p,
+				count: 0,
+				remaining: p.limit ?? Infinity,
+			});
 			// every piece should show up at least once
-			limited.push( { layer: l, piece: p } );
+			limited.push({ layer: l, piece: p });
 		}
 		sources.push(source);
 	}
@@ -50,7 +61,7 @@ onmessage = function(e) {
 
 	while (idlist.length > 0) {
 		tryCount++;
-		const attributes: Map< WorkerLayer, WorkerPiece > = new Map();
+		const attributes: Map<WorkerLayer, WorkerPiece> = new Map();
 		let valid: boolean = false;
 		let favorite: string | false = false;
 		// if there are favorite images, process them first
@@ -60,33 +71,33 @@ onmessage = function(e) {
 			const [favId, favAttributes]: [string, string[]] = favorites.shift()!;
 			favorite = favId;
 			for (const pieceId of favAttributes) {
-				if ( ! pieceLookup[ pieceId ] ) {
+				if (!pieceLookup[pieceId]) {
 					continue;
 				}
-				const { layer, piece } = pieceLookup[ pieceId ];
-				attributes.set( layer, piece );
+				const { layer, piece } = pieceLookup[pieceId];
+				attributes.set(layer, piece);
 			}
 		} else {
 			// if there are any limited-number pieces that haven't reached their limit,
 			// start with one of them first.
 			if (limited.length > 0) {
 				const r = limited.shift()!;
-				attributes.set( r.layer, r.piece );
+				attributes.set(r.layer, r.piece);
 				// move this limited item to the end of the list
-				limited.push( r );
+				limited.push(r);
 			}
 
 			// create a list of blocked tags and used tags
 			const blocks: Set<string> = new Set();
 			const usedTags: Set<string> = new Set();
 			for (const [layer, piece] of attributes) {
-				if ( layer.tags ) {
+				if (layer.tags) {
 					for (const t of layer.tags) usedTags.add(t);
 				}
-				if ( layer.blockedTags ) {
+				if (layer.blockedTags) {
 					for (const t of layer.blockedTags) blocks.add(t);
 				}
-				if (piece.blockedTags ) {
+				if (piece.blockedTags) {
 					for (const t of piece.blockedTags) blocks.add(t);
 				}
 				if (piece.tags) {
@@ -100,7 +111,10 @@ onmessage = function(e) {
 				for (const source of sources) {
 					// don't pick a piece if it's already set
 					if (attributes.has(source.layer)) continue;
-					if (includesBlockedTags(source.layer.tags, blocks) || includesBlockedTags(usedTags, source.layer.blockedTags)) {
+					if (
+						includesBlockedTags(source.layer.tags, blocks) ||
+						includesBlockedTags(usedTags, source.layer.blockedTags)
+					) {
 						// if this layer is required, abort generating this image
 						if (source.layer.required) {
 							throw false;
@@ -112,7 +126,10 @@ onmessage = function(e) {
 					shuffle(source.pieces);
 					// go through the pieces and find one that works
 					for (const piece of source.pieces) {
-						if (includesBlockedTags(piece.piece.tags, blocks) || includesBlockedTags(usedTags, piece.piece.blockedTags))
+						if (
+							includesBlockedTags(piece.piece.tags, blocks) ||
+							includesBlockedTags(usedTags, piece.piece.blockedTags)
+						)
 							continue;
 						attributes.set(source.layer, piece.piece);
 						if (source.layer.blockedTags)
@@ -138,7 +155,7 @@ onmessage = function(e) {
 
 		// If we created a valid image, make sure it's unique in the set
 		let key: number = 0;
-		if ( valid ) {
+		if (valid) {
 			// generate a unique hash based on the attributes in the image
 			const keys = [...attributes.entries()]
 				.filter(([layer]) => !layer.excludeFromKey)
@@ -151,24 +168,23 @@ onmessage = function(e) {
 			}
 		}
 
-		if ( ! valid ) {
+		if (!valid) {
 			failureCount++;
 			// if we've failed lots of times in a row to generate a valid image, stop
-			if ( failureCount >= size ) break;
+			if (failureCount >= size) break;
 		} else {
 			failureCount = 0;
 			// update counts of limited-rate pieces
 			for (const [layer, piece] of attributes) {
-
 				// if this layer has a limit, update it
-				if ( layerLimits.has(layer.id) ) {
+				if (layerLimits.has(layer.id)) {
 					let newLimit = layerLimits.get(layer.id)! - 1;
-					layerLimits.set( layer.id, newLimit );
+					layerLimits.set(layer.id, newLimit);
 					if (newLimit === 0) {
 						// remove all sources that use this layer
-						sources = sources.filter( s => s.layer.id !== layer.id );
+						sources = sources.filter((s) => s.layer.id !== layer.id);
 						// remove all limited pieces that are in this layer
-						limited = limited.filter( l => l.layer.id !== layer.id ); 
+						limited = limited.filter((l) => l.layer.id !== layer.id);
 					}
 				} else {
 					const source = sources.find((l) => l.layer === layer);
@@ -187,7 +203,9 @@ onmessage = function(e) {
 					// if this is a limited piece and it has reached its limit, remove it from the "limited" list and the source
 					else if (psource.remaining <= 0) {
 						limited = limited.filter((x) => x.piece !== piece);
-						source.pieces = source.pieces.filter((p) => p.piece !== piece);
+						source.pieces = source.pieces.filter(
+							(p) => p.piece !== piece
+						);
 					}
 					// if this layer has no more pieces or its piece limit has been reached, remove it from the sources
 					if (source.pieces.length === 0 || source.remaining <= 0) {
@@ -197,27 +215,32 @@ onmessage = function(e) {
 			}
 
 			// if we get here then we've discovered a valid image!
+			// generate the preview
+			let attributeIds: string[] = [];
+			for( let v of attributes.values() ) {
+				attributeIds.push( v.id );
+			}
 			const image: WorkerImage = {
 				number: idlist.shift()!,
 				key,
 				favorite,
-				attributes: [...attributes.values()].map(v => v.id)
+				attributes: attributeIds
 			};
 			existing[image.key] = true;
-			done.push( image );
+			done.push(image);
 
 			// if we have 1000 images in the queue, push it
-			if ( done.length >= 1000 ) {
-				this.postMessage({ type:"update", images:done});
+			if (done.length >= 1000) {
+				this.postMessage({ type: "update", images: done });
 				done = [];
 			}
 		}
 	}
 	// push the rest of the images
-	if ( done.length > 0 ) {
-		this.postMessage({type:"update", images:done});
+	if (done.length > 0) {
+		this.postMessage({ type: "update", images: done });
 	}
-	this.postMessage({type:"finish"});
+	this.postMessage({ type: "finish" });
 }
 
 function generateIdList(limit: number) {
