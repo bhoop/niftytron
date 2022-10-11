@@ -10,21 +10,10 @@ import {
 } from "vue";
 import type { Image } from "./state";
 import Preview from "./Preview.vue";
-import PreviewCanvas from "./PreviewCanvas.vue";
 import Grid from "vue-virtual-scroll-grid";
 
 const props = defineProps<{ images: Image[] }>();
 const emit = defineEmits<{ (e: 'select-image', image:Image): void }>();
-
-function throttle( fn, timer = 300 ) {
-	if ( ! fn._busy ) {
-		fn._busy = true;
-		setTimeout( () => {
-			fn._busy = false;
-			fn();
-		}, timer );
-	}
-}
 
 let probe = ref<HTMLDivElement>();
 let box = ref<HTMLDivElement>();
@@ -39,9 +28,7 @@ function updateRenderboxDimensions() {
 		};
 	}
 }
-let resizeObserver = new ResizeObserver( () => { 
-	throttle( updateRenderboxDimensions );
-} );
+let resizeObserver = new ResizeObserver( updateRenderboxDimensions );
 
 onMounted( () => {
 	updateRenderboxDimensions();
